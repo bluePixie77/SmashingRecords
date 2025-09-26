@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea920516-4553-43e4-93c1-eee2edab72be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java/POO/alumnes/Alumne.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java/POO/alumnes/MainAlumnes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java/POO/cotxes/Cotxe.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java/POO/cotxes/MainCotxes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java/POO/profes/MainProfes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java/POO/profes/Profe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,22 +12,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2uuyqK8VIgyCZRt7kquOWh5xE5T" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/mariaramis/Documents/INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/mariaramis/Documents/INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/../../../INFORMÀTICA/Intellij Idea Java/Intelij_Idea_Java" />

@@ -6,19 +6,4 @@ public class Main extends PApplet {
         PApplet.main("Main");
     }
 
-    public void settings(){
-        size(800, 800);
-    }
-    public void setup(){
-
-    }
-    public void draw(){
-
-    }
-    public void keyPressed(){
-
-    }
-    public void mousePressed(){
-
-    }
 }

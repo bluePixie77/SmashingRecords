@@ -33,5 +33,4 @@ public class FontsMain extends PApplet {
         // Muestra fuentes app
         fontsApp.displayFonts(this, 100, 400, 50);
     }
-
 }

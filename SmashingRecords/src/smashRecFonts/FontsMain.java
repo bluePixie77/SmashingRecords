@@ -11,22 +11,25 @@ public class FontsMain extends PApplet {
         PApplet.main("smashRecFonts.FontsMain", args);
     }
 
-    // Constructor
-    public FontsMain() {
-       fontsApp = new Fonts(this);
+
+    public void settings(){
+        size(800, 800);
+    }
+    public void setup(){
+        // Constructor
+        fontsApp = new Fonts(this);
     }
 
     public void draw(){
         background(255);
 
+        fill(0);
         textFont(fontsApp.getFirstFont());
         text("Título", 50, 200);
 
-        fill(50);
         textFont(fontsApp.getSecondFont());
         text("Subtítulo", 50, 250);
 
-        fill(55, 0, 0);
         textFont(fontsApp.getThridFont());
         text("Párrafo", 50, 300);
 

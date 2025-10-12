@@ -25,15 +25,18 @@ public class FontsMain extends PApplet {
 
         fill(0);
         textFont(fontsApp.getFirstFont());
-        text("Título", 50, 200);
+        text("The Smashing Records", 50, 200);
 
         textFont(fontsApp.getSecondFont());
-        text("Subtítulo", 50, 250);
+        text("The Smashing Records", 50, 300);
 
         textFont(fontsApp.getThridFont());
-        text("Párrafo", 50, 300);
+        text("Subtítulo", 50, 400);
+
+        textFont(fontsApp.getForthFont());
+        text("Párrafo", 50, 500);
 
         // Muestra fuentes app
-        fontsApp.displayFonts(this, 100, 400, 50);
+        //fontsApp.displayFonts(this, 100, 400, 50);
     }
 }

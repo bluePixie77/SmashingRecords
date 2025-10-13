@@ -12,7 +12,7 @@ public class ColorsMain extends PApplet{
 
 
     public void settings(){
-        size(800, 800);
+        size(1200, 800);
     }
     public void setup(){
         c = new smashRecColors.Colors(this);
@@ -22,7 +22,7 @@ public class ColorsMain extends PApplet{
         background(255);
 
         // Dibujar paleta
-        c.displayColors(this, width/4, 100, width-100);
+        c.displayColors(this, width/10, 100, width-200);
     }
     public void keyPressed(){
 

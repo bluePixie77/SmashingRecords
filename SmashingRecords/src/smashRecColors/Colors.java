@@ -11,18 +11,19 @@ public class Colors {
 
     // Colores de la App (setter)
     void setColors(PApplet p5){
-        this.colors = new int[5];
-        this.colors[0] = p5.color(0xFF068D9D);
-        this.colors[1] = p5.color(0xFF068D9D);
-        this.colors[2] = p5.color(0xFF068D9D);
-        this.colors[3] = p5.color(0xFF068D9D);
-        this.colors[4] = p5.color(0xFF53599A);
+        this.colors = new int[4];
+        this.colors[0] = p5.color(0xFF020202);
+        this.colors[1] = p5.color(0xFFFFF0DC);
+        this.colors[2] = p5.color(0xFFE47738);
+        this.colors[3] = p5.color(0xFFE03C00);
     }
 
     // Getters
     public int getNumColors(){ return this.colors.length; }
     public int getFirstColor(){ return this.colors[0]; }
     public int getSecondColor(){ return this.colors[1]; }
+    public int getThirdColor(){ return this.colors[2]; }
+    public int getFourthColor(){ return this.colors[3]; }
 
     public int getColorAt(int i){ return this.colors[i]; }
 
@@ -31,7 +32,7 @@ public class Colors {
         p5.pushStyle();
             // Leyenda
             p5.fill(0); p5.textAlign(p5.LEFT); p5.textSize(36);
-            p5.text("Colors: ", x, y-10);
+            p5.text("Paleta Colores: ", x, y-20);
 
             // Paleta de colores
             float wc = w / getNumColors();

@@ -13,7 +13,7 @@ public class Main extends PApplet {
     }
 
     public void settings(){
-        size(800, 800);
+        size(1200, 800);
     }
     public void setup(){
         gui = new GUI();
@@ -40,7 +40,5 @@ public class Main extends PApplet {
             gui.pantallaActual = GUI.PANTALLA.VINILOS;
         }
     }
-
-
 
 }

@@ -1,7 +1,8 @@
-package smashRecPantallas;
+package gui;
 
+import gui.smashRecPantallas.Boton;
 import processing.core.PApplet;
-import smashRecFonts.Sizes;
+import gui.smashRecFonts.Sizes;
 
 public class GUI {
 
@@ -11,17 +12,30 @@ public class GUI {
     // Pantalla actual
     public PANTALLA pantallaActual;
 
+    // Botones
+    public Boton b1, b2;
+
     // Constructor de GUI
-    public GUI(){
+    public GUI(PApplet p5){
         pantallaActual = PANTALLA.INICIO;
+        setBotones(p5);
+        gui.smashRecPantallas.Boton.setColors();
     }
 
+    // Setter botones
+    public void setBotones(PApplet p5){
+        b1 = new Boton(p5, "RED", 40, 400, 250, 100);
+        b2 = new Boton(p5, "GREEN", 40, 550, 250, 100);
+
+    }
 
     // Pantallas de la GUI
-
     public void displayPantallaInicio(PApplet p5){
         p5.background(0);
         p5.circle(5, 5, 5);
+
+        displayBotonesPUsuario(p5);
+
     }
 
     public void displayPantallaUsuario(PApplet p5){
@@ -32,7 +46,7 @@ public class GUI {
 
             p5.circle((p5.width/2)+50, (p5.height/2)-300, 150);
             p5.textAlign(p5.CENTER);
-            p5.textSize(Sizes.medidaSubtitulo); //p5.textFont(smashRecFonts.Fonts.getThirdFont());
+            p5.textSize(Sizes.medidaSubtitulo); //p5.textFont(gui.smashRecFonts.Fonts.getThirdFont());
             p5.text("Nombre: Jane Doe", (p5.width/2)+50, (p5.height/2)-200);
             p5.text("Correo: janeDoe@gmail.com", (p5.width/2)+50, (p5.height/2)-150);
 
@@ -55,10 +69,15 @@ public class GUI {
 
     public void displayLogo(PApplet p5){
 
-        p5.circle(smashRecPantallas.Layout.marginH, smashRecPantallas.Layout.marginH, 100);
+        p5.circle(gui.smashRecPantallas.Layout.marginH, gui.smashRecPantallas.Layout.marginH, 100);
     }
 
     public void displaySidebar(PApplet p5){}
 
     public void displayColumna1(PApplet p5){}
+
+    public void displayBotonesPUsuario(PApplet p5){
+        b1.display(p5);
+        b2.display(p5);
+    }
 }

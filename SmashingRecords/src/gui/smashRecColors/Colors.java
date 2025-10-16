@@ -1,4 +1,4 @@
-package smashRecColors;
+package gui.smashRecColors;
 
 import processing.core.PApplet;
 

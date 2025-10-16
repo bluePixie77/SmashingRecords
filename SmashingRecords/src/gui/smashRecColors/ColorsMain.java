@@ -1,11 +1,11 @@
-package smashRecColors;
+package gui.smashRecColors;
 
 import processing.core.PApplet;
 
 public class ColorsMain extends PApplet{
 
     public static void main(String[] args) {
-        PApplet.main("smashRecColors.ColorsMain");
+        PApplet.main("gui.smashRecColors.ColorsMain");
     }
     // Atributos o propiedades
     Colors c;
@@ -15,7 +15,7 @@ public class ColorsMain extends PApplet{
         size(1200, 800);
     }
     public void setup(){
-        c = new smashRecColors.Colors(this);
+        c = new gui.smashRecColors.Colors(this);
 
     }
     public void draw(){

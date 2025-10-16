@@ -1,5 +1,5 @@
 import processing.core.PApplet;
-import smashRecPantallas.GUI;
+import gui.GUI;
 
 public class Main extends PApplet {
 
@@ -16,7 +16,7 @@ public class Main extends PApplet {
         size(1200, 800);
     }
     public void setup(){
-        gui = new GUI();
+        gui = new GUI(this);
     }
 
     public void draw(){
@@ -29,6 +29,8 @@ public class Main extends PApplet {
             case VINILOS: gui.displayPantallaVinilos(this);
                           break;
         }
+
+        updateCursor(this);
     }
 
     public void keyPressed(){
@@ -41,4 +43,20 @@ public class Main extends PApplet {
         }
     }
 
+    public void mousePressed(){
+        if(gui.b1.mouseOverButton(this)){
+            println("B1 has been pressed.");
+        }else if(gui.b1.mouseOverButton(this)){
+            println("B2 has been pressed.");
+        }
+    }
+
+    public void updateCursor(PApplet p5){
+        if(gui.b1.updateHandCursor(p5) ||
+           gui.b2.updateHandCursor(p5)){
+                cursor(HAND);
+        }else{
+            cursor(ARROW);
+        }
+    }
 }

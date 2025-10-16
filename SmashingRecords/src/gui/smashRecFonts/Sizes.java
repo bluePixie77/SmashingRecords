@@ -1,4 +1,4 @@
-package smashRecFonts;
+package gui.smashRecFonts;
 
 public class Sizes {
 

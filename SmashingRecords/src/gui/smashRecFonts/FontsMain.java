@@ -1,4 +1,4 @@
-package smashRecFonts;
+package gui.smashRecFonts;
 
 import processing.core.PApplet;
 
@@ -8,7 +8,7 @@ public class FontsMain extends PApplet {
     Fonts fontsApp;
 
     public static void main(String[] args){
-        PApplet.main("smashRecFonts.FontsMain", args);
+        PApplet.main("gui.smashRecFonts.FontsMain", args);
     }
 
 

@@ -1,4 +1,4 @@
-package smashRecPantallas;
+package gui.smashRecPantallas;
 
 public class Layout {
 

@@ -1,5 +1,7 @@
 package gui;
 
+import gui.smashRecColors.Colors;
+import gui.smashRecFonts.Fonts;
 import gui.smashRecPantallas.Boton;
 import processing.core.PApplet;
 import gui.smashRecFonts.Sizes;
@@ -15,11 +17,16 @@ public class GUI {
     // Botones
     public Boton b1, b2;
 
+    // Colores y texto
+    Colors appColors;
+    Fonts appFonts;
+
     // Constructor de GUI
     public GUI(PApplet p5){
         pantallaActual = PANTALLA.INICIO;
         setBotones(p5);
-        gui.smashRecPantallas.Boton.setColors();
+        appColors = new Colors(p5);
+        appFonts = new Fonts(p5);
     }
 
     // Setter botones
@@ -30,11 +37,13 @@ public class GUI {
     }
 
     // Pantallas de la GUI
-    public void displayPantallaInicio(PApplet p5){
+    public void displayPantallaInicioSesion(PApplet p5){
         p5.background(0);
-        p5.circle(5, 5, 5);
+        p5.push();
+            displayLogIn(p5);
 
-        displayBotonesPUsuario(p5);
+
+        p5.pop();
 
     }
 
@@ -49,6 +58,7 @@ public class GUI {
             p5.textSize(Sizes.medidaSubtitulo); //p5.textFont(gui.smashRecFonts.Fonts.getThirdFont());
             p5.text("Nombre: Jane Doe", (p5.width/2)+50, (p5.height/2)-200);
             p5.text("Correo: janeDoe@gmail.com", (p5.width/2)+50, (p5.height/2)-150);
+            displayBotonesPUsuario(p5);
 
         p5.pop();
     }
@@ -66,6 +76,12 @@ public class GUI {
     }
 
     // Zonas de la GUI
+
+    public void displayLogIn(PApplet p5){
+        //p5.rectAlign(p5.CENTER);
+        p5.rect(p5.width/2, p5.height/2, p5.width/6, p5.height/2);
+
+    }
 
     public void displayLogo(PApplet p5){
 

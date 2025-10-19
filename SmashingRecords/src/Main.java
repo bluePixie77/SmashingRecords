@@ -17,12 +17,13 @@ public class Main extends PApplet {
     }
     public void setup(){
         gui = new GUI(this);
+        //gui.smashRecColors.setColors(this);
     }
 
     public void draw(){
         // Dibuixa la pantalla corresponent
         switch(gui.pantallaActual){
-            case INICIO: gui.displayPantallaInicio(this);
+            case INICIO: gui.displayPantallaInicioSesion(this);
                          break;
             case USUARIO: gui.displayPantallaUsuario(this);
                           break;

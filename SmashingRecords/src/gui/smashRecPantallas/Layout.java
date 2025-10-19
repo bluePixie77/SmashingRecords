@@ -3,8 +3,8 @@ package gui.smashRecPantallas;
 public class Layout {
 
     // Márgenes horizontales y verticales
-    public static float marginH = 20, marginV =20;
+    public static float marginH = 40, marginV = 40;
 
     //
-    public static float sideBarWidth = 0;
+    public static float sideBarWidth = 200;
 }

@@ -3,8 +3,11 @@ package gui;
 import gui.smashRecColors.Colors;
 import gui.smashRecFonts.Fonts;
 import gui.smashRecPantallas.Boton;
+import gui.smashRecPantallas.TextField;
 import processing.core.PApplet;
 import gui.smashRecFonts.Sizes;
+
+import static gui.smashRecPantallas.Layout.marginH;
 
 public class GUI {
 
@@ -15,11 +18,14 @@ public class GUI {
     public PANTALLA pantallaActual;
 
     // Botones
-    public Boton b1, b2;
+    public Boton b1, b2, b3;
 
     // Colores y texto
     Colors appColors;
     Fonts appFonts;
+
+    // Text
+    TextField textField;
 
     // Constructor de GUI
     public GUI(PApplet p5){
@@ -78,14 +84,25 @@ public class GUI {
     // Zonas de la GUI
 
     public void displayLogIn(PApplet p5){
-        //p5.rectAlign(p5.CENTER);
-        p5.rect(p5.width/2, p5.height/2, p5.width/6, p5.height/2);
+        p5.push();
+        p5.rectMode(p5.CENTER);
+        p5.textAlign(p5.CENTER);
+        p5.rect(p5.width/2, p5.height/2, p5.width/3, p5.height-200);
+        p5.circle(p5.width/2, p5.height/2-175, p5.width/3-275);
+        textField = new TextField(p5, p5.width/2, p5.height/2, p5.width/3-2*((int)marginH), p5.height/20);
+        textField.display(p5);
+        textField = new TextField(p5, p5.width/2, p5.height/2+75, p5.width/3-2*((int)marginH), p5.height/20);
+        textField.display(p5);
 
+        b3 = new Boton(p5, "Iniciar sesión", p5.width/2, p5.height/2+140, p5.width/3-3*((int)marginH), p5.height/18);
+        b3.display(p5);
+
+        p5.pop();
     }
 
     public void displayLogo(PApplet p5){
 
-        p5.circle(gui.smashRecPantallas.Layout.marginH, gui.smashRecPantallas.Layout.marginH, 100);
+        p5.circle(marginH, marginH, 100);
     }
 
     public void displaySidebar(PApplet p5){}

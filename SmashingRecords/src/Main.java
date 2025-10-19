@@ -13,11 +13,11 @@ public class Main extends PApplet {
     }
 
     public void settings(){
-        size(1200, 800);
+        fullScreen();
     }
     public void setup(){
         gui = new GUI(this);
-        //gui.smashRecColors.setColors(this);
+
     }
 
     public void draw(){

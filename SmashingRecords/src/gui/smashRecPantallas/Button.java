@@ -2,7 +2,7 @@ package gui.smashRecPantallas;
 
 import processing.core.PApplet;
 
-public class Boton {
+public class Button {
 
     // Atributos o propiedades
     float x, y, w, h; // Posición (x, y) i dimensiones(w, h);
@@ -12,7 +12,7 @@ public class Boton {
     public boolean enabled;  // Estat del botó (actiu / inactiu).
 
     // Constructor
-    public Boton(PApplet p5, String text, float x, float y, float w, float h){
+    public Button(PApplet p5, String text, float x, float y, float w, float h){
         this.textBoto = text;
         this.x = x;
         this.y = y;

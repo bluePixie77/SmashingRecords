@@ -42,6 +42,7 @@ public class Main extends PApplet {
         }else if(key=='2'){
             gui.pantallaActual = GUI.PANTALLA.VINILOS;
         }
+        gui.tFInicioSesion1.keyPressed(key, keyCode);
     }
 
     public void mousePressed(){
@@ -50,6 +51,7 @@ public class Main extends PApplet {
         }else if(gui.b1.mouseOverButton(this)){
             println("B2 has been pressed.");
         }
+        gui.tFInicioSesion1.isPressed(this);
     }
 
     public void updateCursor(PApplet p5){

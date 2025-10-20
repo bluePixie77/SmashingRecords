@@ -25,7 +25,7 @@ public class GUI {
     Fonts appFonts;
 
     // Text
-    TextField textField;
+    public TextField tFInicioSesion1, tFInicioSesion2;
 
     // Constructor de GUI
     public GUI(PApplet p5){
@@ -33,13 +33,17 @@ public class GUI {
         setBotones(p5);
         appColors = new Colors(p5);
         appFonts = new Fonts(p5);
+        setTextFields(p5);
     }
 
     // Setter botones
     public void setBotones(PApplet p5){
         b1 = new Boton(p5, "RED", 40, 400, 250, 100);
         b2 = new Boton(p5, "GREEN", 40, 550, 250, 100);
-
+    }
+    public void setTextFields(PApplet p5){
+        tFInicioSesion1 = new TextField(p5, p5.width/2, p5.height/2, p5.width/3-2*((int)marginH), p5.height/20);
+        tFInicioSesion2 = new TextField(p5, p5.width/2, p5.height/2+75, p5.width/3-2*((int)marginH), p5.height/20);
     }
 
     // Pantallas de la GUI
@@ -50,7 +54,6 @@ public class GUI {
 
 
         p5.pop();
-
     }
 
     public void displayPantallaUsuario(PApplet p5){
@@ -89,10 +92,9 @@ public class GUI {
         p5.textAlign(p5.CENTER);
         p5.rect(p5.width/2, p5.height/2, p5.width/3, p5.height-200);
         p5.circle(p5.width/2, p5.height/2-175, p5.width/3-275);
-        textField = new TextField(p5, p5.width/2, p5.height/2, p5.width/3-2*((int)marginH), p5.height/20);
-        textField.display(p5);
-        textField = new TextField(p5, p5.width/2, p5.height/2+75, p5.width/3-2*((int)marginH), p5.height/20);
-        textField.display(p5);
+
+        tFInicioSesion1.display(p5);
+        tFInicioSesion2.display(p5);
 
         b3 = new Boton(p5, "Iniciar sesión", p5.width/2, p5.height/2+140, p5.width/3-3*((int)marginH), p5.height/18);
         b3.display(p5);

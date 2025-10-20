@@ -10,7 +10,7 @@ public class Colors {
     public Colors(PApplet p5){ this.setColors(p5); }
 
     // Colores de la App (setter)
-    void setColors(PApplet p5){
+    public void setColors(PApplet p5){
         this.colors = new int[4];
         this.colors[0] = p5.color(0xFF020202);
         this.colors[1] = p5.color(0xFFFFF0DC);

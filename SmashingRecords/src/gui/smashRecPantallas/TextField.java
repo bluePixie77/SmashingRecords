@@ -7,30 +7,34 @@ import static processing.core.PConstants.BACKSPACE;
 
 public class TextField {
 
-    // Propietats del camp de text
+    // Atributos o propiedades
     int x, y, h, w;
 
-    // Colors
-    int bgColor, fgColor, selectedColor, borderColor;
+    // Colores
+    int bgColor, fgColor, selectedColor, borderColor; // bg: background, fg: foreground
     int borderWeight = 1;
 
-    // Text del camp
+    // Texto del campo
     public String text = "";
     int textSize = 24;
 
     boolean selected = false;
 
+    Colors c;
+
     // Constructor
     public TextField(PApplet p5, int x, int y, int w, int h) {
         this.x = x; this.y = y; this.w = w; this.h = h;
-        this.bgColor = p5.color(140, 140, 140);
+        //this.bgColor = setColors(p5);
+        //c.setColors(p5);
+        this.bgColor = p5.color(100);
         this.fgColor = p5.color(0, 0, 0);
         this.selectedColor = p5.color(199, 43, 31, 11);
         this.borderColor = p5.color(30, 30, 30);
         this.borderWeight = 1;
     }
 
-    // Dibuixa el Camp de Text
+    // Dibujar
     public void display(PApplet p5) {
         p5.pushStyle();
         if (selected) {
@@ -41,6 +45,7 @@ public class TextField {
 
         p5.strokeWeight(borderWeight);
         p5.stroke(borderColor);
+        p5.rectMode(p5.CORNER);
         p5.rect(x, y, w, h, 5);
 
         p5.fill(fgColor);
@@ -49,7 +54,7 @@ public class TextField {
         p5.popStyle();
     }
 
-    // Afegeix i/o lleva el text que es tecleja
+    // Añadir y/o quitar el texto que se teclea
     public void keyPressed(char key, int keyCode) {
         if (selected) {
             if (keyCode == (int)BACKSPACE) {
@@ -57,48 +62,46 @@ public class TextField {
             } else if (keyCode == 32) {
                 addText(' '); // SPACE
             } else {
-
-                boolean isKeyCapitalLetter = (key >= 'A' && key <= 'Z');
+                /*boolean isKeyCapitalLetter = (key >= 'A' && key <= 'Z');
                 boolean isKeySmallLetter = (key >= 'a' && key <= 'z');
                 boolean isKeyNumber = (key >= '0' && key <= '9');
-
-                if (isKeyCapitalLetter || isKeySmallLetter || isKeyNumber) {
-                    addText(key);
-                }
+                if (isKeyCapitalLetter || isKeySmallLetter || isKeyNumber) { }
+                 */
+                addText(key);
             }
         }
     }
 
-    // Afegeix la lletra c al final del text
+    // Añadir la letra c al final del texto
     public void addText(char c) {
         if (this.text.length() + 1 < w) {
             this.text += c;
         }
     }
 
-    // Lleva la darrera lletra del text
+    // Quitar la última letra del texto
     public void removeText() {
         if (text.length() > 0) {
             text = text.substring(0, text.length() - 1);
         }
     }
 
-    // Lleva tot el text
+    // Quitar todo el texto
     public void removeAllText(){
         this.text = "";
     }
 
-    // Retorna el text
+    // Recuperar el texto
     public String getText(){
         return this.text;
     }
 
-    // Setter del text
+    // Setter del texto
     public void setText(String t){
         this.text= t;
     }
 
-    // Indica si el ratolí està sobre el camp de text
+    // Indica si el ratón está sobre el campo
     public boolean mouseOverTextField(PApplet p5) {
         return (p5.mouseX >= this.x && p5.mouseX <= this.x + this.w && p5.mouseY >= this.y && p5.mouseY <= this.y + this.h);
     }
@@ -106,10 +109,13 @@ public class TextField {
     // Selecciona el camp de text si pitjam a sobre
     // Deselecciona el camp de text si pitjam a fora
     public void isPressed(PApplet p5) {
-        if (mouseOverTextField(p5)) {
+        System.out.println("IS PRESSED");
+        if(mouseOverTextField(p5)) {
+
             selected = true;
         } else {
             selected = false;
         }
+        System.out.println("SELECTED: "+selected);
     }
 }

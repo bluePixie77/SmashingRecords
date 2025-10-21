@@ -10,7 +10,6 @@ import gui.smashRecFonts.Sizes;
 import processing.core.PImage;
 
 import static gui.smashRecPantallas.Layout.marginH;
-import static gui.smashRecPantallas.Layout.marginV;
 
 public class GUI {
 
@@ -21,7 +20,7 @@ public class GUI {
     public PANTALLA pantallaActual;
 
     // Botones
-    public Button b1, b2, b3;
+    public Button b1, b2, b3, b4, b5;
 
     // Colores y texto
     Colors appColors;
@@ -51,13 +50,16 @@ public class GUI {
     }
     // Setter botones
     public void setBotones(PApplet p5){
-        b1 = new Button(p5, "RED", 40, 400, 250, 100);
-        b2 = new Button(p5, "GREEN", 40, 550, 250, 100);
-        b3 = new Button(p5, "Iniciar sesión", p5.width/2-(p5.width/8), p5.height/2+140+40, p5.width/3-3*((int)marginH), p5.height/19);
+        b1 = new Button(p5, "Vinilos", 0, p5.height*0.20f, p5.width*0.20f, p5.height*0.08f);
+        b2 = new Button(p5, "CDs", 0, p5.height*0.30f, p5.width*0.20f, p5.height*0.08f);
+        b3 = new Button(p5, "Conciertos", 0, p5.height*0.40f, p5.width*0.20f, p5.height*0.08f);
+        b4 = new Button(p5, "Estadísticas", 0, p5.height*0.50f, p5.width*0.20f, p5.height*0.08f);
+        b5 = new Button(p5, "Iniciar sesión", p5.width*0.5f-(p5.width*0.125f), p5.height*0.68f, p5.width/3-3*((int)marginH), p5.height/19);
+
     }
     public void setTextFields(PApplet p5){
-        tFInicioSesion1 = new TextField(p5, p5.width/2-(p5.width/7)+10, p5.height/2, p5.width/3-2*((int)marginH), p5.height/20);
-        tFInicioSesion2 = new TextField(p5, p5.width/2-(p5.width/7)+10, p5.height/2+75, p5.width/3-2*((int)marginH), p5.height/20);
+        tFInicioSesion1 = new TextField(p5, p5.width*0.36f, p5.height*0.5f, p5.width/3-2*((int)marginH), p5.height/20);
+        tFInicioSesion2 = new TextField(p5, p5.width*0.36f, p5.height*0.55f, p5.width/3-2*((int)marginH), p5.height/20);
     }
     public void setRoundButton(PApplet p5){
       /*  rB1 = new RoundButton(p5, icona1, 150, 500, 60);
@@ -82,15 +84,12 @@ public class GUI {
     public void displayPantallaUsuario(PApplet p5){
         p5.background(0);
         p5.push();
-            p5.translate(p5.width/2, p5.height/3);
-            p5.rect(-p5.width/2, -p5.height/3, p5.width/4, p5.height);
-            //displayLogo(p5);
-
-            p5.circle(0, 0, 150);
+            displaySidebar(p5);
+            p5.circle(p5.width*0.65f, p5.height*0.25f, 150);
             p5.textAlign(p5.CENTER);
             p5.textSize(Sizes.medidaSubtitulo); //p5.textFont(gui.smashRecFonts.Fonts.getThirdFont());
-            p5.text("Nombre: Jane Doe", 50, 100);
-            p5.text("Correo: janeDoe@gmail.com", 50, 150);
+            p5.text("Nombre: Jane Doe", p5.width*0.35f, p5.height*0.1f);
+            p5.text("Correo: janeDoe@gmail.com", p5.width*0.35f, p5.height*0.2f);
 
         p5.pop();
             displayBotonesPUsuario(p5);
@@ -110,7 +109,14 @@ public class GUI {
     }
 
     // Zonas de la GUI
+    public void displaySidebar(PApplet p5){
+        p5.pop();
+        p5.rect(0, 0, p5.width*0.20f, p5.height);
 
+        //displayLogo(p5);
+
+        p5.push();
+    }
     public void displayLogIn(PApplet p5){
         p5.push();
         p5.rectMode(p5.CENTER);
@@ -122,8 +128,7 @@ public class GUI {
         tFInicioSesion1.display(p5);
         tFInicioSesion2.display(p5);
 
-        b3.display(p5);
-
+        b5.display(p5);
 
     }
 
@@ -131,7 +136,7 @@ public class GUI {
         p5.circle(marginH, marginH, 100);
     }
 
-    public void displaySidebar(PApplet p5){}
+
 
     public void displayColumna1(PApplet p5){}
 

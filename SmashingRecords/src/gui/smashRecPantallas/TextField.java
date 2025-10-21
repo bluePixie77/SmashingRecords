@@ -8,7 +8,7 @@ import static processing.core.PConstants.BACKSPACE;
 public class TextField {
 
     // Atributos o propiedades
-    int x, y, h, w;
+    float x, y, h, w;
 
     // Colores
     int bgColor, fgColor, selectedColor, borderColor; // bg: background, fg: foreground
@@ -23,7 +23,7 @@ public class TextField {
     Colors c;
 
     // Constructor
-    public TextField(PApplet p5, int x, int y, int w, int h) {
+    public TextField(PApplet p5, float x, float y, float w, float h) {
         this.x = x; this.y = y; this.w = w; this.h = h;
         //this.bgColor = setColors(p5);
         //c.setColors(p5);

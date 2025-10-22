@@ -35,6 +35,7 @@ public class Main extends PApplet {
                              break;
             case ESTADISTICAS:gui.displayPantallaEstadisticas(this);
                              break;
+            case AGREGAR:    gui.displayPantallaAgregarMusica(this);
 
         }
 
@@ -52,18 +53,36 @@ public class Main extends PApplet {
         gui.tFInicioSesion1.keyPressed(key, keyCode);
         gui.tFInicioSesion2.keyPressed(key, keyCode);
         gui.tFNotasUsuario.keyPressed(key, keyCode);
-
+        gui.tFBuscador.keyPressed(key, keyCode);
     }
 
     public void mousePressed(){
         if(gui.b1.mouseOverButton(this)){
             println("B1 has been pressed.");
-        }else if(gui.b1.mouseOverButton(this)){
+            gui.pantallaActual = GUI.PANTALLA.VINILOS;
+        }else if(gui.b2.mouseOverButton(this)){
             println("B2 has been pressed.");
+            gui.pantallaActual = GUI.PANTALLA.CDS;
+        }else if(gui.b3.mouseOverButton(this)){
+            println("B3 has been pressed.");
+            gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+        }else if(gui.b4.mouseOverButton(this)){
+            println("B4 has been pressed.");
+            gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+        }else if(gui.b5.mouseOverButton(this)){
+            println("B5 has been pressed.");
+            gui.pantallaActual = GUI.PANTALLA.USUARIO;
+        }else if(gui.b6.mouseOverButton(this)){
+            println("B6 has been pressed.");
+            gui.pantallaActual = GUI.PANTALLA.USUARIO;
+        }else if(gui.b7.mouseOverButton(this)){
+            println("B7 has been pressed.");
+            gui.pantallaActual = GUI.PANTALLA.INICIO;
         }
         gui.tFInicioSesion1.isPressed(this);
         gui.tFInicioSesion2.isPressed(this);
         gui.tFNotasUsuario.isPressed(this);
+        gui.tFBuscador.isPressed(this);
 
     }
 

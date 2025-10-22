@@ -9,12 +9,11 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 import static gui.smashRecFonts.Sizes.*;
-import static gui.smashRecPantallas.Layout.marginH;
 
 public class GUI {
 
     // Enumerado para las pantallas
-    public enum PANTALLA{INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS}
+    public enum PANTALLA{INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR}
 
     // Pantalla actual
     public PANTALLA pantallaActual;
@@ -27,7 +26,7 @@ public class GUI {
     Fonts appFonts;
 
     // Text
-    public TextField tFInicioSesion1, tFInicioSesion2, tFNotasUsuario;
+    public TextField tFInicioSesion1, tFInicioSesion2, tFNotasUsuario, tFBuscador;
 
     // Imatges de la GUI
     RoundButton rB1, rB2;
@@ -59,7 +58,7 @@ public class GUI {
         tFInicioSesion1 = new TextField(p5, p5.width*0.36f, p5.height*0.50f, p5.width*0.28f, p5.height*0.05f);
         tFInicioSesion2 = new TextField(p5, p5.width*0.36f, p5.height*0.60f, p5.width*0.28f, p5.height*0.05f);
         tFNotasUsuario = new TextField(p5, p5.width*0.25f, p5.height*0.60f, p5.width*0.70f, p5.height*0.35f);
-
+        tFBuscador = new TextField(p5, p5.width*0.25f, p5.height*0.1f, p5.width*0.65f, p5.height*0.10f);
     }
     public void setMedia(PApplet p5){
        /* icona1 = p5.loadImage("data/.png");   // imatge transparent (loadShape: vectorial)
@@ -73,7 +72,7 @@ public class GUI {
 
 
 
-    // Pantallas de la GUI
+    // PANTALLAS DE LA GUI
     public void displayPantallaInicioSesion(PApplet p5){
         p5.background(0);
         p5.push();
@@ -89,7 +88,7 @@ public class GUI {
             p5.text("Contraseña", p5.width*0.36f, p5.height*0.59f);
             tFInicioSesion2.display(p5);
 
-            b6.display(p5);
+            b6.display(p5); // Iniciar sesión
         p5.pop();
     }
 
@@ -103,7 +102,7 @@ public class GUI {
             p5.textSize(medidaSubtitulo); //p5.textFont(gui.smashRecFonts.Fonts.getThirdFont());
             p5.text("Nombre: Jane Doe", p5.width*0.60f, p5.height*0.38f);
             p5.text("Correo: janeDoe@gmail.com", p5.width*0.60f, p5.height*0.45f);
-            b7.display(p5);
+            b7.display(p5); // Cerrar sesión
             p5.textAlign(p5.CORNER);
             p5.text("Notas", p5.width*0.25f, p5.height*0.59f);
             tFNotasUsuario.display(p5);
@@ -112,26 +111,61 @@ public class GUI {
 
     }
     public void displayPantallaVinilos(PApplet p5){
-        p5.background(0);
-        p5.rect(50, 0, 400,400);
+        p5.push();
+            p5.background(0);
+            displaySidebar(p5);
+            displayBuscadorYFiltros(p5);
+        p5.pop();
+    }
+    public void displayPantallaAgregarMusica(PApplet p5){
+        p5.push();
+        displayLogo(p5);
+        //p5.rect(p5.width*0.1f, )
+
+
+        p5.pop();
+
     }
     public void displayPantallaCDs(PApplet p5){
-        p5.background(0);
-        p5.rect(100, 0, 100, 600);
+        p5.push();
+            p5.background(0);
+            displaySidebar(p5);
+            displayBuscadorYFiltros(p5);
+            displayDisposicionMusica(p5);
+            p5.textFont(appFonts.getFontAt(0));
+            p5.text("CD's", p5.width*0.25f, p5.height*0.10f);
+        p5.pop();
     }
     public void displayPantallaConciertos(PApplet p5){
-        p5.background(0);
-        p5.rect(200, 0, 600, 700);
+        p5.push();
+            p5.background(0);
+            displaySidebar(p5);
+            displayBuscadorYFiltros(p5);
+
+            p5.textFont(appFonts.getFontAt(0));
+            p5.text("Conciertos", p5.width*0.25f, p5.height*0.10f);
+
+        p5.pop();
     }
     public void displayPantallaEstadisticas(PApplet p5){
+        p5.push();
+            displaySidebar(p5);
+            displayDisposicionMusica(p5);
 
+            p5.textFont(appFonts.getFontAt(0));
+            p5.text("Estadísticas", p5.width*0.25f, p5.height*0.10f);
+        p5.pop();
     }
 
-    // Zonas de la GUI
+    // ZONAS DE LA GUI
+    public void displayLogo(PApplet p5){
+        p5.circle(p5.width*0.10f, p5.height*0.125f, p5.width*0.12f);
+    }
+
     public void displaySidebar(PApplet p5){
         p5.pop();
         p5.rect(0, 0, p5.width*0.20f, p5.height);
-        p5.circle(p5.width*0.10f, p5.height*0.125f, p5.width*0.12f); //displayLogo(p5);
+        displayLogo(p5);
         b1.display(p5); // Vinilos
         b2.display(p5); // CDs
         b3.display(p5); // Conciertos
@@ -140,17 +174,20 @@ public class GUI {
 
         p5.push();
     }
-    public void displayLogIn(PApplet p5){
+
+    public void displayBuscadorYFiltros(PApplet p5){
+        p5.push();
+            tFBuscador.display(p5);
 
 
+        p5.pop();
     }
 
-    public void displayLogo(PApplet p5){
-        p5.circle(marginH, marginH, 100);
+    public void displayDisposicionMusica(PApplet p5){
+        p5.push();
+        p5.rect(p5.width*0.65f, p5.height*0.30f, p5.width*0.10f, p5.width*0.10f);
+        p5.rect(p5.width*0.80f, p5.height*0.30f, p5.width*0.10f, p5.width*0.10f);
+        p5.pop();
     }
-
-
-
-    public void displayColumna1(PApplet p5){}
 
 }

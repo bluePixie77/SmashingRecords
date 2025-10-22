@@ -3,7 +3,9 @@ package gui.smashRecPantallas;
 import gui.smashRecColors.Colors;
 import processing.core.PApplet;
 
+import static gui.smashRecFonts.Sizes.medidaIntermedia;
 import static processing.core.PConstants.BACKSPACE;
+import static processing.core.PConstants.ENTER;
 
 public class TextField {
 
@@ -16,7 +18,7 @@ public class TextField {
 
     // Texto del campo
     public String text = "";
-    int textSize = 24;
+    int textSize = (int) medidaIntermedia-1;
 
     boolean selected = false;
 
@@ -61,7 +63,9 @@ public class TextField {
                 removeText();
             } else if (keyCode == 32) {
                 addText(' '); // SPACE
-            } else {
+            } else if (keyCode == ENTER){
+                selected = false;
+            }else{
                 /*boolean isKeyCapitalLetter = (key >= 'A' && key <= 'Z');
                 boolean isKeySmallLetter = (key >= 'a' && key <= 'z');
                 boolean isKeyNumber = (key >= '0' && key <= '9');

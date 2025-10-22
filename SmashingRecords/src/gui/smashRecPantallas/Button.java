@@ -65,7 +65,8 @@ public class Button {
         else{
             p5.fill(fillColor);          // Color cuando ratón no está encima
         }
-        p5.stroke(strokeColor); p5.strokeWeight(2);        // Color y grosor del contorno
+        //p5.stroke(strokeColor); p5.strokeWeight(2);      // Color y grosor del contorno
+        p5.noStroke();
         p5.rectMode(p5.CORNER); p5.strokeJoin(p5.MITER);
         p5.rect(this.x, this.y, this.w, this.h, 10);    // Rectángulo del botón
 

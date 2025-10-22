@@ -30,7 +30,7 @@ public class FontsMain extends PApplet {
         textFont(fontsApp.getSecondFont());
         text("The Smashing Records", 50, 300);
 
-        textFont(fontsApp.getThridFont());
+        textFont(fontsApp.getThirdFont());
         text("Subtítulo", 50, 400);
 
         textFont(fontsApp.getForthFont());

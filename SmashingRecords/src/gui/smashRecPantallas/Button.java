@@ -1,5 +1,6 @@
 package gui.smashRecPantallas;
 
+import gui.smashRecColors.Colors;
 import processing.core.PApplet;
 
 public class Button {
@@ -10,6 +11,7 @@ public class Button {
     int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
     String textBoto;  // Text
     public boolean enabled;  // Estat del botó (actiu / inactiu).
+    Colors appColors;
 
     // Constructor
     public Button(PApplet p5, String text, float x, float y, float w, float h){
@@ -19,6 +21,8 @@ public class Button {
         this.w = w;
         this.h = h;
         this.enabled = true;
+        /*appColors = new Colors(p5);
+        appColors.setColors(p5);*/
         this.fillColor = p5.color(155, 55, 155);
         this.fillColorOver = p5.color(255, 55, 155);
         this.fillColorDisabled = p5.color(150);
@@ -36,6 +40,12 @@ public class Button {
         this.strokeColor = cStroke;
         this.fillColorOver = cOver;
         this.fillColorDisabled = cDisabled;
+        /*
+        this.fillColor = appColors.getSecondColor();
+        this.fillColorOver = appColors.getFirstColor();
+        this.fillColorDisabled = appColors.getThirdColor();
+        this.strokeColor = appColors.getFourthColor();
+         */
     }
 
     // Getters
@@ -56,7 +66,7 @@ public class Button {
             p5.fill(fillColor);          // Color cuando ratón no está encima
         }
         p5.stroke(strokeColor); p5.strokeWeight(2);        // Color y grosor del contorno
-        p5.rectMode(p5.CORNER);
+        p5.rectMode(p5.CORNER); p5.strokeJoin(p5.MITER);
         p5.rect(this.x, this.y, this.w, this.h, 10);    // Rectángulo del botón
 
         // Text (color, alineación y medida)

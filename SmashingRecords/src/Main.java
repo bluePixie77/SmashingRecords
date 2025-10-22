@@ -23,12 +23,19 @@ public class Main extends PApplet {
     public void draw(){
         // Dibuixa la pantalla corresponent
         switch(gui.pantallaActual){
-            case INICIO: gui.displayPantallaInicioSesion(this);
-                         break;
-            case USUARIO: gui.displayPantallaUsuario(this);
-                          break;
-            case VINILOS: gui.displayPantallaVinilos(this);
-                          break;
+            case INICIO:     gui.displayPantallaInicioSesion(this);
+                             break;
+            case USUARIO:    gui.displayPantallaUsuario(this);
+                             break;
+            case VINILOS:    gui.displayPantallaVinilos(this);
+                             break;
+            case CDS:        gui.displayPantallaCDs(this);
+                             break;
+            case CONCIERTOS: gui.displayPantallaConciertos(this);
+                             break;
+            case ESTADISTICAS:gui.displayPantallaEstadisticas(this);
+                             break;
+
         }
 
         updateCursor(this);
@@ -44,6 +51,8 @@ public class Main extends PApplet {
         }
         gui.tFInicioSesion1.keyPressed(key, keyCode);
         gui.tFInicioSesion2.keyPressed(key, keyCode);
+        gui.tFNotasUsuario.keyPressed(key, keyCode);
+
     }
 
     public void mousePressed(){
@@ -54,11 +63,18 @@ public class Main extends PApplet {
         }
         gui.tFInicioSesion1.isPressed(this);
         gui.tFInicioSesion2.isPressed(this);
+        gui.tFNotasUsuario.isPressed(this);
+
     }
 
     public void updateCursor(PApplet p5){
         if(gui.b1.updateHandCursor(p5) ||
-           gui.b2.updateHandCursor(p5)){
+           gui.b2.updateHandCursor(p5) ||
+           gui.b3.updateHandCursor(p5) ||
+           gui.b4.updateHandCursor(p5) ||
+           gui.b5.updateHandCursor(p5) ||
+           gui.b6.updateHandCursor(p5) ||
+           gui.b7.updateHandCursor(p5)){
                 cursor(HAND);
         }else{
             cursor(ARROW);

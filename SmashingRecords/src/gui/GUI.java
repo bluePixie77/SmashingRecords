@@ -44,6 +44,7 @@ public class GUI {
         appColors = new Colors(p5);
         appFonts = new Fonts(p5);
         appFonts.setFonts(p5);
+        setMedia(p5);
 
         setColors(p5);
     }
@@ -67,14 +68,13 @@ public class GUI {
     }
 
     public void setMedia(PApplet p5) {
-       /* icona1 = p5.loadImage("data/.png");   // imatge transparent (loadShape: vectorial)
-          icona2 = p5.loadImage("data/.png"); */
-
+       icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente (loadShape: vectorial)
+       icona2 = p5.loadImage("data/iconFullUser.png");
     }
 
     public void setRoundButton(PApplet p5) {
       /*  rB1 = new RoundButton(p5, icona1, 150, 500, 60);
-          rB2 = new RoundButton(p5, icona2, 150, 800, 60);*/
+          rB2 = new RoundButton(p5, icona2, 150, 800, 60); */
     }
     public void setColors(PApplet p5){
         bg = appColors.getFourthColor();
@@ -172,9 +172,8 @@ public class GUI {
     public void displayPantallaAgregarMusica(PApplet p5) {
         p5.push();
         p5.background(bg);
-        displayLogo(p5);
+        displaySidebar(p5);
         //p5.rect(p5.width*0.1f, )
-
 
         p5.pop();
 
@@ -183,6 +182,9 @@ public class GUI {
     // ZONAS DE LA GUI
     public void displayLogo(PApplet p5) {
         p5.circle(p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.12f);
+        /*p5.imageMode(p5.CENTER); p5.scale(p5.width*0.3f);
+        p5.image(icona1, p5.width*0.10f, p5.height*0.1f);
+        p5.image(icona2, p5.width*0.10f, p5.height*0.1f);*/
     }
 
     public void displaySidebar(PApplet p5) {
@@ -201,7 +203,6 @@ public class GUI {
     public void displayBuscadorYFiltros(PApplet p5) {
         p5.push();
         tFBuscador.display(p5);
-
 
         p5.pop();
     }

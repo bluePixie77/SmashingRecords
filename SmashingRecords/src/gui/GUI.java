@@ -13,7 +13,7 @@ import static gui.smashRecFonts.Sizes.*;
 public class GUI {
 
     // Enumerado para las pantallas
-    public enum PANTALLA{INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR}
+    public enum PANTALLA {INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR}
 
     // Pantalla actual
     public PANTALLA pantallaActual;
@@ -33,7 +33,7 @@ public class GUI {
     PImage icona1, icona2;
 
     // Constructor de GUI
-    public GUI(PApplet p5){
+    public GUI(PApplet p5) {
         pantallaActual = PANTALLA.INICIO;
 
         setTextFields(p5);
@@ -45,79 +45,121 @@ public class GUI {
     }
 
     // Setter botones
-    public void setBotones(PApplet p5){
-        b1 = new Button(p5, "Vinilos", 0, p5.height*0.25f, p5.width*0.20f, p5.height*0.05f);
-        b2 = new Button(p5, "CDs", 0, p5.height*0.35f, p5.width*0.20f, p5.height*0.05f);
-        b3 = new Button(p5, "Conciertos", 0, p5.height*0.45f, p5.width*0.20f, p5.height*0.05f);
-        b4 = new Button(p5, "Estadísticas", 0, p5.height*0.65f, p5.width*0.20f, p5.height*0.05f);
-        b5 = new Button(p5, "Sesión", 0, p5.height*0.95f, p5.width*0.20f, p5.height*0.05f);
-        b6 = new Button(p5, "Iniciar sesión", p5.width*0.5f-(p5.width*0.125f), p5.height*0.73f, p5.width*0.25f, p5.height*0.052f);
-        b7 = new Button(p5, "Cerrar sesión", p5.width*0.525f, p5.height*0.49f, p5.width*0.15f, p5.height*0.052f);
+    public void setBotones(PApplet p5) {
+        b1 = new Button(p5, "Vinilos", 0, p5.height * 0.25f, p5.width * 0.20f, p5.height * 0.05f);
+        b2 = new Button(p5, "CDs", 0, p5.height * 0.35f, p5.width * 0.20f, p5.height * 0.05f);
+        b3 = new Button(p5, "Conciertos", 0, p5.height * 0.45f, p5.width * 0.20f, p5.height * 0.05f);
+        b4 = new Button(p5, "Estadísticas", 0, p5.height * 0.65f, p5.width * 0.20f, p5.height * 0.05f);
+        b5 = new Button(p5, "Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
+        b6 = new Button(p5, "Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
+        b7 = new Button(p5, "Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
     }
-    public void setTextFields(PApplet p5){
-        tFInicioSesion1 = new TextField(p5, p5.width*0.36f, p5.height*0.50f, p5.width*0.28f, p5.height*0.05f);
-        tFInicioSesion2 = new TextField(p5, p5.width*0.36f, p5.height*0.60f, p5.width*0.28f, p5.height*0.05f);
-        tFNotasUsuario = new TextField(p5, p5.width*0.25f, p5.height*0.60f, p5.width*0.70f, p5.height*0.35f);
-        tFBuscador = new TextField(p5, p5.width*0.25f, p5.height*0.1f, p5.width*0.65f, p5.height*0.10f);
+
+    public void setTextFields(PApplet p5) {
+        tFInicioSesion1 = new TextField(p5, p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
+        tFInicioSesion2 = new TextField(p5, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
+        tFNotasUsuario = new TextField(p5, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
+        tFBuscador = new TextField(p5, p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.65f, p5.height * 0.10f);
     }
-    public void setMedia(PApplet p5){
+
+    public void setMedia(PApplet p5) {
        /* icona1 = p5.loadImage("data/.png");   // imatge transparent (loadShape: vectorial)
           icona2 = p5.loadImage("data/.png"); */
 
     }
-    public void setRoundButton(PApplet p5){
+
+    public void setRoundButton(PApplet p5) {
       /*  rB1 = new RoundButton(p5, icona1, 150, 500, 60);
           rB2 = new RoundButton(p5, icona2, 150, 800, 60);*/
     }
 
 
-
     // PANTALLAS DE LA GUI
-    public void displayPantallaInicioSesion(PApplet p5){
+    public void displayPantallaInicioSesion(PApplet p5) {
         p5.background(0);
         p5.push();
-            p5.rectMode(p5.CENTER);
-            p5.textAlign(p5.CENTER);
-            p5.rect(p5.width*0.5f, p5.height*0.5f, p5.width*0.33f, p5.height*0.80f);
-            p5.circle(p5.width*0.5f, p5.height*0.29f, p5.width*0.16f); // imagen logo
+        p5.rectMode(p5.CENTER);
+        p5.textAlign(p5.CENTER);
+        p5.rect(p5.width * 0.5f, p5.height * 0.5f, p5.width * 0.33f, p5.height * 0.80f);
+        p5.circle(p5.width * 0.5f, p5.height * 0.29f, p5.width * 0.16f); // imagen logo
         p5.pop();
         p5.push();
-            p5.textFont(appFonts.getThirdFont()); p5.fill(0); p5.textSize(medidaIntermedia);
-            p5.text("Correo electrónico", p5.width*0.36f, p5.height*0.49f);
-            tFInicioSesion1.display(p5);
-            p5.text("Contraseña", p5.width*0.36f, p5.height*0.59f);
-            tFInicioSesion2.display(p5);
+        p5.textFont(appFonts.getThirdFont());
+        p5.fill(0);
+        p5.textSize(medidaIntermedia);
+        p5.text("Correo electrónico", p5.width * 0.36f, p5.height * 0.49f);
+        tFInicioSesion1.display(p5);
+        p5.text("Contraseña", p5.width * 0.36f, p5.height * 0.59f);
+        tFInicioSesion2.display(p5);
 
-            b6.display(p5); // Iniciar sesión
+        b6.display(p5); // Iniciar sesión
         p5.pop();
     }
 
-    public void displayPantallaUsuario(PApplet p5){
+    public void displayPantallaUsuario(PApplet p5) {
         p5.background(0);
         p5.push();
-            displaySidebar(p5);
+        displaySidebar(p5);
 
-            p5.circle(p5.width*0.60f, p5.height*0.20f, p5.width*0.14f);
-            p5.textAlign(p5.CENTER);
-            p5.textSize(medidaSubtitulo); //p5.textFont(gui.smashRecFonts.Fonts.getThirdFont());
-            p5.text("Nombre: Jane Doe", p5.width*0.60f, p5.height*0.38f);
-            p5.text("Correo: janeDoe@gmail.com", p5.width*0.60f, p5.height*0.45f);
-            b7.display(p5); // Cerrar sesión
-            p5.textAlign(p5.CORNER);
-            p5.text("Notas", p5.width*0.25f, p5.height*0.59f);
-            tFNotasUsuario.display(p5);
+        p5.circle(p5.width * 0.60f, p5.height * 0.20f, p5.width * 0.14f);
+        p5.textAlign(p5.CENTER);
+        p5.textSize(medidaSubtitulo); //p5.textFont(gui.smashRecFonts.Fonts.getThirdFont());
+        p5.text("Nombre: Jane Doe", p5.width * 0.60f, p5.height * 0.38f);
+        p5.text("Correo: janeDoe@gmail.com", p5.width * 0.60f, p5.height * 0.45f);
+        b7.display(p5); // Cerrar sesión
+        p5.textAlign(p5.CORNER);
+        p5.text("Notas", p5.width * 0.25f, p5.height * 0.59f);
+        tFNotasUsuario.display(p5);
 
         p5.pop();
 
     }
-    public void displayPantallaVinilos(PApplet p5){
+
+    public void displayPantallaVinilos(PApplet p5) {
         p5.push();
-            p5.background(0);
-            displaySidebar(p5);
-            displayBuscadorYFiltros(p5);
+        p5.background(0);
+        displaySidebar(p5);
+        displayBuscadorYFiltros(p5);
+
+        p5.textFont(appFonts.getFontAt(0));
+        p5.text("VINILOS", p5.width * 0.25f, p5.height * 0.10f);
         p5.pop();
     }
-    public void displayPantallaAgregarMusica(PApplet p5){
+
+    public void displayPantallaCDs(PApplet p5) {
+        p5.push();
+        p5.background(0);
+        displaySidebar(p5);
+        displayBuscadorYFiltros(p5);
+        displayDisposicionMusica(p5);
+        p5.textFont(appFonts.getFontAt(0));
+        p5.text("CD's", p5.width * 0.25f, p5.height * 0.10f);
+        p5.pop();
+    }
+
+    public void displayPantallaConciertos(PApplet p5) {
+        p5.push();
+        p5.background(0);
+        displaySidebar(p5);
+        displayBuscadorYFiltros(p5);
+
+        p5.textFont(appFonts.getFontAt(0));
+        p5.text("Conciertos", p5.width * 0.25f, p5.height * 0.10f);
+
+        p5.pop();
+    }
+
+    public void displayPantallaEstadisticas(PApplet p5) {
+        p5.push();
+        displaySidebar(p5);
+        displayDisposicionMusica(p5);
+
+        p5.textFont(appFonts.getFontAt(0));
+        p5.text("Estadísticas", p5.width * 0.25f, p5.height * 0.10f);
+        p5.pop();
+    }
+
+    public void displayPantallaAgregarMusica(PApplet p5) {
         p5.push();
         displayLogo(p5);
         //p5.rect(p5.width*0.1f, )
@@ -126,45 +168,15 @@ public class GUI {
         p5.pop();
 
     }
-    public void displayPantallaCDs(PApplet p5){
-        p5.push();
-            p5.background(0);
-            displaySidebar(p5);
-            displayBuscadorYFiltros(p5);
-            displayDisposicionMusica(p5);
-            p5.textFont(appFonts.getFontAt(0));
-            p5.text("CD's", p5.width*0.25f, p5.height*0.10f);
-        p5.pop();
-    }
-    public void displayPantallaConciertos(PApplet p5){
-        p5.push();
-            p5.background(0);
-            displaySidebar(p5);
-            displayBuscadorYFiltros(p5);
-
-            p5.textFont(appFonts.getFontAt(0));
-            p5.text("Conciertos", p5.width*0.25f, p5.height*0.10f);
-
-        p5.pop();
-    }
-    public void displayPantallaEstadisticas(PApplet p5){
-        p5.push();
-            displaySidebar(p5);
-            displayDisposicionMusica(p5);
-
-            p5.textFont(appFonts.getFontAt(0));
-            p5.text("Estadísticas", p5.width*0.25f, p5.height*0.10f);
-        p5.pop();
-    }
 
     // ZONAS DE LA GUI
-    public void displayLogo(PApplet p5){
-        p5.circle(p5.width*0.10f, p5.height*0.125f, p5.width*0.12f);
+    public void displayLogo(PApplet p5) {
+        p5.circle(p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.12f);
     }
 
-    public void displaySidebar(PApplet p5){
+    public void displaySidebar(PApplet p5) {
         p5.pop();
-        p5.rect(0, 0, p5.width*0.20f, p5.height);
+        p5.rect(0, 0, p5.width * 0.20f, p5.height);
         displayLogo(p5);
         b1.display(p5); // Vinilos
         b2.display(p5); // CDs
@@ -175,19 +187,18 @@ public class GUI {
         p5.push();
     }
 
-    public void displayBuscadorYFiltros(PApplet p5){
+    public void displayBuscadorYFiltros(PApplet p5) {
         p5.push();
-            tFBuscador.display(p5);
+        tFBuscador.display(p5);
 
 
         p5.pop();
     }
 
-    public void displayDisposicionMusica(PApplet p5){
+    public void displayDisposicionMusica(PApplet p5) {
         p5.push();
-        p5.rect(p5.width*0.65f, p5.height*0.30f, p5.width*0.10f, p5.width*0.10f);
-        p5.rect(p5.width*0.80f, p5.height*0.30f, p5.width*0.10f, p5.width*0.10f);
+        p5.rect(p5.width * 0.65f, p5.height * 0.30f, p5.width * 0.10f, p5.width * 0.10f);
+        p5.rect(p5.width * 0.80f, p5.height * 0.30f, p5.width * 0.10f, p5.width * 0.10f);
         p5.pop();
     }
-
 }

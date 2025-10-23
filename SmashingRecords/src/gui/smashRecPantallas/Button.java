@@ -21,8 +21,8 @@ public class Button {
         this.w = w;
         this.h = h;
         this.enabled = true;
-        /*appColors = new Colors(p5);
-        appColors.setColors(p5);*/
+        appColors = new Colors(p5);
+
         this.fillColor = p5.color(155, 55, 155);
         this.fillColorOver = p5.color(255, 55, 155);
         this.fillColorDisabled = p5.color(150);
@@ -40,12 +40,12 @@ public class Button {
         this.strokeColor = cStroke;
         this.fillColorOver = cOver;
         this.fillColorDisabled = cDisabled;
-        /*
-        this.fillColor = appColors.getSecondColor();
+
+        /*this.fillColor = appColors.getSecondColor();
         this.fillColorOver = appColors.getFirstColor();
         this.fillColorDisabled = appColors.getThirdColor();
-        this.strokeColor = appColors.getFourthColor();
-         */
+        this.strokeColor = appColors.getFourthColor();*/
+
     }
 
     // Getters

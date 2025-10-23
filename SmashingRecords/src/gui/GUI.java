@@ -21,11 +21,12 @@ public class GUI {
     // Botones
     public Button b1, b2, b3, b4, b5, b6, b7;
 
-    // Colores y texto
+    // Colores
     Colors appColors;
-    Fonts appFonts;
+    int bg, titles, text;
 
-    // Text
+    // Texto
+    Fonts appFonts;
     public TextField tFInicioSesion1, tFInicioSesion2, tFNotasUsuario, tFBuscador;
 
     // Imatges de la GUI
@@ -40,8 +41,11 @@ public class GUI {
         setBotones(p5);
         setRoundButton(p5);
 
+        appColors = new Colors(p5);
         appFonts = new Fonts(p5);
         appFonts.setFonts(p5);
+
+        setColors(p5);
     }
 
     // Setter botones
@@ -72,20 +76,25 @@ public class GUI {
       /*  rB1 = new RoundButton(p5, icona1, 150, 500, 60);
           rB2 = new RoundButton(p5, icona2, 150, 800, 60);*/
     }
-
+    public void setColors(PApplet p5){
+        bg = appColors.getFourthColor();
+        titles = appColors.getFirstColor();
+        text = appColors.getFourthColor();
+    }
 
     // PANTALLAS DE LA GUI
     public void displayPantallaInicioSesion(PApplet p5) {
-        p5.background(0);
         p5.push();
+        p5.background(bg);
         p5.rectMode(p5.CENTER);
         p5.textAlign(p5.CENTER);
         p5.rect(p5.width * 0.5f, p5.height * 0.5f, p5.width * 0.33f, p5.height * 0.80f);
         p5.circle(p5.width * 0.5f, p5.height * 0.29f, p5.width * 0.16f); // imagen logo
+        p5.text("THE SMASHING RECORDS", p5.width*0.5f, p5.height*0.15f);
         p5.pop();
         p5.push();
         p5.textFont(appFonts.getThirdFont());
-        p5.fill(0);
+        p5.fill(titles);
         p5.textSize(medidaIntermedia);
         p5.text("Correo electrónico", p5.width * 0.36f, p5.height * 0.49f);
         tFInicioSesion1.display(p5);
@@ -97,13 +106,13 @@ public class GUI {
     }
 
     public void displayPantallaUsuario(PApplet p5) {
-        p5.background(0);
         p5.push();
+        p5.background(bg);
         displaySidebar(p5);
 
         p5.circle(p5.width * 0.60f, p5.height * 0.20f, p5.width * 0.14f);
         p5.textAlign(p5.CENTER);
-        p5.textSize(medidaSubtitulo); //p5.textFont(gui.smashRecFonts.Fonts.getThirdFont());
+        p5.textSize(medidaSubtitulo); p5.textFont(appFonts.getThirdFont());
         p5.text("Nombre: Jane Doe", p5.width * 0.60f, p5.height * 0.38f);
         p5.text("Correo: janeDoe@gmail.com", p5.width * 0.60f, p5.height * 0.45f);
         b7.display(p5); // Cerrar sesión
@@ -117,7 +126,7 @@ public class GUI {
 
     public void displayPantallaVinilos(PApplet p5) {
         p5.push();
-        p5.background(0);
+        p5.background(bg);
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
 
@@ -128,7 +137,7 @@ public class GUI {
 
     public void displayPantallaCDs(PApplet p5) {
         p5.push();
-        p5.background(0);
+        p5.background(bg);
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
         displayDisposicionMusica(p5);
@@ -139,7 +148,7 @@ public class GUI {
 
     public void displayPantallaConciertos(PApplet p5) {
         p5.push();
-        p5.background(0);
+        p5.background(bg);
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
 
@@ -151,6 +160,7 @@ public class GUI {
 
     public void displayPantallaEstadisticas(PApplet p5) {
         p5.push();
+        p5.background(bg);
         displaySidebar(p5);
         displayDisposicionMusica(p5);
 
@@ -161,6 +171,7 @@ public class GUI {
 
     public void displayPantallaAgregarMusica(PApplet p5) {
         p5.push();
+        p5.background(bg);
         displayLogo(p5);
         //p5.rect(p5.width*0.1f, )
 

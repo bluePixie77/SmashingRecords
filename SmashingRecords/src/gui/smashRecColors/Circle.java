@@ -6,6 +6,5 @@ public class Circle {
     int c;
 
     public Circle(float x, float y, float r){
-
     }
 }

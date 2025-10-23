@@ -11,10 +11,9 @@ public class Button {
     int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
     String textBoto;  // Text
     public boolean enabled;  // Estat del botó (actiu / inactiu).
-    Colors appColors;
 
     // Constructor
-    public Button(PApplet p5, String text, float x, float y, float w, float h){
+    public Button(PApplet p5, Colors appColors, String text, float x, float y, float w, float h){
         this.textBoto = text;
         this.x = x;
         this.y = y;
@@ -23,10 +22,12 @@ public class Button {
         this.enabled = true;
         appColors = new Colors(p5);
 
-        this.fillColor = p5.color(155, 55, 155);
+        /*this.fillColor = p5.color(155, 55, 155);
         this.fillColorOver = p5.color(255, 55, 155);
         this.fillColorDisabled = p5.color(150);
-        this.strokeColor = p5.color(0);
+        this.strokeColor = p5.color(0);*/
+
+        this.setColors(appColors);
     }
 
     // Setters
@@ -35,16 +36,11 @@ public class Button {
     }
     public void setTextBoto(String t){ this.textBoto = t; }
 
-    public void setColors(int cFill, int cStroke, int cOver, int cDisabled){
-        this.fillColor = cFill;
-        this.strokeColor = cStroke;
-        this.fillColorOver = cOver;
-        this.fillColorDisabled = cDisabled;
-
-        /*this.fillColor = appColors.getSecondColor();
+    public void setColors(Colors appColors){
+        this.fillColor = appColors.getSecondColor();
         this.fillColorOver = appColors.getFirstColor();
         this.fillColorDisabled = appColors.getThirdColor();
-        this.strokeColor = appColors.getFourthColor();*/
+        this.strokeColor = appColors.getFourthColor();
 
     }
 

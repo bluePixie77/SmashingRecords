@@ -50,13 +50,13 @@ public class GUI {
 
     // Setter botones
     public void setBotones(PApplet p5) {
-        b1 = new Button(p5, "Vinilos", 0, p5.height * 0.25f, p5.width * 0.20f, p5.height * 0.05f);
-        b2 = new Button(p5, "CDs", 0, p5.height * 0.35f, p5.width * 0.20f, p5.height * 0.05f);
-        b3 = new Button(p5, "Conciertos", 0, p5.height * 0.45f, p5.width * 0.20f, p5.height * 0.05f);
-        b4 = new Button(p5, "Estadísticas", 0, p5.height * 0.65f, p5.width * 0.20f, p5.height * 0.05f);
-        b5 = new Button(p5, "Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
-        b6 = new Button(p5, "Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
-        b7 = new Button(p5, "Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
+        b1 = new Button(p5, appColors, "Vinilos", 0, p5.height * 0.25f, p5.width * 0.20f, p5.height * 0.05f);
+        b2 = new Button(p5, appColors, "CDs", 0, p5.height * 0.35f, p5.width * 0.20f, p5.height * 0.05f);
+        b3 = new Button(p5, appColors,"Conciertos", 0, p5.height * 0.45f, p5.width * 0.20f, p5.height * 0.05f);
+        b4 = new Button(p5, appColors,"Estadísticas", 0, p5.height * 0.65f, p5.width * 0.20f, p5.height * 0.05f);
+        b5 = new Button(p5, appColors,"Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
+        b6 = new Button(p5, appColors,"Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
+        b7 = new Button(p5, appColors,"Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
     }
 
     public void setTextFields(PApplet p5) {

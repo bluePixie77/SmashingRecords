@@ -17,7 +17,6 @@ public class Main extends PApplet {
     }
     public void setup(){
         gui = new GUI(this);
-
     }
 
     public void draw(){
@@ -38,18 +37,17 @@ public class Main extends PApplet {
             case AGREGAR:    gui.displayPantallaAgregarMusica(this);
 
         }
-
         updateCursor(this);
     }
 
     public void keyPressed(){
-        if(key=='0'){
+       /* if(key=='0'){
             gui.pantallaActual = GUI.PANTALLA.INICIO;
         } else if(key=='1'){
             gui.pantallaActual = GUI.PANTALLA.USUARIO;
         }else if(key=='2'){
             gui.pantallaActual = GUI.PANTALLA.VINILOS;
-        }
+        }*/
         gui.tFInicioSesion1.keyPressed(key, keyCode);
         gui.tFInicioSesion2.keyPressed(key, keyCode);
         gui.tFNotasUsuario.keyPressed(key, keyCode);

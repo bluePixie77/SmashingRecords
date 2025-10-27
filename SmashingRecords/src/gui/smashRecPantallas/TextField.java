@@ -52,7 +52,7 @@ public class TextField {
 
         p5.fill(fgColor);
         p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);
-        p5.text(text, x + 5, y + h - textSize);
+        p5.text(text, x + 10, y + h - textSize);
         p5.popStyle();
     }
 
@@ -78,7 +78,7 @@ public class TextField {
 
     // Añadir la letra c al final del texto
     public void addText(char c) {
-        if (this.text.length()  < 15) {
+        if (this.text.length()  < 40) {
             this.text += c;
         }
     }

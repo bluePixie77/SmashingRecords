@@ -195,7 +195,7 @@ public class GUI {
         //p5.circle(p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.12f);
         p5.push();
             p5.imageMode(p5.CENTER);
-            p5.image(logo, p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.9f, p5.width * 0.2f);
+            p5.image(logo, p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.6f, p5.height * 0.5f);
         p5.pop();
         /*p5.imageMode(p5.CENTER); p5.scale(p5.width*0.3f);
         p5.image(icona1, p5.width*0.10f, p5.height*0.1f);

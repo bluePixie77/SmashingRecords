@@ -12,10 +12,10 @@ public class Colors {
     // Setter (colores de la app)
     public void setColors(PApplet p5){
         this.colors = new int[4];
-        this.colors[0] = p5.color(0xFFE03C00);
-        this.colors[1] = p5.color(0xFFE47738);
-        this.colors[2] = p5.color(0xFFFFF0DC);
-        this.colors[3] = p5.color(0xFF020202);
+        this.colors[0] = p5.color(0xFFE03C00); // Naranja fuerte
+        this.colors[1] = p5.color(0xFFE47738); // Naranja flojo
+        this.colors[2] = p5.color(0xFFFFF0DC); // Blanco beige
+        this.colors[3] = p5.color(0xFF020202); // Negro
     }
 
     // Getters
@@ -41,7 +41,5 @@ public class Colors {
                 p5.rect(x + i*wc, y, wc, wc);
             }
         p5.popStyle();
-
     }
-
 }

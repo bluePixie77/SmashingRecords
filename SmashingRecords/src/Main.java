@@ -6,8 +6,7 @@ public class Main extends PApplet {
     // Atributs
         // GUI
     GUI gui;
-
-
+    
     public static void main(String[] args) {
         PApplet.main("Main");
     }

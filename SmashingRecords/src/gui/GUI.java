@@ -4,6 +4,7 @@ import gui.smashRecColors.Colors;
 import gui.smashRecFonts.Fonts;
 import gui.smashRecPantallas.Button;
 import gui.smashRecPantallas.RoundButton;
+import gui.smashRecPantallas.TextArea;
 import gui.smashRecPantallas.TextField;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -30,6 +31,8 @@ public class GUI {
     Fonts appFonts;
     public TextField tFInicioSesion1, tFInicioSesion2, tFNotasUsuario, tFBuscador;
 
+    public TextArea tANotasUsuario;
+
     // Imatges de la GUI
     RoundButton rB1, rB2;
     PImage icona1, icona2, logo;
@@ -46,8 +49,6 @@ public class GUI {
         appColors = new Colors(p5);
         appFonts = new Fonts(p5);
         appFonts.setFonts(p5);
-
-        this.logo = p5.loadImage("data/logoSR.png");
 
         setMedia(p5);
         setColors(p5);
@@ -67,15 +68,18 @@ public class GUI {
     }
 
     public void setTextFields(PApplet p5) {
-        tFInicioSesion1 = new TextField(p5, p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
+        tFInicioSesion1 = new TextField(p5,  p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
         tFInicioSesion2 = new TextField(p5, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
         tFNotasUsuario = new TextField(p5, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
         tFBuscador = new TextField(p5, p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.65f, p5.height * 0.10f);
+
+        tANotasUsuario = new TextArea(p5, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 1, 10);
     }
 
     public void setMedia(PApplet p5) {
-       icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente (loadShape: vectorial)
+       icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
        icona2 = p5.loadImage("data/iconFullUser.png");
+       logo = p5.loadImage("data/logoSR.png");
     }
 
     public void setRoundButton(PApplet p5) {
@@ -100,8 +104,8 @@ public class GUI {
 
             displayLogoMayor(p5); // logo en dimensión grande
 
-            p5.textFont(appFonts.getSecondFont()); p5.fill(titles);
-            p5.text("THE SMASHING RECORDS", p5.width*0.5f, p5.height*0.15f);
+            p5.textFont(appFonts.getSecondFont()); p5.fill(titles); p5.textSize(medidaTitulo-14);
+            p5.text("THE SMASHING RECORDS", p5.width*0.5f, p5.height*0.16f);
         p5.pop();
         p5.push();
             p5.textFont(appFonts.getThirdFont());
@@ -129,7 +133,9 @@ public class GUI {
         b7.display(p5); // Cerrar sesión
         p5.textAlign(p5.CORNER);
         p5.text("Notas", p5.width * 0.25f, p5.height * 0.59f);
-        tFNotasUsuario.display(p5);
+
+        tANotasUsuario.display(p5);
+
 
         p5.pop();
 
@@ -195,7 +201,9 @@ public class GUI {
         //p5.circle(p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.12f);
         p5.push();
             p5.imageMode(p5.CENTER);
-            p5.image(logo, p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.6f, p5.height * 0.5f);
+            p5.image(logo, p5.width * 0.10f, p5.height * 0.09f, p5.width * 0.6f, p5.height * 0.5f);
+            p5.line(p5.width*0.20f, 0, p5.width*0.20f, p5.height*0.13f);
+            p5.line(0, p5.height*0.20f, p5.width*0.20f, p5.height*0.20f);
         p5.pop();
         /*p5.imageMode(p5.CENTER); p5.scale(p5.width*0.3f);
         p5.image(icona1, p5.width*0.10f, p5.height*0.1f);
@@ -204,20 +212,21 @@ public class GUI {
     public void displayLogoMayor(PApplet p5) {
         p5.push();
             p5.imageMode(p5.CENTER);
-            p5.image(logo, p5.width*0.5f, p5.height * 0.29f, p5.width * 0.87f, p5.height * 0.80f);
+            p5.image(logo, p5.width*0.5f, p5.height * 0.29f, p5.width * 0.81f, p5.height * 0.72f);
         p5.pop();
     }
 
     public void displaySidebar(PApplet p5) {
         p5.pop();
-        p5.rect(0, 0, p5.width * 0.20f, p5.height);
-        displayLogo(p5);
-        p5.textFont(appFonts.getFontAt(2));
-        b1.display(p5); // Vinilos
-        b2.display(p5); // CDs
-        b3.display(p5); // Conciertos
-        b4.display(p5); // Estadísticas
-        b5.display(p5); // Sesión
+            p5.fill(white);
+            p5.rect(0, 0, p5.width * 0.20f, p5.height);
+            displayLogo(p5);
+            p5.textFont(appFonts.getFontAt(2));
+            b1.display(p5); // Vinilos
+            b2.display(p5); // CDs
+            b3.display(p5); // Conciertos
+            b4.display(p5); // Estadísticas
+            b5.display(p5); // Sesión
 
         p5.push();
     }

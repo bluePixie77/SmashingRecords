@@ -41,19 +41,16 @@ public class GUI {
     public GUI(PApplet p5) {
         pantallaActual = PANTALLA.INICIO;
 
+        appColors = new Colors(p5);
+        appFonts = new Fonts(p5);
+        appFonts.setFonts(p5);
 
         setTextFields(p5);
         setBotones(p5);
         setRoundButton(p5);
 
-        appColors = new Colors(p5);
-        appFonts = new Fonts(p5);
-        appFonts.setFonts(p5);
-
         setMedia(p5);
         setColors(p5);
-
-
     }
 
     // Setter botones
@@ -68,10 +65,10 @@ public class GUI {
     }
 
     public void setTextFields(PApplet p5) {
-        tFInicioSesion1 = new TextField(p5,  p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
-        tFInicioSesion2 = new TextField(p5, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
-        tFNotasUsuario = new TextField(p5, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
-        tFBuscador = new TextField(p5, p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.65f, p5.height * 0.10f);
+        tFInicioSesion1 = new TextField(p5,  appColors, 40,p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
+        tFInicioSesion2 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
+        tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
+        tFBuscador = new TextField(p5, appColors, 70,p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.65f, p5.height * 0.10f);
 
         tANotasUsuario = new TextArea(p5, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 1, 10);
     }

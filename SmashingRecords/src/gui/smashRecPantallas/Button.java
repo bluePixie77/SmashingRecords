@@ -36,7 +36,6 @@ public class Button {
         this.fillColorOver = appColors.getFirstColor();
         this.fillColorDisabled = appColors.getThirdColor();
         this.strokeColor = appColors.getFourthColor();
-
     }
 
     // Getters

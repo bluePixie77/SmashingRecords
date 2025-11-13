@@ -11,10 +11,11 @@ public class TextField {
 
     // Atributos o propiedades
     float x, y, h, w;
+    int length;
 
     // Colores
-    int bgColor, fgColor, selectedColor, borderColor; // bg: background, fg: foreground
-    int borderWeight = 1;
+    int fillColor, selectedColor, borderColor; // bg: background, fg: foreground
+    int borderWeight;
 
     // Texto del campo
     public String text = "";
@@ -22,17 +23,19 @@ public class TextField {
 
     boolean selected = false;
 
-    Colors c;
-
     // Constructor
-    public TextField(PApplet p5, float x, float y, float w, float h) {
+    public TextField(PApplet p5, Colors  appColors, int length, float x, float y, float w, float h) {
         this.x = x; this.y = y; this.w = w; this.h = h;
-        //this.bgColor = setColors(p5);
-        //c.setColors(p5);
-        this.bgColor = p5.color(100);
-        this.fgColor = p5.color(0, 0, 0);
-        this.selectedColor = p5.color(199, 43, 31, 11);
-        this.borderColor = p5.color(30, 30, 30);
+        this.length = length;
+        setColors(appColors);
+
+    }
+
+    // Setters
+    public void setColors(Colors appColors){
+        this.fillColor = appColors.getFifthColor();
+        this.selectedColor = appColors.getThirdColor();
+        this.borderColor = appColors.getFourthColor();
         this.borderWeight = 1;
     }
 
@@ -42,7 +45,7 @@ public class TextField {
         if (selected) {
             p5.fill(selectedColor);
         } else {
-            p5.fill(bgColor);
+            p5.fill(fillColor);
         }
 
         p5.strokeWeight(borderWeight);
@@ -50,7 +53,7 @@ public class TextField {
         p5.rectMode(p5.CORNER);
         p5.rect(x, y, w, h, 5);
 
-        p5.fill(fgColor);
+        p5.fill(borderColor);
         p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);
         p5.text(text, x + 10, y + h - textSize);
         p5.popStyle();
@@ -78,7 +81,7 @@ public class TextField {
 
     // Añadir la letra c al final del texto
     public void addText(char c) {
-        if (this.text.length()  < 40) {
+        if (this.text.length()  < length) {
             this.text += c;
         }
     }

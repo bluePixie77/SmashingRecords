@@ -70,7 +70,7 @@ public class GUI {
         tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
         tFBuscador = new TextField(p5, appColors, 70,p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.65f, p5.height * 0.10f);
 
-        tANotasUsuario = new TextArea(p5, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 1, 10);
+        tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 1, 10);
     }
 
     public void setMedia(PApplet p5) {

@@ -16,7 +16,7 @@ public class TextArea {
     int numCols, numRows;
 
     // Colores
-    int bgColor, fgColor, selectedColor, borderColor;
+    int fillColor, selectedColor, borderColor;
     int borderWeight = 1;
 
     // Texto del campo
@@ -27,7 +27,7 @@ public class TextArea {
     boolean selected = false;
 
     // Constructor
-    public TextArea(PApplet p5, float x, float y, float w, float h, int nc, int nr) {
+    public TextArea(PApplet p5, Colors appColors, float x, float y, float w, float h, int nc, int nr) {
         this.x = x; this.y = y; this.w = w; this.h = h;
         this.numCols = nc; this.numRows = nr;
         this.lines = new String[nr];
@@ -36,7 +36,7 @@ public class TextArea {
         if (selected) {
             p5.fill(selectedColor);
         } else {
-            p5.fill(bgColor);
+            p5.fill(fillColor);
         }
 
         p5.strokeWeight(borderWeight);
@@ -44,10 +44,19 @@ public class TextArea {
         p5.rectMode(p5.CORNER);
         p5.rect(x, y, w, h, 5);
 
-        p5.fill(fgColor);
+        p5.fill(borderColor);
         p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);
         p5.text(text, x + 10, y + h - textSize);
         p5.popStyle();
+    }
+
+    // Setters
+    public void setColors(Colors appColors){
+        this.fillColor = appColors.getFifthColor();
+        this.selectedColor = appColors.getThirdColor();
+        this.borderColor = appColors.getFourthColor();
+        this.borderWeight = 1;
+
     }
 
     // Dibuixa el Camp de Text
@@ -56,14 +65,14 @@ public class TextArea {
         if (selected) {
             p5.fill(selectedColor);
         } else {
-            p5.fill(bgColor);
+            p5.fill(fillColor);
         }
 
         p5.strokeWeight(borderWeight);
         p5.stroke(borderColor);
         p5.rect(x, y, w, h, 5);
 
-        p5.fill(fgColor);
+        p5.fill(borderColor);
         p5.textSize(textSize);
         for(int i=0; i<lines.length; i++){
             if(lines[i]!=null){

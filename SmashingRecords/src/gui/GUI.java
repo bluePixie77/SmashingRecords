@@ -76,7 +76,7 @@ public class GUI {
     public void setMedia(PApplet p5) {
        icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
        icona2 = p5.loadImage("data/iconFullUser.png");
-       logo = p5.loadImage("data/logoSR.png");
+       logo = p5.loadImage("data/logo.png");
     }
 
     public void setRoundButton(PApplet p5) {
@@ -96,7 +96,7 @@ public class GUI {
             p5.background(bg);
             p5.rectMode(p5.CENTER);
             p5.textAlign(p5.CENTER);
-            p5.fill(white);
+            p5.fill(bg); p5.strokeWeight(2); p5.stroke(white);
             p5.rect(p5.width * 0.5f, p5.height * 0.5f, p5.width * 0.33f, p5.height * 0.80f);
 
             displayLogoMayor(p5); // logo en dimensión grande
@@ -198,7 +198,7 @@ public class GUI {
         //p5.circle(p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.12f);
         p5.push();
             p5.imageMode(p5.CENTER);
-            p5.image(logo, p5.width * 0.10f, p5.height * 0.09f, p5.width * 0.6f, p5.height * 0.5f);
+            p5.image(logo, p5.width * 0.10f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.15f);
             p5.line(p5.width*0.20f, 0, p5.width*0.20f, p5.height*0.13f);
             p5.line(0, p5.height*0.20f, p5.width*0.20f, p5.height*0.20f);
         p5.pop();
@@ -209,7 +209,7 @@ public class GUI {
     public void displayLogoMayor(PApplet p5) {
         p5.push();
             p5.imageMode(p5.CENTER);
-            p5.image(logo, p5.width*0.5f, p5.height * 0.29f, p5.width * 0.81f, p5.height * 0.72f);
+            p5.image(logo, p5.width*0.5f, p5.height * 0.32f, p5.width * 0.18f, p5.height * 0.25f);
         p5.pop();
     }
 

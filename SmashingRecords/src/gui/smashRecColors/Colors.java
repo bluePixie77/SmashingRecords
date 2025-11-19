@@ -14,7 +14,7 @@ public class Colors {
         this.colors = new int[5];
         this.colors[0] = p5.color(0xFFE03C00); // Naranja fuerte
         this.colors[1] = p5.color(0xFFE47738); // Naranja flojo
-        this.colors[2] = p5.color(0xFFFFF0DC); // Blanco beige
+        this.colors[2] = p5.color(255); // Blanco
         this.colors[3] = p5.color(0xFF020202); // Negro
         this.colors[4] = p5.color(100);        // Gris
     }

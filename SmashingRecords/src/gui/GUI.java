@@ -2,10 +2,7 @@ package gui;
 
 import gui.smashRecColors.Colors;
 import gui.smashRecFonts.Fonts;
-import gui.smashRecPantallas.Button;
-import gui.smashRecPantallas.RoundButton;
-import gui.smashRecPantallas.TextArea;
-import gui.smashRecPantallas.TextField;
+import gui.smashRecPantallas.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -35,7 +32,7 @@ public class GUI {
 
     // Imatges de la GUI
     RoundButton rB1, rB2;
-    RadioButton
+    RadioButton radioB1, radioB2, radioB3;
     PImage icona1, icona2, logo;
 
     // Constructor de GUI

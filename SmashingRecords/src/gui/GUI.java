@@ -35,6 +35,7 @@ public class GUI {
 
     // Imatges de la GUI
     RoundButton rB1, rB2;
+    RadioButton
     PImage icona1, icona2, logo;
 
     // Constructor de GUI

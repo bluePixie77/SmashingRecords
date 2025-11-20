@@ -33,7 +33,7 @@ public class GUI {
     // Imatges de la GUI
     RoundButton rB1, rB2;
     RadioButton radioB1, radioB2, radioB3;
-    PImage icona1, icona2, logo;
+    PImage icona1, icona2, logo, imgPlus;
 
     // Constructor de GUI
     public GUI(PApplet p5) {
@@ -43,12 +43,14 @@ public class GUI {
         appFonts = new Fonts(p5);
         appFonts.setFonts(p5);
 
+        setMedia(p5);
+        setColors(p5);
+
         setTextFields(p5);
         setBotones(p5);
         setRoundButton(p5);
 
-        setMedia(p5);
-        setColors(p5);
+
     }
 
     // Setter botones
@@ -60,6 +62,8 @@ public class GUI {
         b5 = new Button(p5, appColors,"Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
         b6 = new Button(p5, appColors,"Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
         b7 = new Button(p5, appColors,"Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
+
+        rB1 = new RoundButton(p5, appColors, imgPlus, p5.width*0.80f, p5.height*0.25f, p5.width*0.025f);
     }
 
     public void setTextFields(PApplet p5) {
@@ -68,13 +72,14 @@ public class GUI {
         tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
         tFBuscador = new TextField(p5, appColors, 70,p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.65f, p5.height * 0.10f);
 
-        tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 1, 10);
+        tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 40, 10);
     }
 
     public void setMedia(PApplet p5) {
        icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
        icona2 = p5.loadImage("data/iconFullUser.png");
        logo = p5.loadImage("data/logo.png");
+       imgPlus = p5.loadImage("data/imgPlus.png");
     }
 
     public void setRoundButton(PApplet p5) {
@@ -229,6 +234,7 @@ public class GUI {
     public void displayBuscadorYFiltros(PApplet p5) {
         p5.push();
         tFBuscador.display(p5);
+        rB1.display(p5); //
 
         p5.pop();
     }

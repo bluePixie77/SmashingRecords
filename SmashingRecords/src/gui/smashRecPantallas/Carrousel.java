@@ -1,5 +1,6 @@
 package gui.smashRecPantallas;
 
+import gui.smashRecColors.Colors;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -44,12 +45,12 @@ public class Carrousel {
             }
         }
 
-        public void setButtons(PApplet p5, String img1, String img2){
+        public void setButtons(PApplet p5, Colors appColors, String img1, String img2){
             PImage imgPrev = p5.loadImage(img1);
-            bPrev = new RoundButton(p5, imgPrev, x, y + h/2, 30);
+            bPrev = new RoundButton(p5, appColors, imgPrev, x, y + h/2, 30);
 
             PImage imgNext = p5.loadImage(img2);
-            bNext = new RoundButton(p5, imgNext, x + w, y + h/2, 30);
+            bNext = new RoundButton(p5, appColors, imgNext, x + w, y + h/2, 30);
         }
 
         public void next(){

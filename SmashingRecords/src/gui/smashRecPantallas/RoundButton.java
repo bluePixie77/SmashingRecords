@@ -1,5 +1,6 @@
 package gui.smashRecPantallas;
 
+import gui.smashRecColors.Colors;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -10,19 +11,18 @@ public class RoundButton {
     int fillColor, strokeColor; // Colors del boto (fill / stroke).
     int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
     PImage icona;  // Icona del botó
-    boolean enabled;  // Estat del botó (actiu / inactiu).
+    public boolean enabled;  // Estat del botó (actiu / inactiu).
 
     // Constructor
-    public RoundButton(PApplet p5, PImage img, float x, float y, float r){
+    public RoundButton(PApplet p5, Colors appColors, PImage img, float x, float y, float r){
         this.icona = img;
         this.x = x;
         this.y = y;
         this.r = r;
         this.enabled = true;
-        this.fillColor = p5.color(155, 55, 155);
-        this.fillColorOver = p5.color(255, 55, 155);
-        this.fillColorDisabled = p5.color(150);
-        this.strokeColor = p5.color(0);
+        appColors = new Colors(p5);
+        this.setImage(img);
+        this.setColors(appColors);
     }
 
     // Setters
@@ -33,11 +33,11 @@ public class RoundButton {
         this.enabled = b;
     }
 
-    public void setColors(int cFill, int cStroke, int cOver, int cDisabled){
-        this.fillColor = cFill;
-        this.strokeColor = cStroke;
-        this.fillColorOver = cOver;
-        this.fillColorDisabled = cDisabled;
+    public void setColors(Colors appColors){
+        this.fillColor = appColors.getSecondColor();
+        this.fillColorOver = appColors.getFirstColor();
+        this.fillColorDisabled = appColors.getThirdColor();
+        this.strokeColor = appColors.getFourthColor();
     }
 
     // Dibuixa el botó

@@ -31,8 +31,9 @@ public class TextArea {
         this.x = x; this.y = y; this.w = w; this.h = h;
         this.numCols = nc; this.numRows = nr;
         this.lines = new String[nr];
+        setColors(appColors);
 
-        p5.pushStyle();
+       /* p5.pushStyle();
         if (selected) {
             p5.fill(selectedColor);
         } else {
@@ -47,7 +48,7 @@ public class TextArea {
         p5.fill(borderColor);
         p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);
         p5.text(text, x + 10, y + h - textSize);
-        p5.popStyle();
+        p5.popStyle();*/
     }
 
     // Setters

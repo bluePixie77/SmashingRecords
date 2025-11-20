@@ -51,6 +51,7 @@ public class Main extends PApplet {
         gui.tFInicioSesion2.keyPressed(key, keyCode);
         gui.tFNotasUsuario.keyPressed(key, keyCode);
         gui.tFBuscador.keyPressed(key, keyCode);
+        gui.tANotasUsuario.keyPressed(key, keyCode);
     }
 
     public void mousePressed(){
@@ -80,6 +81,7 @@ public class Main extends PApplet {
         gui.tFInicioSesion2.isPressed(this);
         gui.tFNotasUsuario.isPressed(this);
         gui.tFBuscador.isPressed(this);
+        gui.tANotasUsuario.isPressed(this);
 
     }
 

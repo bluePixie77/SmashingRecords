@@ -49,40 +49,130 @@ public class Main extends PApplet {
         }*/
         gui.tFInicioSesion1.keyPressed(key, keyCode);
         gui.tFInicioSesion2.keyPressed(key, keyCode);
-        gui.tFNotasUsuario.keyPressed(key, keyCode);
+       // gui.tFNotasUsuario.keyPressed(key, keyCode);
         gui.tFBuscador.keyPressed(key, keyCode);
         gui.tANotasUsuario.keyPressed(key, keyCode);
     }
 
     public void mousePressed(){
-        if(gui.b1.mouseOverButton(this)){
-            println("B1 has been pressed.");
-            gui.pantallaActual = GUI.PANTALLA.VINILOS;
-        }else if(gui.b2.mouseOverButton(this)){
-            println("B2 has been pressed.");
-            gui.pantallaActual = GUI.PANTALLA.CDS;
-        }else if(gui.b3.mouseOverButton(this)){
-            println("B3 has been pressed.");
-            gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
-        }else if(gui.b4.mouseOverButton(this)){
-            println("B4 has been pressed.");
-            gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
-        }else if(gui.b5.mouseOverButton(this)){
-            println("B5 has been pressed.");
-            gui.pantallaActual = GUI.PANTALLA.USUARIO;
-        }else if(gui.b6.mouseOverButton(this)){
-            println("B6 has been pressed.");
-            gui.pantallaActual = GUI.PANTALLA.USUARIO;
-        }else if(gui.b7.mouseOverButton(this)){
-            println("B7 has been pressed.");
-            gui.pantallaActual = GUI.PANTALLA.INICIO;
+        if(gui.pantallaActual== GUI.PANTALLA.INICIO){
+            if(gui.b6.mouseOverButton(this)){
+                println("B6 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.USUARIO;
+            }
+            gui.tFInicioSesion1.isPressed(this);
+            gui.tFInicioSesion2.isPressed(this);
         }
-        gui.tFInicioSesion1.isPressed(this);
-        gui.tFInicioSesion2.isPressed(this);
-        gui.tFNotasUsuario.isPressed(this);
-        gui.tFBuscador.isPressed(this);
-        gui.tANotasUsuario.isPressed(this);
-
+        else if(gui.pantallaActual== GUI.PANTALLA.USUARIO){
+            if(gui.b1.mouseOverButton(this)){
+                println("B1 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.VINILOS;
+            }else if(gui.b2.mouseOverButton(this)){
+                println("B2 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CDS;
+            }else if(gui.b3.mouseOverButton(this)){
+                println("B3 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+            }else if(gui.b4.mouseOverButton(this)){
+                println("B4 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+            }else if(gui.b5.mouseOverButton(this)){
+                println("B5 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.USUARIO;
+            }else if(gui.b7.mouseOverButton(this)){
+                println("B7 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.INICIO;
+            }
+            gui.tANotasUsuario.isPressed(this);
+        }
+        else if(gui.pantallaActual== GUI.PANTALLA.VINILOS){
+            if(gui.b1.mouseOverButton(this)){
+                println("B1 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.VINILOS;
+            }else if(gui.b2.mouseOverButton(this)){
+                println("B2 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CDS;
+            }else if(gui.b3.mouseOverButton(this)){
+                println("B3 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+            }else if(gui.b4.mouseOverButton(this)){
+                println("B4 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+            }else if(gui.b5.mouseOverButton(this)){
+                println("B5 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.USUARIO;
+            }else if(gui.rBPlus.mouseOverButton(this)){
+                println("RBPlus has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+            }
+            gui.tFBuscador.isPressed(this);
+        }else if(gui.pantallaActual== GUI.PANTALLA.CDS){
+            if(gui.b1.mouseOverButton(this)){
+                println("B1 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.VINILOS;
+            }else if(gui.b2.mouseOverButton(this)){
+                println("B2 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CDS;
+            }else if(gui.b3.mouseOverButton(this)){
+                println("B3 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+            }else if(gui.b4.mouseOverButton(this)){
+                println("B4 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+            }else if(gui.b5.mouseOverButton(this)){
+                println("B5 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.USUARIO;
+            }else if(gui.rBPlus.mouseOverButton(this)){
+                println("RBPlus has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+            }
+            gui.tFBuscador.isPressed(this);
+        }else if(gui.pantallaActual== GUI.PANTALLA.CONCIERTOS){
+            if(gui.b1.mouseOverButton(this)){
+                println("B1 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.VINILOS;
+            }else if(gui.b2.mouseOverButton(this)){
+                println("B2 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CDS;
+            }else if(gui.b3.mouseOverButton(this)){
+                println("B3 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+            }else if(gui.b4.mouseOverButton(this)){
+                println("B4 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+            }else if(gui.b5.mouseOverButton(this)){
+                println("B5 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.USUARIO;
+            }else if(gui.rBPlus.mouseOverButton(this)){
+                println("RBPlus has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+            }
+            gui.tFBuscador.isPressed(this);
+        }else if(gui.pantallaActual== GUI.PANTALLA.ESTADISTICAS){
+            if(gui.b1.mouseOverButton(this)){
+                println("B1 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.VINILOS;
+            }else if(gui.b2.mouseOverButton(this)){
+                println("B2 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CDS;
+            }else if(gui.b3.mouseOverButton(this)){
+                println("B3 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+            }else if(gui.b4.mouseOverButton(this)){
+                println("B4 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+            }else if(gui.b5.mouseOverButton(this)){
+                println("B5 has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.USUARIO;
+            }
+        }
+        /*  b1 // Vinilos
+            b2 // CDs
+            b3 // Conciertos
+            b4 // Estadísticas
+            b5 // Sesión
+            b6 // Iniciar sesión
+            b7 // Cerrar sesión */
     }
 
     public void updateCursor(PApplet p5){
@@ -92,7 +182,9 @@ public class Main extends PApplet {
            gui.b4.updateHandCursor(p5) ||
            gui.b5.updateHandCursor(p5) ||
            gui.b6.updateHandCursor(p5) ||
-           gui.b7.updateHandCursor(p5)){
+           gui.b7.updateHandCursor(p5) ||
+           gui.rBPlus.updateHandCursor(p5) ||
+           gui.rBFilter.updateHandCursor(p5)){
                 cursor(HAND);
         }else{
             cursor(ARROW);

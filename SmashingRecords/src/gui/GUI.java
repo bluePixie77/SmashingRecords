@@ -31,9 +31,9 @@ public class GUI {
     public TextArea tANotasUsuario;
 
     // Imatges de la GUI
-    RoundButton rB1, rB2;
+    public RoundButton rBPlus, rBFilter;
     RadioButton radioB1, radioB2, radioB3;
-    PImage icona1, icona2, logo, imgPlus;
+    PImage icona1, icona2, logo, imgPlus, imgFilter;
 
     // Constructor de GUI
     public GUI(PApplet p5) {
@@ -48,7 +48,6 @@ public class GUI {
 
         setTextFields(p5);
         setBotones(p5);
-        setRoundButton(p5);
 
 
     }
@@ -63,14 +62,15 @@ public class GUI {
         b6 = new Button(p5, appColors,"Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
         b7 = new Button(p5, appColors,"Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
 
-        rB1 = new RoundButton(p5, appColors, imgPlus, p5.width*0.80f, p5.height*0.25f, p5.width*0.025f);
+        rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width*0.95f, p5.height*0.15f, p5.width*0.020f);
+        rBFilter = new RoundButton(p5, appColors, imgFilter, p5. width*0.90f, p5.height*0.15f, p5.width*0.020f);
     }
 
     public void setTextFields(PApplet p5) {
         tFInicioSesion1 = new TextField(p5,  appColors, 40,p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
         tFInicioSesion2 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
-        tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
-        tFBuscador = new TextField(p5, appColors, 70,p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.65f, p5.height * 0.10f);
+       // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
+        tFBuscador = new TextField(p5, appColors, 70,p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.60f, p5.height * 0.10f);
 
         tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 40, 10);
     }
@@ -80,12 +80,9 @@ public class GUI {
        icona2 = p5.loadImage("data/iconFullUser.png");
        logo = p5.loadImage("data/logo.png");
        imgPlus = p5.loadImage("data/imgPlus.png");
+       imgFilter = p5.loadImage("data/imgFilter.png");
     }
 
-    public void setRoundButton(PApplet p5) {
-      /*  rB1 = new RoundButton(p5, icona1, 150, 500, 60);
-          rB2 = new RoundButton(p5, icona2, 150, 800, 60); */
-    }
     public void setColors(PApplet p5){
         bg = appColors.getFourthColor();
         titles = appColors.getFirstColor();
@@ -127,7 +124,7 @@ public class GUI {
 
         p5.circle(p5.width * 0.60f, p5.height * 0.20f, p5.width * 0.14f);
         p5.textAlign(p5.CENTER);
-        p5.textSize(medidaSubtitulo); p5.textFont(appFonts.getThirdFont());
+        p5.textSize(medidaSubtitulo); p5.textFont(appFonts.getThirdFont()); p5.fill(white);
         p5.text("Nombre: Jane Doe", p5.width * 0.60f, p5.height * 0.38f);
         p5.text("Correo: janeDoe@gmail.com", p5.width * 0.60f, p5.height * 0.45f);
         b7.display(p5); // Cerrar sesión
@@ -147,7 +144,7 @@ public class GUI {
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
 
-        p5.textFont(appFonts.getFontAt(0));
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("VINILOS", p5.width * 0.25f, p5.height * 0.10f);
         p5.pop();
     }
@@ -158,7 +155,7 @@ public class GUI {
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
         displayDisposicionMusica(p5);
-        p5.textFont(appFonts.getFontAt(0));
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("CD's", p5.width * 0.25f, p5.height * 0.10f);
         p5.pop();
     }
@@ -169,7 +166,7 @@ public class GUI {
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
 
-        p5.textFont(appFonts.getFontAt(0));
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("Conciertos", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.pop();
@@ -181,7 +178,7 @@ public class GUI {
         displaySidebar(p5);
         displayDisposicionMusica(p5);
 
-        p5.textFont(appFonts.getFontAt(0));
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("Estadísticas", p5.width * 0.25f, p5.height * 0.10f);
         p5.pop();
     }
@@ -189,8 +186,8 @@ public class GUI {
     public void displayPantallaAgregarMusica(PApplet p5) {
         p5.push();
         p5.background(bg);
-        displaySidebar(p5);
-        //p5.rect(p5.width*0.1f, )
+        displayLogo(p5);
+        p5.rect(p5.width*0.1f, p5.height*0.25f, p5.width*0.5f, p5.height*0.80f);
 
         p5.pop();
 
@@ -202,7 +199,8 @@ public class GUI {
         p5.push();
             p5.imageMode(p5.CENTER);
             p5.image(logo, p5.width * 0.10f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.15f);
-            p5.line(p5.width*0.20f, 0, p5.width*0.20f, p5.height*0.13f);
+            p5.stroke(white);
+            p5.line(p5.width*0.20f, 0, p5.width*0.20f, p5.height*0.20f);
             p5.line(0, p5.height*0.20f, p5.width*0.20f, p5.height*0.20f);
         p5.pop();
         /*p5.imageMode(p5.CENTER); p5.scale(p5.width*0.3f);
@@ -218,7 +216,7 @@ public class GUI {
 
     public void displaySidebar(PApplet p5) {
         p5.pop();
-            p5.fill(white);
+            p5.fill(bg); p5.strokeWeight(2); p5.stroke(white);
             p5.rect(0, 0, p5.width * 0.20f, p5.height);
             displayLogo(p5);
             p5.textFont(appFonts.getFontAt(2));
@@ -226,7 +224,7 @@ public class GUI {
             b2.display(p5); // CDs
             b3.display(p5); // Conciertos
             b4.display(p5); // Estadísticas
-            b5.display(p5); // Sesión
+            b5.display(p5); // Iniciar Sesión
 
         p5.push();
     }
@@ -234,7 +232,8 @@ public class GUI {
     public void displayBuscadorYFiltros(PApplet p5) {
         p5.push();
         tFBuscador.display(p5);
-        rB1.display(p5); //
+        rBPlus.display(p5); //
+        rBFilter.display(p5);
 
         p5.pop();
     }

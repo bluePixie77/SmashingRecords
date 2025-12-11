@@ -56,19 +56,21 @@ public class Main extends PApplet {
         // Load imgs
         for(int i=0; i<imgs.length; i++){
             if(imgs[i] != null){
-                image(imgs[i],50,50, 700, 600);
-                textSize(34); textAlign(RIGHT);
+                image(imgs[i], 50 + i*350, 50, 350, 600);
+                textSize(34);
+                textAlign(RIGHT);
                 fill(0);
-                text(titulo[i], 750, 350, i*350);
-            }else{
-                fill(250);
-                rect();
-                image(imgs[i],50,50, 700, 600);
-                textSize(34); textAlign(RIGHT);
-
-                text(titulo[i], 750, 350, i*350);
+                text(titulo[i], 750, 350 + i*350);
+            } else {
+                fill(255);
+                rect(50+  i*350, 50, 350 , 600);
+                textSize(34);
+                textAlign(RIGHT);
+                text(i+ "¨: Sense imatge", 750, 350 + i*350);
             }
         }
+        // Dibuixa el botó
+        b.display(this);
     }
 
     public void keyPressed(){

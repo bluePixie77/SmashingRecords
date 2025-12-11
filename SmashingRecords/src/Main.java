@@ -1,11 +1,22 @@
+import gui.smashRecPantallas.Button;
 import processing.core.PApplet;
 import gui.GUI;
+import processing.core.PImage;
+
+import java.io.File;
 
 public class Main extends PApplet {
 
     // Atributs
         // GUI
     GUI gui;
+
+    // Load Images
+    PImage[] imgs;
+    String[] titulo;
+    int numImg = 0;
+
+    Button b;
     
     public static void main(String[] args) {
         PApplet.main("Main");
@@ -16,6 +27,10 @@ public class Main extends PApplet {
     }
     public void setup(){
         gui = new GUI(this);
+
+        // Load imgs
+        imgs = new PImage[2];
+        titulo = new String[2];
     }
 
     public void draw(){
@@ -37,6 +52,23 @@ public class Main extends PApplet {
 
         }
         updateCursor(this);
+
+        // Load imgs
+        for(int i=0; i<imgs.length; i++){
+            if(imgs[i] != null){
+                image(imgs[i],50,50, 700, 600);
+                textSize(34); textAlign(RIGHT);
+                fill(0);
+                text(titulo[i], 750, 350, i*350);
+            }else{
+                fill(250);
+                rect();
+                image(imgs[i],50,50, 700, 600);
+                textSize(34); textAlign(RIGHT);
+
+                text(titulo[i], 750, 350, i*350);
+            }
+        }
     }
 
     public void keyPressed(){
@@ -173,6 +205,9 @@ public class Main extends PApplet {
             b5 // Sesión
             b6 // Iniciar sesión
             b7 // Cerrar sesión */
+        if(b.mouseOverButton(this)){
+            selectInput("Selecciona una imatge...", "fileSelected");
+        }
     }
 
     public void updateCursor(PApplet p5){
@@ -188,6 +223,17 @@ public class Main extends PApplet {
                 cursor(HAND);
         }else{
             cursor(ARROW);
+        }
+    }
+
+    public void fileSelected(File selection){
+        if(selection == null){
+            System.out.println("No file selected.");
+        }else{
+            String rutaImage = selection.getAbsolutePath();
+            imgs[numImg] = loadImage(rutaImage);
+            titulo[numImg] = selection.getName();
+            numImg++;
         }
     }
 }

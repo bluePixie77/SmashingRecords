@@ -6,6 +6,8 @@ import gui.smashRecPantallas.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import java.io.File;
+
 import static gui.smashRecFonts.Sizes.*;
 
 public class GUI {
@@ -34,6 +36,7 @@ public class GUI {
     public RoundButton rBPlus, rBFilter;
     RadioButton radioB1, radioB2, radioB3;
     PImage icona1, icona2, logo, imgPlus, imgFilter;
+
 
     // Constructor de GUI
     public GUI(PApplet p5) {
@@ -210,7 +213,7 @@ public class GUI {
     public void displayLogoMayor(PApplet p5) {
         p5.push();
             p5.imageMode(p5.CENTER);
-            p5.image(logo, p5.width*0.5f, p5.height * 0.32f, p5.width * 0.18f, p5.height * 0.25f);
+            p5.image(logo, p5.width*0.5f, p5.height * 0.32f, p5.width * 0.17f, p5.height * 0.25f);
         p5.pop();
     }
 

@@ -23,7 +23,7 @@ public class GUI {
     public Button b1, b2, b3, b4, b5, b6, b7;
 
     // Colores
-    Colors appColors;
+    public Colors appColors;
     int bg, titles, text, white;
 
     // Texto
@@ -33,9 +33,9 @@ public class GUI {
     public TextArea tANotasUsuario;
 
     // Imatges de la GUI
-    public RoundButton rBPlus, rBFilter;
+    public RoundButton rBFilter, rBHeart, rBPlus;
     RadioButton radioB1, radioB2, radioB3;
-    PImage icona1, icona2, logo, imgPlus, imgFilter;
+    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus;
 
 
     // Constructor de GUI
@@ -51,8 +51,6 @@ public class GUI {
 
         setTextFields(p5);
         setBotones(p5);
-
-
     }
 
     // Setter botones
@@ -65,8 +63,9 @@ public class GUI {
         b6 = new Button(p5, appColors,"Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
         b7 = new Button(p5, appColors,"Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
 
-        rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width*0.95f, p5.height*0.15f, p5.width*0.020f);
-        rBFilter = new RoundButton(p5, appColors, imgFilter, p5. width*0.90f, p5.height*0.15f, p5.width*0.020f);
+        rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width*0.85f, p5.height*0.15f, p5.width*0.020f);
+        rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width*0.95f,p5.height*0.15f, p5.width*0.020f);
+        rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width*0.90f, p5.height*0.15f, p5.width*0.020f);
     }
 
     public void setTextFields(PApplet p5) {
@@ -82,8 +81,9 @@ public class GUI {
        icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
        icona2 = p5.loadImage("data/iconFullUser.png");
        logo = p5.loadImage("data/logo.png");
-       imgPlus = p5.loadImage("data/imgPlus.png");
        imgFilter = p5.loadImage("data/imgFilter.png");
+       imgHeart = p5.loadImage("data/imgHeart.png");
+       imgPlus = p5.loadImage("data/imgPlus.png");
     }
 
     public void setColors(PApplet p5){
@@ -235,8 +235,9 @@ public class GUI {
     public void displayBuscadorYFiltros(PApplet p5) {
         p5.push();
         tFBuscador.display(p5);
-        rBPlus.display(p5); //
-        rBFilter.display(p5);
+        rBFilter.display(p5); //
+        rBPlus.display(p5);
+        rBHeart.display(p5);
 
         p5.pop();
     }

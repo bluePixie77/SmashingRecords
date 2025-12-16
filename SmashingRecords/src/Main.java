@@ -11,12 +11,12 @@ public class Main extends PApplet {
         // GUI
     GUI gui;
 
-    // Load Images
+    /* Load Images
     PImage[] imgs;
     String[] titulo;
     int numImg = 0;
 
-    Button b;
+    Button b;*/
     
     public static void main(String[] args) {
         PApplet.main("Main");
@@ -28,9 +28,10 @@ public class Main extends PApplet {
     public void setup(){
         gui = new GUI(this);
 
-        // Load imgs
+        /* Load imgs
         imgs = new PImage[2];
         titulo = new String[2];
+        b = new Button(this, gui.appColors, "Vinilos", 0, height * 0.25f, width * 0.20f, height * 0.05f);*/
     }
 
     public void draw(){
@@ -53,7 +54,7 @@ public class Main extends PApplet {
         }
         updateCursor(this);
 
-        // Load imgs
+        /* Load imgs
         for(int i=0; i<imgs.length; i++){
             if(imgs[i] != null){
                 image(imgs[i], 50 + i*350, 50, 350, 600);
@@ -70,7 +71,7 @@ public class Main extends PApplet {
             }
         }
         // Dibuixa el botó
-        b.display(this);
+        b.display(this);*/
     }
 
     public void keyPressed(){
@@ -207,9 +208,9 @@ public class Main extends PApplet {
             b5 // Sesión
             b6 // Iniciar sesión
             b7 // Cerrar sesión */
-        if(b.mouseOverButton(this)){
+        /*if(b.mouseOverButton(this)){
             selectInput("Selecciona una imatge...", "fileSelected");
-        }
+        }*/
     }
 
     public void updateCursor(PApplet p5){
@@ -228,7 +229,7 @@ public class Main extends PApplet {
         }
     }
 
-    public void fileSelected(File selection){
+  /*  public void fileSelected(File selection){
         if(selection == null){
             System.out.println("No file selected.");
         }else{
@@ -237,5 +238,5 @@ public class Main extends PApplet {
             titulo[numImg] = selection.getName();
             numImg++;
         }
-    }
+    }*/
 }

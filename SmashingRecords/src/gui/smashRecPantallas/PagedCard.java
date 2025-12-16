@@ -10,6 +10,8 @@ public class PagedCard {
         Card[] cards;            // Cards
         int numCards;            // Número total de Cards
         int numCardsPage;        // Número de Cards en 1 Pàgina
+        int col, rows;
+        int gap = 10;
 
         int numPage;
         int numTotalPages;
@@ -20,6 +22,12 @@ public class PagedCard {
         // Constructor
         public PagedCard(int ncp) {
             this.numCardsPage = ncp;
+            this.numPage = 0;
+        }
+        public PagedCard(int col, int rows) {
+            this.col = col;
+            this.rows = rows;
+            this.numCardsPage = col * rows;
             this.numPage = 0;
         }
 

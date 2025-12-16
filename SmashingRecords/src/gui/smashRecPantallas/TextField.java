@@ -28,7 +28,6 @@ public class TextField {
         this.x = x; this.y = y; this.w = w; this.h = h;
         this.length = length;
         setColors(appColors);
-
     }
 
     // Setters

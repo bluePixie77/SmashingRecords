@@ -64,15 +64,15 @@ public class GUI {
         b7 = new Button(p5, appColors,"Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
 
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width*0.85f, p5.height*0.15f, p5.width*0.020f);
-        rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width*0.95f,p5.height*0.15f, p5.width*0.020f);
-        rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width*0.90f, p5.height*0.15f, p5.width*0.020f);
+        rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width*0.90f,p5.height*0.15f, p5.width*0.020f);
+        rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width*0.95f, p5.height*0.15f, p5.width*0.020f);
     }
 
     public void setTextFields(PApplet p5) {
         tFInicioSesion1 = new TextField(p5,  appColors, 40,p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
         tFInicioSesion2 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
        // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
-        tFBuscador = new TextField(p5, appColors, 70,p5.width * 0.25f, p5.height * 0.1f, p5.width * 0.60f, p5.height * 0.10f);
+        tFBuscador = new TextField(p5, appColors, 60,p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
 
         tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 40, 10);
     }
@@ -160,6 +160,23 @@ public class GUI {
         displayDisposicionMusica(p5);
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("CD's", p5.width * 0.25f, p5.height * 0.10f);
+
+        p5.fill(white);
+        p5.rect(p5.width*0.24f, p5.height*0.25f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.37f, p5.height*0.25f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.5f, p5.height*0.25f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.63f, p5.height*0.25f, p5.width*0.11f, p5.height*0.11f);
+
+        p5.rect(p5.width*0.24f, p5.height*0.5f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.37f, p5.height*0.5f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.5f, p5.height*0.5f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.63f, p5.height*0.5f, p5.width*0.11f, p5.height*0.11f);
+
+        p5.rect(p5.width*0.24f, p5.height*0.75f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.37f, p5.height*0.75f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.5f, p5.height*0.75f, p5.width*0.11f, p5.height*0.11f);
+        p5.rect(p5.width*0.63f, p5.height*0.75f, p5.width*0.11f, p5.height*0.11f);
+
         p5.pop();
     }
 
@@ -171,6 +188,16 @@ public class GUI {
 
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("Conciertos", p5.width * 0.25f, p5.height * 0.10f);
+
+        p5.fill(white);
+        p5.rect(p5.width*0.24f, p5.height*0.25f, p5.width*0.33f, p5.height*0.20f);
+        p5.rect(p5.width*0.59f, p5.height*0.25f, p5.width*0.33f, p5.height*0.20f);
+
+        p5.rect(p5.width*0.24f, p5.height*0.50f, p5.width*0.33f, p5.height*0.20f);
+        p5.rect(p5.width*0.59f, p5.height*0.50f, p5.width*0.33f, p5.height*0.20f);
+
+        p5.rect(p5.width*0.24f, p5.height*0.75f, p5.width*0.33f, p5.height*0.20f);
+        p5.rect(p5.width*0.59f, p5.height*0.75f, p5.width*0.33f, p5.height*0.20f);
 
         p5.pop();
     }

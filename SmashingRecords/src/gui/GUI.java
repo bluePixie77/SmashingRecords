@@ -146,6 +146,7 @@ public class GUI {
         p5.background(bg);
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
+        displayDisposicionMusica(p5);
 
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("VINILOS", p5.width * 0.25f, p5.height * 0.10f);
@@ -162,20 +163,6 @@ public class GUI {
         p5.text("CD's", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.fill(white);
-        p5.rect(p5.width*0.24f, p5.height*0.25f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.37f, p5.height*0.25f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.5f, p5.height*0.25f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.63f, p5.height*0.25f, p5.width*0.11f, p5.height*0.11f);
-
-        p5.rect(p5.width*0.24f, p5.height*0.5f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.37f, p5.height*0.5f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.5f, p5.height*0.5f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.63f, p5.height*0.5f, p5.width*0.11f, p5.height*0.11f);
-
-        p5.rect(p5.width*0.24f, p5.height*0.75f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.37f, p5.height*0.75f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.5f, p5.height*0.75f, p5.width*0.11f, p5.height*0.11f);
-        p5.rect(p5.width*0.63f, p5.height*0.75f, p5.width*0.11f, p5.height*0.11f);
 
         p5.pop();
     }
@@ -271,8 +258,11 @@ public class GUI {
 
     public void displayDisposicionMusica(PApplet p5) {
         p5.push();
-        p5.rect(p5.width * 0.65f, p5.height * 0.30f, p5.width * 0.10f, p5.width * 0.10f);
-        p5.rect(p5.width * 0.80f, p5.height * 0.30f, p5.width * 0.10f, p5.width * 0.10f);
+        p5.rect(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.2f, p5.height * 0.2f);
+        p5.rect(p5.width * 0.37f, p5.height * 0.25f, p5.width * 0.2f, p5.height * 0.2f);
+        p5.rect(p5.width * 0.50f, p5.height * 0.25f, p5.width * 0.2f, p5.height * 0.2f);
+        p5.rect(p5.width * 0.63f, p5.height * 0.25f, p5.width * 0.2f, p5.height * 0.2f);
+
         p5.pop();
     }
 }

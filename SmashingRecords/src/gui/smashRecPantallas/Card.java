@@ -1,9 +1,5 @@
 package gui.smashRecPantallas;
 
-import gui.smashRecColors.Colors;
-import processing.core.PApplet;
-import processing.core.PImage;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -11,10 +7,7 @@ public class Card {
 
     // Propietats
     PImage img;
-    String title, place, date;
-    String section;
-    String description;
-
+    String nameAlbum, nameAuthor, section;
     // Dimensions
     float x, y, w, h, b;
 
@@ -23,20 +16,16 @@ public class Card {
     public Card(){
     }
 
-    public Card(String title, String place, String date, String section, String description){
-        this.title = title;
-        this.place = place;
-        this.date = date;
+    public Card(String title, String nA, String section){
+        this.nameAlbum = title;
+        this.nameAuthor = nA;
         this.section = section;
-        this.description = description;
     }
 
     public Card(String[] info){
-        this.title = info[0];
-        this.place = info[1];
-        this.date = info[2];
+        this.nameAlbum = info[0];
+        this.nameAuthor = info[1];
         this.section = info[3];
-        this.description = info[4];
     }
 
     //Setters
@@ -84,20 +73,12 @@ public class Card {
 
         // Títol
         p5.fill(0); p5.textSize(24); p5.textAlign(p5.CENTER);
-        p5.text(title, x + 2*w/3, y + h/5);
-
-        // Lloc i data
-        p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
-        p5.text(place+", "+date, x + w/3 + w/6, y + 2*h/5);
+        p5.text(nameAlbum, x + 2*w/3, y + h/5);
+        p5.text(nameAuthor, x + 2*w/3, y + h/4);
 
         // Secció
         p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
         p5.text(section, x + 2*w/3 + w/6, y + 2*h/5);
-
-        // Descripció
-        p5.fill(0); p5.textSize(14); p5.textAlign(p5.LEFT);
-        p5.text(description, x + w/3 + b, y + 2*h/3 - b, 2*w/3 - b*2, h/4);
-
 
         p5.popStyle();
     }
@@ -106,5 +87,4 @@ public class Card {
         return this.x < p5.mouseX && p5.mouseX < this.x + this.w &&
                 this.y < p5.mouseY && p5.mouseY < this.y + this.h;
     }
-
 }

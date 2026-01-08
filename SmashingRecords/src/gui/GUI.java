@@ -204,10 +204,9 @@ public class GUI {
         p5.push();
         p5.background(bg);
         displayLogo(p5);
-        p5.rect(p5.width*0.1f, p5.height*0.25f, p5.width*0.5f, p5.height*0.80f);
+        p5.rect(p5.width*0.1f, p5.height*0.25f, p5.width*0.7f, p5.height*0.80f);
 
         p5.pop();
-
     }
 
     // ZONAS DE LA GUI

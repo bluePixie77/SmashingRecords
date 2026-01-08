@@ -16,10 +16,14 @@ public class Card {
     public Card(){
     }
 
-    public Card(String title, String nA, String section){
+    public Card(String title, String nA, float x, float y, float w, float h){
         this.nameAlbum = title;
         this.nameAuthor = nA;
-        this.section = section;
+
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
     }
 
     public Card(String[] info){
@@ -74,11 +78,11 @@ public class Card {
         // Títol
         p5.fill(0); p5.textSize(24); p5.textAlign(p5.CENTER);
         p5.text(nameAlbum, x + 2*w/3, y + h/5);
-        p5.text(nameAuthor, x + 2*w/3, y + h/4);
+        p5.text(nameAuthor, x + 2*w/3, y + h/2);
 
         // Secció
-        p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
-        p5.text(section, x + 2*w/3 + w/6, y + 2*h/5);
+        //p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
+        //p5.text(section, x + 2*w/3 + w/6, y + 2*h/5);
 
         p5.popStyle();
     }

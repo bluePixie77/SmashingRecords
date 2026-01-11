@@ -13,9 +13,6 @@ public class Card {
 
     // Constructors
 
-    public Card(){
-    }
-
     public Card(String title, String nA, float x, float y, float w, float h){
         this.nameAlbum = title;
         this.nameAuthor = nA;

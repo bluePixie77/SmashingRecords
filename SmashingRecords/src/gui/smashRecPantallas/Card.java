@@ -1,5 +1,6 @@
 package gui.smashRecPantallas;
 
+import gui.smashRecColors.Colors;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -47,6 +48,25 @@ public class Card {
 
         p5.pushStyle();
 
+        p5.stroke(0);
+        p5.fill(200, 100, 100);
+        p5.rect(x, y, w, h+30, b/2);
+
+        if(img!=null){
+            p5.image(img, x+20, y+20, w-50, h-60);
+            p5.noFill();
+        }
+        else {
+            p5.fill(50);
+        }
+       // p5.rect(x + b, y + b, w-20, h-20);
+
+        p5.fill(0); p5.textSize(24); p5.textAlign(p5.CORNER);
+        p5.text(nameAlbum, x+30, 4.9f*y);
+        p5.text(nameAuthor, x+30, 5.2f*y);
+
+        p5.popStyle();
+/*
         // Rectangle inferior
         p5.stroke(0);
         if(selectedCard){
@@ -80,8 +100,8 @@ public class Card {
         // Secció
         //p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
         //p5.text(section, x + 2*w/3 + w/6, y + 2*h/5);
+*/
 
-        p5.popStyle();
     }
 
     public boolean mouseOver(PApplet p5){

@@ -257,10 +257,10 @@ public class GUI {
 
     public void displayDisposicionMusica(PApplet p5) {
         p5.push();
-        p5.rect(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.2f, p5.height * 0.2f);
-        p5.rect(p5.width * 0.37f, p5.height * 0.25f, p5.width * 0.2f, p5.height * 0.2f);
-        p5.rect(p5.width * 0.50f, p5.height * 0.25f, p5.width * 0.2f, p5.height * 0.2f);
-        p5.rect(p5.width * 0.63f, p5.height * 0.25f, p5.width * 0.2f, p5.height * 0.2f);
+        p5.rect(p5.width * 0.25f, p5.height * 0.25f, p5.height * 0.2f, p5.height * 0.2f);
+        p5.rect(p5.width * 0.40f, p5.height * 0.25f, p5.height * 0.2f, p5.height * 0.2f);
+        p5.rect(p5.width * 0.55f, p5.height * 0.25f, p5.height * 0.2f, p5.height * 0.2f);
+        p5.rect(p5.width * 0.70f, p5.height * 0.25f, p5.height * 0.2f, p5.height * 0.2f);
 
         p5.pop();
     }

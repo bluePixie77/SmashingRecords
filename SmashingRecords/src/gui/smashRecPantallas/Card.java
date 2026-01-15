@@ -101,7 +101,6 @@ public class Card {
         //p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
         //p5.text(section, x + 2*w/3 + w/6, y + 2*h/5);
 */
-
     }
 
     public boolean mouseOver(PApplet p5){

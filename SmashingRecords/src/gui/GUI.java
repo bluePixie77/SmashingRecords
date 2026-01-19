@@ -38,8 +38,8 @@ public class GUI {
     PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDisc1, imgDisc2;
 
     // Paged Cards
-    PagedCard2D pcMusica;   // Vinilos y CDs
-    PagedCard2D pcConcert;  // Conciertos
+    public PagedCard2D pcMusica;   // Vinilos y CDs
+    public PagedCard2D pcConcert;  // Conciertos
 
     // Dades de les cards
     String[][] infoAlbum = {
@@ -216,6 +216,8 @@ public class GUI {
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
         displayDisposicionMusica(p5);
+
+
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("CD's", p5.width * 0.25f, p5.height * 0.10f);
 
@@ -307,6 +309,8 @@ public class GUI {
     public void displayDisposicionMusica(PApplet p5) {
         p5.push();
         pcMusica.display(p5);
+        bNext.display(p5);
+        bPrev.display(p5);
         p5.pop();
     }
 }

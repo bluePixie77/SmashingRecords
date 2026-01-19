@@ -18,13 +18,6 @@ public class Main extends PApplet {
 
     Button b;*/
 
-    // Paged Cards
-    //PagedCard2D pcMusica;   // Vinilos y CDs
-   // PagedCard2D pcConcert;  // Conciertos
-
-    // Botones
-  //  Button bNext, bPrev; // NEXT y PREV
-
     // Imatges de les cards
     PImage img1, img2;
     //
@@ -176,7 +169,13 @@ public class Main extends PApplet {
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
             }else if(gui.bNext.mouseOverButton(this)){
-                println("BNext has been pressed.");
+                gui.pcMusica.nextPage();
+            }
+            else if(gui.bPrev.mouseOverButton(this) && gui.bPrev.isEnabled()){
+                gui.pcMusica.prevPage();
+            }
+            else {
+                gui.pcMusica.checkCardSelection(this);
             }
             gui.tFBuscador.isPressed(this);
         }else if(gui.pantallaActual== GUI.PANTALLA.CDS){
@@ -198,6 +197,14 @@ public class Main extends PApplet {
             }else if(gui.rBPlus.mouseOverButton(this)){
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+            }else if(gui.bNext.mouseOverButton(this)){
+                gui.pcMusica.nextPage();
+            }
+            else if(gui.bPrev.mouseOverButton(this) && gui.bPrev.isEnabled()){
+                gui.pcMusica.prevPage();
+            }
+            else {
+                gui.pcMusica.checkCardSelection(this);
             }
             gui.tFBuscador.isPressed(this);
         }else if(gui.pantallaActual== GUI.PANTALLA.CONCIERTOS){
@@ -219,6 +226,14 @@ public class Main extends PApplet {
             }else if(gui.rBPlus.mouseOverButton(this)){
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+            }else if(gui.bNext.mouseOverButton(this)){
+                gui.pcConcert.nextPage();
+            }
+            else if(gui.bPrev.mouseOverButton(this) && gui.bPrev.isEnabled()){
+                gui.pcConcert.prevPage();
+            }
+            else {
+                gui.pcConcert.checkCardSelection(this);
             }
             gui.tFBuscador.isPressed(this);
         }else if(gui.pantallaActual== GUI.PANTALLA.ESTADISTICAS){
@@ -252,15 +267,16 @@ public class Main extends PApplet {
     }
 
     public void updateCursor(PApplet p5){
-        if(gui.b1.updateHandCursor(p5) ||
-           gui.b2.updateHandCursor(p5) ||
-           gui.b3.updateHandCursor(p5) ||
-           gui.b4.updateHandCursor(p5) ||
-           gui.b5.updateHandCursor(p5) ||
-           gui.b6.updateHandCursor(p5) ||
-           gui.b7.updateHandCursor(p5) ||
-           gui.rBPlus.updateHandCursor(p5) ||
-           gui.rBFilter.updateHandCursor(p5)){
+        if(gui.b1.updateHandCursor(p5) && gui.b1.isEnabled() ||
+           gui.b2.updateHandCursor(p5) && gui.b2.isEnabled() ||
+           gui.b3.updateHandCursor(p5) && gui.b3.isEnabled() ||
+           gui.b4.updateHandCursor(p5) && gui.b4.isEnabled() ||
+           gui.b5.updateHandCursor(p5) && gui.b5.isEnabled() ||
+           gui.b6.updateHandCursor(p5) && gui.b6.isEnabled() ||
+           gui.b7.updateHandCursor(p5) && gui.b7.isEnabled() ||
+           gui.rBPlus.updateHandCursor(p5) && gui.rBPlus.enabled ||
+           gui.rBFilter.updateHandCursor(p5) && gui.rBFilter.enabled ||
+           gui.bNext.mouseOverButton(p5) && gui.bNext.isEnabled()){
                 cursor(HAND);
         }else{
             cursor(ARROW);

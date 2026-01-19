@@ -29,8 +29,8 @@ public class GUI {
 
     // Texto
     Fonts appFonts;
-    public TextField tFInicioSesion1, tFInicioSesion2, tFBuscador, tFTitle, tFSubtitle;
-
+    public TextField tFInicioSesion1, tFInicioSesion2, tFBuscador;
+    public TextField[] tFAgregar;
     public TextArea tANotasUsuario, tANotasAgregar;
 
     // Imatges de la GUI
@@ -116,6 +116,18 @@ public class GUI {
         tFInicioSesion2 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
         // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
         tFBuscador = new TextField(p5, appColors, 60, p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
+
+        tFAgregar = new TextField[4];
+
+        float startX = p5.width * 0.45f;      // Alineado a la derecha de la imagen
+        float startY = p5.height * 0.25f;     // Debajo de los botones OK/Cancelar
+        float fieldW = p5.width * 0.50f;      // Ancho del campo
+        float fieldH = p5.height * 0.05f;     // Alto del campo
+        float spacing = p5.height * 0.10f;    // Espacio vertical entre campos
+
+        for (int i = 0; i < tFAgregar.length; i++) {
+            tFAgregar[i] = new TextField(p5, appColors, 40, startX, startY + (i * spacing), fieldW, fieldH);
+        }
 
         tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 40, 10);
         tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.8f, p5.width * 0.3f, p5.height * 0.20f, 40, 4);
@@ -258,7 +270,7 @@ public class GUI {
         p5.push();
         p5.background(bg);
         displaySidebar(p5);
-        displayBuscadorYFiltros(p5);
+        tFBuscador.display(p5);
 
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("Estadísticas", p5.width * 0.25f, p5.height * 0.10f);
@@ -283,6 +295,8 @@ public class GUI {
 
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
         p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
+
+        displayTFAgregar(p5, "Artista/Banda", "Género");
         tANotasAgregar.display(p5);
         p5.pop();
     }
@@ -302,8 +316,9 @@ public class GUI {
 
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
         p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.65f, p5.width*0.3f);
-        tANotasAgregar.display(p5);
 
+        displayTFAgregar(p5, "Lugar / Recinto", "Ciudad");
+        tANotasAgregar.display(p5);
         p5.pop();
     }
 
@@ -359,5 +374,19 @@ public class GUI {
         bNext.display(p5);
         bPrev.display(p5);
         p5.pop();
+    }
+
+    public void displayTFAgregar(PApplet p5, String titulo2, String titulo4) {
+        String[] labels = {"Título", titulo2, "Fecha", titulo4};
+        p5.textFont(appFonts.getThirdFont());
+        p5.fill(white);
+        p5.textSize(medidaIntermedia);
+
+        for (int i = 0; i < tFAgregar.length; i++) {
+            p5.textAlign(p5.LEFT);
+            // Texto descriptivo sobre el campo
+            p5.text(labels[i], tFAgregar[i].x, tFAgregar[i].y - 10);
+            tFAgregar[i].display(p5);
+        }
     }
 }

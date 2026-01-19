@@ -10,7 +10,7 @@ import static processing.core.PConstants.ENTER;
 public class TextField {
 
     // Atributos o propiedades
-    float x, y, h, w;
+    public float x, y, h, w;
     int length;
 
     // Colores

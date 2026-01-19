@@ -120,6 +120,9 @@ public class Main extends PApplet {
         gui.tFBuscador.keyPressed(key, keyCode);
         gui.tANotasUsuario.keyPressed(key, keyCode);
         gui.tANotasAgregar.keyPressed(key, keyCode);
+        for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
+            tf.keyPressed(key, keyCode);
+        }
     }
 
     public void mousePressed(){

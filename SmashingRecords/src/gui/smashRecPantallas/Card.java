@@ -8,16 +8,17 @@ public class Card {
 
     // Propietats
     PImage img;
-    String nameAlbum, nameAuthor, section;
+    String title, subtitle, section;
     // Dimensions
     float x, y, w, h, b;
 
+    // Colors
+    int selected, notSelected;
+
     // Constructors
-
-    public Card(String title, String nA, float x, float y, float w, float h){
-        this.nameAlbum = title;
-        this.nameAuthor = nA;
-
+    public Card(String title, String subTitle, float x, float y, float w, float h){
+        this.title = title;
+        this.subtitle = subTitle;
         this.x = x;
         this.y = y;
         this.w = w;
@@ -25,8 +26,8 @@ public class Card {
     }
 
     public Card(String[] info){
-        this.nameAlbum = info[0];
-        this.nameAuthor = info[1];
+        this.title = info[0];
+        this.subtitle = info[1];
         this.section = info[3];
     }
 
@@ -40,6 +41,11 @@ public class Card {
 
     public void setImage(PImage img){
         this.img = img;
+    }
+
+    public void setCardColors(int sel, int notSel){
+        this.selected = sel;
+        this.notSelected = notSel;
     }
 
     // Dibuixa la Card
@@ -62,8 +68,8 @@ public class Card {
        // p5.rect(x + b, y + b, w-20, h-20);
 
         p5.fill(0); p5.textSize(24); p5.textAlign(p5.CORNER);
-        p5.text(nameAlbum, x+30, 4.9f*y);
-        p5.text(nameAuthor, x+30, 5.2f*y);
+        p5.text(title, x+30, 4.9f*y);
+        p5.text(subtitle, x+30, 5.2f*y);
 
         p5.popStyle();
 /*
@@ -95,8 +101,8 @@ public class Card {
 
         // Títol
         p5.fill(0); p5.textSize(24); p5.textAlign(p5.CENTER);
-        p5.text(nameAlbum, x + 2*w/3, y + h/5);
-        p5.text(nameAuthor, x + 2*w/3, y + h/2);
+        p5.text(title, x + 2*w/3, y + h/5);
+        p5.text(subtitle, x + 2*w/3, y + h/2);
 
         // Secció
         //p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);

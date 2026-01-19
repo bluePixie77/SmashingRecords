@@ -283,7 +283,6 @@ public class Main extends PApplet {
             cursor(ARROW);
         }
     }
-
   /*  public void fileSelected(File selection){
         if(selection == null){
             System.out.println("No file selected.");

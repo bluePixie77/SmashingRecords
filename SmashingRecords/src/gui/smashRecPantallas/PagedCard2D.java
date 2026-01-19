@@ -18,7 +18,7 @@ public class PagedCard2D extends PApplet{
     int numTotalPages;
 
     // Colors
-    //public Colors appColors;
+    public Colors appColors;
     int bg, titles, text, white;
 
     float x, y, w, h;
@@ -27,8 +27,9 @@ public class PagedCard2D extends PApplet{
 
     // Constructor
     public PagedCard2D(PApplet p5, int numRows, int numCols, Colors appColors) {
-        appColors = new Colors(p5);
-        setColors(appColors);
+       // appColors = new Colors(p5);
+        this.appColors = appColors;
+        //setColors(appColors);
 
         this.numRowsPage = numRows;
         this.numCardsRow = numCols;
@@ -73,6 +74,7 @@ public class PagedCard2D extends PApplet{
             float xCard = x + (wc + 5)* nc;
             cards[numCard] = new Card(cardsData[numCard]);
             cards[numCard].setDimensions(xCard, yCard, wc, hc, 10);
+            cards[numCard].setCardColors(appColors.getFourthColor(), appColors.getFirstColor());
         }
     }
 
@@ -172,7 +174,7 @@ public class PagedCard2D extends PApplet{
             p5.fill(0); p5.textSize(18);
             p5.text("Seleccionada: ", 900, 300);
             p5.textSize(24);
-            p5.text(cSelected.nameAlbum, 900, 340);
+            p5.text(cSelected.title, 900, 340);
             p5.popStyle();
         }
     }

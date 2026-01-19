@@ -149,7 +149,7 @@ public class PagedCard {
                 p5.fill(0); p5.textSize(18);
                 p5.text("Seleccionada: ", 900, 300);
                 p5.textSize(24);
-                p5.text(cSelected.nameAlbum, 900, 340);
+                p5.text(cSelected.title, 900, 340);
                 p5.popStyle();
             }
         }

@@ -54,7 +54,9 @@ public class TestPagedCard2D extends PApplet {
             img2 = loadImage("data/musicPredetWhiteBG.png");
 
             // Creació de la taula
+            appColors = new Colors(this);
             pc = new PagedCard2D(this, 2, 4, appColors);
+           //? pc.setColors(appColors);
             pc.setDimensions(50, 50, cardsW, cardsH);
             pc.setData(info);
             pc.setCards();

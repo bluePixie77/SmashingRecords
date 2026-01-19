@@ -13,10 +13,11 @@ import static gui.smashRecFonts.Sizes.*;
 public class GUI {
 
     // Enumerado para las pantallas
-    public enum PANTALLA {INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR}
+    public enum PANTALLA {INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR, AGREGAR_CONCERT}
 
     // Pantalla actual
     public PANTALLA pantallaActual;
+    public PANTALLA pantallaAnterior;
     public boolean enablePantalla;
 
     // Botones
@@ -265,8 +266,28 @@ public class GUI {
         bCancelar.display(p5);
         bOk.display(p5);
 
+        // Título dinámico según el origen
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
+        String txtTitulo = ((pantallaAnterior == PANTALLA.VINILOS) ? "AGREGAR VINILO" : "AGREGAR CD");
+        p5.text(txtTitulo, p5.width * 0.25f, p5.height * 0.10f);
+
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
         p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
+        tANotasAgregar.display(p5);
+        p5.pop();
+    }
+    public void displayPantallaAgregarConcert(PApplet p5) {
+        p5.push();
+        p5.background(bg);
+        displayLogo(p5);
+        bCancelar.display(p5);
+        bOk.display(p5);
+
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
+        p5.text("AGREGAR CONCIERTO", p5.width * 0.25f, p5.height * 0.10f);
+
+        p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
+        p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.45f, p5.width*0.3f);
         tANotasAgregar.display(p5);
 
         p5.pop();

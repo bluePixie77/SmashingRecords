@@ -76,6 +76,9 @@ public class Main extends PApplet {
             case ESTADISTICAS:gui.displayPantallaEstadisticas(this);
                              break;
             case AGREGAR:    gui.displayPantallaAgregarMusica(this);
+                             break;
+            case AGREGAR_CONCERT:gui.displayPantallaAgregarConcert(this);
+                             break;
 
         }
         updateCursor(this);
@@ -167,6 +170,7 @@ public class Main extends PApplet {
                 println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }else if(gui.rBPlus.mouseOverButton(this)){
+                gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
             }else if(gui.bNext.mouseOverButton(this)){
@@ -196,6 +200,7 @@ public class Main extends PApplet {
                 println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }else if(gui.rBPlus.mouseOverButton(this)){
+                gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
             }else if(gui.bNext.mouseOverButton(this)){
@@ -225,8 +230,9 @@ public class Main extends PApplet {
                 println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }else if(gui.rBPlus.mouseOverButton(this)){
+                gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
-                gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+                gui.pantallaActual = GUI.PANTALLA.AGREGAR_CONCERT;
             }else if(gui.bNext.mouseOverButton(this)){
                 gui.pcConcert.nextPage();
             }
@@ -237,30 +243,27 @@ public class Main extends PApplet {
                 gui.pcConcert.checkCardSelection(this);
             }
             gui.tFBuscador.isPressed(this);
-        }else if(gui.pantallaActual== GUI.PANTALLA.ESTADISTICAS){
-            if(gui.b1.mouseOverButton(this)){
+        }else if(gui.pantallaActual== GUI.PANTALLA.ESTADISTICAS) {
+            if (gui.b1.mouseOverButton(this)) {
                 println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
-            }else if(gui.b2.mouseOverButton(this)){
+            } else if (gui.b2.mouseOverButton(this)) {
                 println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
-            }else if(gui.b3.mouseOverButton(this)){
+            } else if (gui.b3.mouseOverButton(this)) {
                 println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
-            }else if(gui.b4.mouseOverButton(this)){
+            } else if (gui.b4.mouseOverButton(this)) {
                 println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
-            }else if(gui.b5.mouseOverButton(this)){
+            } else if (gui.b5.mouseOverButton(this)) {
                 println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }
-        }else if(gui.pantallaActual== GUI.PANTALLA.AGREGAR){
-            if(gui.bOk.mouseOverButton(this)){
-                println("OK has been pressed.");
-                gui.pantallaActual = GUI.PANTALLA.VINILOS; // ??
-            }else if(gui.bCancelar.mouseOverButton(this)){
-                println("BCancelar has been pressed.");
-                gui.pantallaActual = GUI.PANTALLA.VINILOS; // ??
+        }else if(gui.pantallaActual == GUI.PANTALLA.AGREGAR || gui.pantallaActual == GUI.PANTALLA.AGREGAR_CONCERT){
+            if(gui.bOk.mouseOverButton(this) || gui.bCancelar.mouseOverButton(this)){
+                // Volvemos exactamente de donde vinimos
+                gui.pantallaActual = gui.pantallaAnterior;
             }
             gui.tANotasAgregar.isPressed(this);
         }

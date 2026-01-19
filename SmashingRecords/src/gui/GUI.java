@@ -20,7 +20,7 @@ public class GUI {
     public boolean enablePantalla;
 
     // Botones
-    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev;
+    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk;
 
     // Colores
     public Colors appColors;
@@ -30,7 +30,7 @@ public class GUI {
     Fonts appFonts;
     public TextField tFInicioSesion1, tFInicioSesion2, tFNotasUsuario, tFBuscador;
 
-    public TextArea tANotasUsuario;
+    public TextArea tANotasUsuario, tANotasAgregar;
 
     // Imatges de la GUI
     public RoundButton rBFilter, rBHeart, rBPlus;
@@ -56,21 +56,21 @@ public class GUI {
             {"Album 10", "Autor 10", "Data 10", "Secció 10", "Descripció 10"},
     };
     String[][] infoConcert = {
-            {"Títol 0", "Autor 0", "Data 0", "Lloc 0", "Descripció 0"},
-            {"Títol 1", "Autor 1", "Data 1", "Lloc 1", "Descripció 1"},
-            {"Títol 2", "Autor 2", "Data 2", "Lloc 2", "Descripció 2"},
-            {"Títol 3", "Autor 3", "Data 3", "Lloc 1", "Descripció 3"},
-            {"Títol 4", "Autor 4", "Data 4", "Lloc 1", "Descripció 4"},
-            {"Títol 5", "Autor 5", "Data 5", "Lloc 2", "Descripció 5"},
-            {"Títol 6", "Autor 6", "Data 6", "Lloc 2", "Descripció 6"},
-            {"Títol 7", "Autor 7", "Data 7", "Lloc 1", "Descripció 7"},
-            {"Títol 8", "Autor 8", "Data 8", "Lloc 8", "Descripció 8"},
-            {"Títol 9", "Autor 9", "Data 9", "Lloc 9", "Descripció 9"},
-            {"Títol 10", "Autor 10", "Data 10", "Lloc 10", "Descripció 10"},
+            {"Concert 0", "Autor 0", "Data 0", "Lloc 0", "Descripció 0"},
+            {"Concert 1", "Autor 1", "Data 1", "Lloc 1", "Descripció 1"},
+            {"Concert 2", "Autor 2", "Data 2", "Lloc 2", "Descripció 2"},
+            {"Concert 3", "Autor 3", "Data 3", "Lloc 1", "Descripció 3"},
+            {"Concert 4", "Autor 4", "Data 4", "Lloc 1", "Descripció 4"},
+            {"Concert 5", "Autor 5", "Data 5", "Lloc 2", "Descripció 5"},
+            {"Concert 6", "Autor 6", "Data 6", "Lloc 2", "Descripció 6"},
+            {"Concert 7", "Autor 7", "Data 7", "Lloc 1", "Descripció 7"},
+            {"Concert 8", "Autor 8", "Data 8", "Lloc 8", "Descripció 8"},
+            {"Concert 9", "Autor 9", "Data 9", "Lloc 9", "Descripció 9"},
+            {"Concert 10", "Autor 10", "Data 10", "Lloc 10", "Descripció 10"},
     };
 
     // Otros
-    boolean cursorHand = false;
+
 
     // Constructor de GUI
     public GUI(PApplet p5) {
@@ -97,8 +97,11 @@ public class GUI {
         b5 = new Button(p5, appColors, "Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
         b6 = new Button(p5, appColors, "Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
         b7 = new Button(p5, appColors, "Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
-        bNext = new Button(p5, appColors, "NEXT", 100 + p5.width * 0.75f, 80, 60, 60);
-        bPrev = new Button(p5, appColors, "PREV", 100 + p5.width * 0.75f, 100 + 60, 60, 60);
+        bNext = new Button(p5, appColors, ">", p5.width * 0.90f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
+        bPrev = new Button(p5, appColors, "<", p5.width * 0.24f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
+        bCancelar = new Button(p5, appColors, "CANCELAR", p5.width * 0.75f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
+        bOk       = new Button(p5, appColors, "OK", p5.width * 0.85f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
+
 
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
@@ -112,6 +115,7 @@ public class GUI {
         tFBuscador = new TextField(p5, appColors, 60, p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
 
         tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 40, 10);
+        tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.8f, p5.width * 0.3f, p5.height * 0.20f, 40, 4);
     }
 
     public void setMedia(PApplet p5) {
@@ -193,7 +197,6 @@ public class GUI {
         p5.text("Notas", p5.width * 0.25f, p5.height * 0.59f);
 
         tANotasUsuario.display(p5);
-
         p5.pop();
 
     }
@@ -217,7 +220,6 @@ public class GUI {
         displayBuscadorYFiltros(p5);
         displayDisposicionMusica(p5);
 
-
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("CD's", p5.width * 0.25f, p5.height * 0.10f);
 
@@ -231,12 +233,17 @@ public class GUI {
         p5.background(bg);
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
+        p5.push();
+            pcConcert.display(p5);
+            bNext.display(p5);
+            bPrev.display(p5);
+        p5.pop();
 
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("Conciertos", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.fill(white);
-        pcConcert.display(p5);
+
         p5.pop();
     }
 
@@ -244,7 +251,7 @@ public class GUI {
         p5.push();
         p5.background(bg);
         displaySidebar(p5);
-        displayDisposicionMusica(p5);
+        displayBuscadorYFiltros(p5);
 
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("Estadísticas", p5.width * 0.25f, p5.height * 0.10f);
@@ -255,7 +262,12 @@ public class GUI {
         p5.push();
         p5.background(bg);
         displayLogo(p5);
-        p5.rect(p5.width*0.1f, p5.height*0.25f, p5.width*0.7f, p5.height*0.80f);
+        bCancelar.display(p5);
+        bOk.display(p5);
+
+        p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
+        p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
+        tANotasAgregar.display(p5);
 
         p5.pop();
     }

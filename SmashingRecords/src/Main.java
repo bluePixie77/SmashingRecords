@@ -116,6 +116,7 @@ public class Main extends PApplet {
        // gui.tFNotasUsuario.keyPressed(key, keyCode);
         gui.tFBuscador.keyPressed(key, keyCode);
         gui.tANotasUsuario.keyPressed(key, keyCode);
+        gui.tANotasAgregar.keyPressed(key, keyCode);
     }
 
     public void mousePressed(){
@@ -253,6 +254,15 @@ public class Main extends PApplet {
                 println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }
+        }else if(gui.pantallaActual== GUI.PANTALLA.AGREGAR){
+            if(gui.bOk.mouseOverButton(this)){
+                println("OK has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.VINILOS; // ??
+            }else if(gui.bCancelar.mouseOverButton(this)){
+                println("BCancelar has been pressed.");
+                gui.pantallaActual = GUI.PANTALLA.VINILOS; // ??
+            }
+            gui.tANotasAgregar.isPressed(this);
         }
         /*  b1 // Vinilos
             b2 // CDs
@@ -276,7 +286,10 @@ public class Main extends PApplet {
            gui.b7.updateHandCursor(p5) && gui.b7.isEnabled() ||
            gui.rBPlus.updateHandCursor(p5) && gui.rBPlus.enabled ||
            gui.rBFilter.updateHandCursor(p5) && gui.rBFilter.enabled ||
-           gui.bNext.mouseOverButton(p5) && gui.bNext.isEnabled()){
+           gui.bNext.mouseOverButton(p5) && gui.bNext.isEnabled() ||
+           gui.bPrev.mouseOverButton(p5) && gui.bPrev.isEnabled() ||
+           gui.bCancelar.mouseOverButton(p5) && gui.bCancelar.isEnabled() ||
+           gui.bOk.mouseOverButton(p5) && gui.bOk.isEnabled()){
                 cursor(HAND);
         }else{
             cursor(ARROW);

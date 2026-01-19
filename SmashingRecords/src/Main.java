@@ -265,6 +265,7 @@ public class Main extends PApplet {
                 // Volvemos exactamente de donde vinimos
                 gui.pantallaActual = gui.pantallaAnterior;
             }
+            gui.cbl.checkMouse(this);
             gui.tANotasAgregar.isPressed(this);
         }
         /*  b1 // Vinilos
@@ -292,7 +293,8 @@ public class Main extends PApplet {
            gui.bNext.mouseOverButton(p5) && gui.bNext.isEnabled() ||
            gui.bPrev.mouseOverButton(p5) && gui.bPrev.isEnabled() ||
            gui.bCancelar.mouseOverButton(p5) && gui.bCancelar.isEnabled() ||
-           gui.bOk.mouseOverButton(p5) && gui.bOk.isEnabled()){
+           gui.bOk.mouseOverButton(p5) && gui.bOk.isEnabled() ||
+           gui.cbl.checkCursor(this)){
                 cursor(HAND);
         }else{
             cursor(ARROW);

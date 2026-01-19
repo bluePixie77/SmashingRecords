@@ -29,7 +29,7 @@ public class GUI {
 
     // Texto
     Fonts appFonts;
-    public TextField tFInicioSesion1, tFInicioSesion2, tFNotasUsuario, tFBuscador;
+    public TextField tFInicioSesion1, tFInicioSesion2, tFBuscador, tFTitle, tFSubtitle;
 
     public TextArea tANotasUsuario, tANotasAgregar;
 
@@ -37,6 +37,7 @@ public class GUI {
     public RoundButton rBFilter, rBHeart, rBPlus;
     RadioButton radioB1, radioB2, radioB3;
     PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDisc1, imgDisc2;
+    String[] imgs = {"starON.png", "starOFF.png"};
 
     // Paged Cards
     public PagedCard2D pcMusica;   // Vinilos y CDs
@@ -71,7 +72,7 @@ public class GUI {
     };
 
     // Otros
-
+    public CheckBoxStarList cbl;
 
     // Constructor de GUI
     public GUI(PApplet p5) {
@@ -87,6 +88,7 @@ public class GUI {
         setTextFields(p5);
         setBotones(p5);
         setPagedTables(p5);
+        setOthers(p5);
     }
 
     // Setter botones
@@ -155,7 +157,11 @@ public class GUI {
         pcConcert.setCards(); // Antes decía pcMusica
         pcConcert.setImages(imgDisc1, imgDisc2);
     }
-
+    public void setOthers(PApplet p5){
+        // Construcción checkboxstarlist
+        cbl = new CheckBoxStarList(p5, 5, imgs, p5.width*0.05f, p5.height*0.72f, p5.width*0.05f, p5.height*0.065f);
+        cbl.setCheckBoxStars(3);
+    }
     // PANTALLAS DE LA GUI
     public void displayPantallaInicioSesion(PApplet p5) {
         p5.push();
@@ -266,6 +272,10 @@ public class GUI {
         bCancelar.display(p5);
         bOk.display(p5);
 
+        cbl.display(p5);
+        p5.fill(white);
+        p5.text(cbl.getNumSelected()+"/5", p5.width*0.32f, p5.height*0.77f);
+
         // Título dinámico según el origen
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         String txtTitulo = ((pantallaAnterior == PANTALLA.VINILOS) ? "AGREGAR VINILO" : "AGREGAR CD");
@@ -283,11 +293,15 @@ public class GUI {
         bCancelar.display(p5);
         bOk.display(p5);
 
+        cbl.display(p5);
+        p5.fill(white);
+        p5.text(cbl.getNumSelected()+"/5", p5.width*0.32f, p5.height*0.77f);
+
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("AGREGAR CONCIERTO", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
-        p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.45f, p5.width*0.3f);
+        p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.65f, p5.width*0.3f);
         tANotasAgregar.display(p5);
 
         p5.pop();

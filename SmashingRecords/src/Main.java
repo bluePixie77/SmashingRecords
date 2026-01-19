@@ -175,6 +175,8 @@ public class Main extends PApplet {
             }else if(gui.rBPlus.mouseOverButton(this)){
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+            }else if(gui.bNext.mouseOverButton(this)){
+                println("BNext has been pressed.");
             }
             gui.tFBuscador.isPressed(this);
         }else if(gui.pantallaActual== GUI.PANTALLA.CDS){

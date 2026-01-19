@@ -20,8 +20,7 @@ public class GUI {
     public boolean enablePantalla;
 
     // Botones
-    public Button b1, b2, b3, b4, b5, b6, b7;
-    Button bNext, bPrev; // NEXT y PREV
+    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev;
 
     // Colores
     public Colors appColors;
@@ -93,60 +92,63 @@ public class GUI {
     public void setBotones(PApplet p5) {
         b1 = new Button(p5, appColors, "Vinilos", 0, p5.height * 0.25f, p5.width * 0.20f, p5.height * 0.05f);
         b2 = new Button(p5, appColors, "CDs", 0, p5.height * 0.35f, p5.width * 0.20f, p5.height * 0.05f);
-        b3 = new Button(p5, appColors,"Conciertos", 0, p5.height * 0.45f, p5.width * 0.20f, p5.height * 0.05f);
-        b4 = new Button(p5, appColors,"Estadísticas", 0, p5.height * 0.65f, p5.width * 0.20f, p5.height * 0.05f);
-        b5 = new Button(p5, appColors,"Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
-        b6 = new Button(p5, appColors,"Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
-        b7 = new Button(p5, appColors,"Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
-        bNext = new Button(p5, appColors, "NEXT", 100 + p5.width*0.75f, 80, 60, 60);
-        bPrev = new Button(p5, appColors, "PREV", 100 + p5.width*0.75f, 100 + 60, 60, 60);
+        b3 = new Button(p5, appColors, "Conciertos", 0, p5.height * 0.45f, p5.width * 0.20f, p5.height * 0.05f);
+        b4 = new Button(p5, appColors, "Estadísticas", 0, p5.height * 0.65f, p5.width * 0.20f, p5.height * 0.05f);
+        b5 = new Button(p5, appColors, "Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
+        b6 = new Button(p5, appColors, "Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
+        b7 = new Button(p5, appColors, "Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
+        bNext = new Button(p5, appColors, "NEXT", 100 + p5.width * 0.75f, 80, 60, 60);
+        bPrev = new Button(p5, appColors, "PREV", 100 + p5.width * 0.75f, 100 + 60, 60, 60);
 
-        rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width*0.85f, p5.height*0.15f, p5.width*0.020f);
-        rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width*0.90f,p5.height*0.15f, p5.width*0.020f);
-        rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width*0.95f, p5.height*0.15f, p5.width*0.020f);
+        rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
+        rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
+        rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width * 0.95f, p5.height * 0.15f, p5.width * 0.020f);
     }
 
     public void setTextFields(PApplet p5) {
-        tFInicioSesion1 = new TextField(p5,  appColors, 40,p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
+        tFInicioSesion1 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
         tFInicioSesion2 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
-       // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
-        tFBuscador = new TextField(p5, appColors, 60,p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
+        // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
+        tFBuscador = new TextField(p5, appColors, 60, p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
 
-        tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height *0.60f, p5.width *0.70f, p5.height*0.35f, 40, 10);
+        tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 40, 10);
     }
 
     public void setMedia(PApplet p5) {
-       icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
-       icona2 = p5.loadImage("data/iconFullUser.png");
-       logo = p5.loadImage("data/logo.png");
-       imgFilter = p5.loadImage("data/imgFilter.png");
-       imgHeart = p5.loadImage("data/imgHeart.png");
-       imgPlus = p5.loadImage("data/imgPlus.png");
+        icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
+        icona2 = p5.loadImage("data/iconFullUser.png");
+        logo = p5.loadImage("data/logo.png");
+        imgFilter = p5.loadImage("data/imgFilter.png");
+        imgHeart = p5.loadImage("data/imgHeart.png");
+        imgPlus = p5.loadImage("data/imgPlus.png");
 
-       imgDisc1 = p5.loadImage("data/musicPredetBlackBG.png");
-       imgDisc2 = p5.loadImage("data/musicPredetWhiteBG.png");
+        imgDisc1 = p5.loadImage("data/musicPredetBlackBG.png");
+        imgDisc2 = p5.loadImage("data/musicPredetWhiteBG.png");
     }
 
-    public void setColors(PApplet p5){
+    public void setColors(PApplet p5) {
         bg = appColors.getFourthColor();
         titles = appColors.getFirstColor();
         text = appColors.getFourthColor();
         white = appColors.getThirdColor();
     }
 
-    public void setPagedTables(PApplet p5){
-        
-        pcMusica = new PagedCard2D(p5, appColors,2, 4, Card.tipoCard.ALBUM);
-        pcMusica.setDimensions(p5.width*0.24f, p5.height*0.25f, p5.width*0.68f, p5.height*0.75f);
+    public void setPagedTables(PApplet p5) {
+        // MÚSICA (Vinilos y CDs)
+        pcMusica = new PagedCard2D(p5, appColors, 2, 4, Card.tipoCard.ALBUM);
+        // X comienza en 22% para dejar espacio a la Sidebar (20%)
+        pcMusica.setDimensions(p5.width * 0.22f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
         pcMusica.setData(infoAlbum);
         pcMusica.setCards();
         pcMusica.setImages(imgDisc1, imgDisc2);
 
-        pcConcert = new PagedCard2D(p5, appColors,3, 2, Card.tipoCard.CONCERT);
-        pcConcert.setDimensions(50, 50, 800, 600);
-        pcMusica.setData(infoConcert);
-        pcMusica.setCards();
-        pcMusica.setImages(imgDisc1, imgDisc2);
+        // CONCIERTOS
+        pcConcert = new PagedCard2D(p5, appColors, 3, 2, Card.tipoCard.CONCERT);
+        // (Mismas dimensiones, para mantener simetría)
+        pcConcert.setDimensions(p5.width * 0.22f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
+        pcConcert.setData(infoConcert); // Antes decía pcMusica
+        pcConcert.setCards(); // Antes decía pcMusica
+        pcConcert.setImages(imgDisc1, imgDisc2);
     }
 
     // PANTALLAS DE LA GUI

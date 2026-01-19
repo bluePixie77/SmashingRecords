@@ -1,10 +1,9 @@
 import gui.smashRecPantallas.Button;
+import gui.smashRecPantallas.Card;
 import gui.smashRecPantallas.PagedCard2D;
 import processing.core.PApplet;
 import gui.GUI;
 import processing.core.PImage;
-
-import java.io.File;
 
 public class Main extends PApplet {
 
@@ -19,30 +18,12 @@ public class Main extends PApplet {
 
     Button b;*/
 
-    // Paged Card
-    PagedCard2D pcCDVinil;
-    PagedCard2D pcConcert;
+    // Paged Cards
+    //PagedCard2D pcMusica;   // Vinilos y CDs
+   // PagedCard2D pcConcert;  // Conciertos
 
-         // Dimensions dels botons
-    Button b1, b2;
-    float buttonW = 60, buttonH = 60;
-        // Dimensions de les cards
-    float cardsW = 800, cardsH = 700;
-
-    // Dades de les cards
-    String[][] info = {
-            {"Títol 0", "Lloc 0", "Data 0", "Secció 0", "Descripció 0"},
-            {"Títol 1", "Lloc 1", "Data 1", "Secció 1", "Descripció 1"},
-            {"Títol 2", "Lloc 2", "Data 2", "Secció 2", "Descripció 2"},
-            {"Títol 3", "Lloc 3", "Data 3", "Secció 1", "Descripció 3"},
-            {"Títol 4", "Lloc 4", "Data 4", "Secció 1", "Descripció 4"},
-            {"Títol 5", "Lloc 5", "Data 5", "Secció 2", "Descripció 5"},
-            {"Títol 6", "Lloc 6", "Data 6", "Secció 2", "Descripció 6"},
-            {"Títol 7", "Lloc 7", "Data 7", "Secció 1", "Descripció 7"},
-            {"Títol 8", "Lloc 8", "Data 8", "Secció 8", "Descripció 8"},
-            {"Títol 9", "Lloc 9", "Data 9", "Secció 9", "Descripció 9"},
-            {"Títol 10", "Lloc 10", "Data 10", "Secció 10", "Descripció 10"},
-    };
+    // Botones
+  //  Button bNext, bPrev; // NEXT y PREV
 
     // Imatges de les cards
     PImage img1, img2;
@@ -58,6 +39,10 @@ public class Main extends PApplet {
     public void setup(){
         gui = new GUI(this);
 
+//        // Dimensiones
+//        float buttonW = 60, buttonH = 60;                  // Botones Cards
+//        float cardsW = width*0.75f, cardsH = height*0.75f; // Espacio total para las Cards
+
         /* Load imgs
         imgs = new PImage[2];
         titulo = new String[2];
@@ -68,17 +53,18 @@ public class Main extends PApplet {
         img1 = loadImage("data/musicPredetBlackBG.png");
         img2 = loadImage("data/musicPredetWhiteBG.png");
 
-            // Creació de la taula
-        pcCDVinil = new PagedCard2D(this, 2, 4, gui.appColors);
-        pcCDVinil.setDimensions(50, 50, cardsW, cardsH);
-        pcCDVinil.setData(info);
-        pcCDVinil.setCards();
-        pcCDVinil.setImages(img1, img2);
+           /* // Creació de les PagedTables ?
+        pcMusica = new PagedCard2D(this, gui.appColors,2, 4, Card.tipoCard.ALBUM);
+        pcMusica.setDimensions(50, 50, cardsW, cardsH);
+        pcMusica.setData(infoAlbum);
+        pcMusica.setCards();
+        pcMusica.setImages(img1, img2);
 
-            // Creació dels botons
-        b1 = new Button(this, gui.appColors, "NEXT", 100 + cardsW, 80, buttonW, buttonH);
-        b2 = new Button(this, gui.appColors, "PREV", 100 + cardsW, 100 + buttonH, buttonW, buttonH);
-        //
+        pcConcert = new PagedCard2D(this, gui.appColors,3, 2, Card.tipoCard.CONCERT);
+        pcConcert.setDimensions(50, 50, 800, 600);
+        pcMusica.setData(infoConcert);
+        pcMusica.setCards();
+        pcMusica.setImages(img1, img2);*/
     }
 
     public void draw(){
@@ -119,11 +105,6 @@ public class Main extends PApplet {
         }
         // Dibuixa el botó
         b.display(this);*/
-
-        // Paged Card
-            // Dibuja las Cards paginadas
-        pcCDVinil.display(this);
-        pcCDVinil.printSelectedCard(this);
 
         // Actualitza forma del cursor
         updateCursor(this);

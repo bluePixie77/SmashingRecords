@@ -14,23 +14,35 @@ public class TestPagedCard2D extends PApplet {
         PagedCard2D pc;
         Colors appColors;
 
-
-        // Dimensions de les cards
-        float cardsW = 800, cardsH = 700;
+        // Dimensions (del conjunt)
+        float cardsW = 800, cardsH = 500; // Cards ALBUM i CONCERT
 
         // Dades de les cards
-        String[][] info = {
-                {"Títol 0", "Lloc 0", "Data 0", "Secció 0", "Descripció 0"},
-                {"Títol 1", "Lloc 1", "Data 1", "Secció 1", "Descripció 1"},
-                {"Títol 2", "Lloc 2", "Data 2", "Secció 2", "Descripció 2"},
-                {"Títol 3", "Lloc 3", "Data 3", "Secció 1", "Descripció 3"},
-                {"Títol 4", "Lloc 4", "Data 4", "Secció 1", "Descripció 4"},
-                {"Títol 5", "Lloc 5", "Data 5", "Secció 2", "Descripció 5"},
-                {"Títol 6", "Lloc 6", "Data 6", "Secció 2", "Descripció 6"},
-                {"Títol 7", "Lloc 7", "Data 7", "Secció 1", "Descripció 7"},
-                {"Títol 8", "Lloc 8", "Data 8", "Secció 8", "Descripció 8"},
-                {"Títol 9", "Lloc 9", "Data 9", "Secció 9", "Descripció 9"},
-                {"Títol 10", "Lloc 10", "Data 10", "Secció 10", "Descripció 10"},
+        String[][] infoAlbum = {
+                {"Album 0", "Autor 0", "Data 0", "Secció 0", "Descripció 0"},
+                {"Album 1", "Autor 1", "Data 1", "Secció 1", "Descripció 1"},
+                {"Album 2", "Autor 2", "Data 2", "Secció 2", "Descripció 2"},
+                {"Album 3", "Autor 3", "Data 3", "Secció 1", "Descripció 3"},
+                {"Album 4", "Autor 4", "Data 4", "Secció 1", "Descripció 4"},
+                {"Album 5", "Autor 5", "Data 5", "Secció 2", "Descripció 5"},
+                {"Album 6", "Autor 6", "Data 6", "Secció 2", "Descripció 6"},
+                {"Album 7", "Autor 7", "Data 7", "Secció 1", "Descripció 7"},
+                {"Album 8", "Autor 8", "Data 8", "Secció 8", "Descripció 8"},
+                {"Album 9", "Autor 9", "Data 9", "Secció 9", "Descripció 9"},
+                {"Album 10", "Autor 10", "Data 10", "Secció 10", "Descripció 10"},
+        };
+        String[][] infoConcert = {
+                {"Títol 0", "Autor 0", "Data 0", "Lloc 0", "Descripció 0"},
+                {"Títol 1", "Autor 1", "Data 1", "Lloc 1", "Descripció 1"},
+                {"Títol 2", "Autor 2", "Data 2", "Lloc 2", "Descripció 2"},
+                {"Títol 3", "Autor 3", "Data 3", "Lloc 1", "Descripció 3"},
+                {"Títol 4", "Autor 4", "Data 4", "Lloc 1", "Descripció 4"},
+                {"Títol 5", "Autor 5", "Data 5", "Lloc 2", "Descripció 5"},
+                {"Títol 6", "Autor 6", "Data 6", "Lloc 2", "Descripció 6"},
+                {"Títol 7", "Autor 7", "Data 7", "Lloc 1", "Descripció 7"},
+                {"Títol 8", "Autor 8", "Data 8", "Lloc 8", "Descripció 8"},
+                {"Títol 9", "Autor 9", "Data 9", "Lloc 9", "Descripció 9"},
+                {"Títol 10", "Autor 10", "Data 10", "Lloc 10", "Descripció 10"},
         };
 
         // Imatges de les cards
@@ -49,20 +61,25 @@ public class TestPagedCard2D extends PApplet {
 
         public void setup(){
 
-            // Imatges de les Categories
+            // Imatges Albums
             img1 = loadImage("data/musicPredetBlackBG.png");
             img2 = loadImage("data/musicPredetWhiteBG.png");
 
-            // Creació de la taula
+            // Instancia colores y pagedCard
             appColors = new Colors(this);
-            pc = new PagedCard2D(this, 2, 4, appColors);
-           //? pc.setColors(appColors);
-            pc.setDimensions(50, 50, cardsW, cardsH);
-            pc.setData(info);
-            pc.setCards();
-            pc.setImages(img1, img2);
+            pc = new PagedCard2D(this, appColors, 2, 4, Card.tipoCard.ALBUM);
 
-            // Creació dels botons
+            // Dimensionar y dar datos a las cards
+            pc.setDimensions(50, 50, cardsW, cardsH);
+            if(pc.tipo == Card.tipoCard.ALBUM){
+                pc.setData(infoAlbum);
+            }else if(pc.tipo == Card.tipoCard.CONCERT){
+                pc.setData(infoConcert);
+            }
+            pc.setCards();            // Creación de Cards
+            pc.setImages(img1, img2); // Asignación imágenes
+
+            // Creación botones
             b1 = new Button(this, appColors, "NEXT", 100 + cardsW, 80, buttonW, buttonH);
             b2 = new Button(this, appColors, "PREV", 100 + cardsW, 100 + buttonH, buttonW, buttonH);
         }
@@ -72,6 +89,8 @@ public class TestPagedCard2D extends PApplet {
 
             // Dibuja las Cards paginadas
             pc.display(this);
+            b1.display(this);
+            b2.display(this);
           //  pc.printSelectedCard(this);
 
             // Actualitza forma del cursor

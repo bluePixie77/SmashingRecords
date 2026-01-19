@@ -6,9 +6,9 @@ import processing.core.PImage;
 
 public class PagedCard2D extends PApplet{
 
-
     String[][] cardsData;    // Dades de les Cards
     Card[] cards;            // Cards
+    Card.tipoCard tipo;
     int numCards;            // Número total de Cards
     int numRowsPage;
     int numCardsRow;
@@ -26,10 +26,11 @@ public class PagedCard2D extends PApplet{
     int selectedCard = -1;
 
     // Constructor
-    public PagedCard2D(PApplet p5, int numRows, int numCols, Colors appColors) {
+    public PagedCard2D(PApplet p5, Colors appColors, int numRows, int numCols, Card.tipoCard tipo) {
        // appColors = new Colors(p5);
         this.appColors = appColors;
         //setColors(appColors);
+        this.tipo = tipo;
 
         this.numRowsPage = numRows;
         this.numCardsRow = numCols;
@@ -72,9 +73,16 @@ public class PagedCard2D extends PApplet{
 
             float yCard = y + (hc + 5) * nr;
             float xCard = x + (wc + 5)* nc;
-            cards[numCard] = new Card(cardsData[numCard]);
+            switch(tipo){
+                case ALBUM:
+                    cards[numCard] = new AlbumCard(cardsData[numCard]);
+                    break;
+                case CONCERT:
+                    cards[numCard] = new ConcertCard(cardsData[numCard]);
+            }
+          //  cards[numCard] = new Card(cardsData[numCard]);
             cards[numCard].setDimensions(xCard, yCard, wc, hc, 10);
-            cards[numCard].setCardColors(appColors.getFirstColor(), appColors.getSecondColor(), appColors.getThirdColor());
+            cards[numCard].setCardColors(appColors.getFirstColor(), appColors.getSecondColor(), appColors.getThirdColor(), appColors.getFourthColor());
         }
     }
 
@@ -86,6 +94,9 @@ public class PagedCard2D extends PApplet{
                 img = img1;
             }else{
                 img = img2;
+            }
+            if (cards[numCard] != null) {
+                cards[numCard].setImage(img);
             }
            /* if (cards[numCard].section == "Secció 1") {
                 img = img1;

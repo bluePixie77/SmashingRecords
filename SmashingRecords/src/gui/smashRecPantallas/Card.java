@@ -1,6 +1,5 @@
 package gui.smashRecPantallas;
 
-import gui.smashRecColors.Colors;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -13,7 +12,7 @@ public class Card {
     float x, y, w, h, b;
 
     // Colors
-    int selected, notSelected;
+    int naraFuerte, naraFlojo, blanco;
 
     // Constructors
     public Card(String title, String subTitle, float x, float y, float w, float h){
@@ -43,21 +42,21 @@ public class Card {
         this.img = img;
     }
 
-    public void setCardColors(int sel, int notSel){
-        this.selected = sel;
-        this.notSelected = notSel;
+    public void setCardColors(int naraFuerte, int naraFlojo, int blanco){
+        this.naraFuerte = naraFuerte;
+        this.naraFlojo = naraFlojo;
+        this.blanco = blanco;
     }
 
     // Dibuixa la Card
 
     public void display(PApplet p5, boolean selectedCard){
-
         p5.pushStyle();
-
+/*
         p5.stroke(0);
         p5.fill(200, 100, 100);
         p5.rect(x, y, w, h+30, b/2);
-
+*/
         if(img!=null){
             p5.image(img, x+20, y+20, w-50, h-60);
             p5.noFill();
@@ -77,13 +76,13 @@ public class Card {
         p5.stroke(0);
         */
         if(selectedCard){
-            p5.fill(200, 100, 100);
+            p5.fill(naraFuerte);
         }
         else if(this.mouseOver(p5)){
-            p5.fill(200);
+            p5.fill(naraFlojo);
         }
         else {
-            p5.fill(220);
+            p5.fill(blanco);
         }
         p5.rect(x, y, w, h, b/2);
 

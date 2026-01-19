@@ -74,7 +74,7 @@ public class PagedCard2D extends PApplet{
             float xCard = x + (wc + 5)* nc;
             cards[numCard] = new Card(cardsData[numCard]);
             cards[numCard].setDimensions(xCard, yCard, wc, hc, 10);
-            cards[numCard].setCardColors(appColors.getFourthColor(), appColors.getFirstColor());
+            cards[numCard].setCardColors(appColors.getFirstColor(), appColors.getSecondColor(), appColors.getThirdColor());
         }
     }
 

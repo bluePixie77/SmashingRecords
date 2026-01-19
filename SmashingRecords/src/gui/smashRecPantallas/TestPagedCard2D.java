@@ -70,7 +70,7 @@ public class TestPagedCard2D extends PApplet {
 
             // Dibuja las Cards paginadas
             pc.display(this);
-            pc.printSelectedCard(this);
+          //  pc.printSelectedCard(this);
 
             // Actualitza forma del cursor
             updateCursor(this);

@@ -6,8 +6,6 @@ import gui.smashRecPantallas.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.io.File;
-
 import static gui.smashRecFonts.Sizes.*;
 
 public class GUI {
@@ -87,7 +85,7 @@ public class GUI {
 
         setTextFields(p5);
         setBotones(p5);
-        setPagedTables(p5);
+        setPagedCards(p5);
         setOthers(p5);
     }
 
@@ -152,7 +150,7 @@ public class GUI {
         white = appColors.getThirdColor();
     }
 
-    public void setPagedTables(PApplet p5) {
+    public void setPagedCards(PApplet p5) {
         // MÚSICA (Vinilos y CDs)
         pcMusica = new PagedCard2D(p5, appColors, 2, 4, Card.tipoCard.ALBUM);
         // X comienza en 22% para dejar espacio a la Sidebar (20%)

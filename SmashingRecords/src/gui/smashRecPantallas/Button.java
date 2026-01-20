@@ -20,7 +20,6 @@ public class Button {
         this.w = w;
         this.h = h;
         this.enabled = true;
-        appColors = new Colors(p5);
 
         this.setColors(appColors);
     }

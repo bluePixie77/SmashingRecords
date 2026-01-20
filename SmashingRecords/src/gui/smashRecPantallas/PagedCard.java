@@ -5,7 +5,6 @@ import processing.core.PImage;
 
 public class PagedCard {
 
-
         String[][] cardsData;    // Dades de les Cards
         Card[] cards;            // Cards
         int numCards;            // Número total de Cards

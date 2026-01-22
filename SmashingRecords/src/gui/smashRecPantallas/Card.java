@@ -5,7 +5,7 @@ import processing.core.PImage;
 
 public class Card {
 
-    public enum tipoCard{ALBUM, CONCERT}
+    public enum tipoCard{ALBUM, CONCERT, ESTADIST}
     // Propietats
     PImage img;
     String title, subtitle, section;

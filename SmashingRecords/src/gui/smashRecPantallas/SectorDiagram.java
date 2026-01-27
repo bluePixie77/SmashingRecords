@@ -8,10 +8,10 @@ import static processing.core.PApplet.sin;
 import static processing.core.PConstants.TWO_PI;
 
 public
-class SectorDiagram {
+class SectorDiagram extends StatsCard{
 
     // Dimensions del Diagrama de Sectors
-    float x, y, r;
+    float r;
 
     // Informació del diagrama (textos, valors i colors)
     String[] texts;
@@ -24,8 +24,9 @@ class SectorDiagram {
 
     // Constructor
 
-    public SectorDiagram(float x, float y, float r){
-        this.x = x; this.y = y; this.r = r;
+    public SectorDiagram(String title, float x, float y, float w, float h) {
+        super(title, "Estadística de sectores", x, y, w, h);
+        this.r = w / 2f;
     }
 
     // Setters
@@ -81,5 +82,4 @@ class SectorDiagram {
         }
         p5.popStyle();
     }
-
 }

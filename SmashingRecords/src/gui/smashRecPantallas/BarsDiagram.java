@@ -2,10 +2,9 @@ package gui.smashRecPantallas;
 
 import processing.core.PApplet;
 
-public class BarsDiagram extends EstadistCard {
+public class BarsDiagram extends StatsCard {
 
     // Dimensions del diagrama de Barres
-    float x, y, w, h;
 
     // Informació del diagrama (textos, valors i colors)
     String[] texts;

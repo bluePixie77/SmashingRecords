@@ -40,6 +40,9 @@ public class GUI {
     // Paged Cards
     public PagedCard2D pcMusica;   // Vinilos y CDs
     public PagedCard2D pcConcert;  // Conciertos
+    public PagedCard2D pcStats;
+
+    public StatsCard[] misGraficos;
 
     // Dades de les cards
     String[][] infoAlbum = {
@@ -166,6 +169,35 @@ public class GUI {
         pcConcert.setData(infoConcert); // Antes decía pcMusica
         pcConcert.setCards(); // Antes decía pcMusica
         pcConcert.setImages(imgDisc1, imgDisc2);
+    }
+    public void setEstadisticas(PApplet p5) {
+        // Definimos el área donde se verá el gráfico
+        float gx = p5.width * 0.25f;
+        float gy = p5.height * 0.25f;
+        float gw = p5.width * 0.70f;
+        float gh = p5.height * 0.60f;
+
+        // Inicializamos los 3 gráficos como EstadistCard
+        BarsDiagram g1 = new BarsDiagram("Distribución por Género", gx, gy, gw, gh);
+        g1.setValues(new float[]{40, 30, 20});
+        g1.setTexts(new String[]{"Rock", "Pop", "Jazz"});
+        g1.setColors(new int[]{p5.color(255,0,0), p5.color(0,255,0), p5.color(0,0,255)});
+
+        SectorDiagram g2 = new SectorDiagram("Proporción ratings", gx + gw/2, gy + gh/2, 150, 150);
+        // g2.setValues...
+
+        LinesDiagram g3 = new LinesDiagram("Evolución Mensual", gx, gy, gw, gh);
+        // g3.setValues...
+
+        misGraficos = new StatsCard[]{g1, g2, g3};
+
+        // Configuramos la PagedCard para mostrar 1 solo elemento por página (1x1)
+        pcStats = new PagedCard2D(p5, appColors, 1, 1, Card.tipoCard.ESTADIST);
+        pcStats.setDimensions(gx, gy, gw, gh);
+
+        // Aquí es vital que tu clase PagedCard2D tenga un método para aceptar
+        // un array de objetos Card directamente
+        pcStats.setCards();
     }
     public void setOthers(PApplet p5){
         // Construcción checkboxstarlist

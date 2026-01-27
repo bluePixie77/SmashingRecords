@@ -34,7 +34,7 @@ public class TestLinesDiagram extends PApplet {
     public void setup(){
 
         // Creació del Diagrama de Barres
-        s = new LinesDiagram(50, 50, width-100, height - 200);
+        s = new LinesDiagram("Estadística lineal", 50, 50, width-100, height - 200);
 
         // Configuració de Dades (textos, valors, colors)
         s.setTexts(textos);

@@ -2,9 +2,8 @@ package gui.smashRecPantallas;
 
 import processing.core.PApplet;
 
-public class LinesDiagram {
+public class LinesDiagram extends StatsCard{
     // Dimensions del diagrama de Barres
-    float x, y, w, h;
 
     // Informació del diagrama (textos, valors i colors)
     String[] texts;
@@ -14,8 +13,8 @@ public class LinesDiagram {
 
     // Constructor
 
-    public LinesDiagram(float x, float y, float w, float h){
-        this.x = x; this.y = y; this.w = w; this.h = h;
+    public LinesDiagram(String title, float x, float y, float w, float h) {
+        super(title, "Estadística lineal", x, y, w, h);
     }
 
     // Setters

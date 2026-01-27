@@ -2,10 +2,10 @@ package gui.smashRecPantallas;
 
 import processing.core.PApplet;
 
-public class EstadistCard extends Card{
+public class StatsCard extends Card{
 
     // Usamos el constructor de Card que ya tienes
-    public EstadistCard(String title, String subTitle, float x, float y, float w, float h) {
+    public StatsCard(String title, String subTitle, float x, float y, float w, float h) {
         super(title, subTitle, x, y, w, h);
     }
 

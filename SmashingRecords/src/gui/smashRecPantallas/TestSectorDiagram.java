@@ -28,7 +28,7 @@ public class TestSectorDiagram extends PApplet {
 
     public void setup(){
         // Creació del Diagrama de Sectors
-        s = new SectorDiagram(width/2, height/2, width/3);
+        s = new SectorDiagram("Diagrama de sectores", width/2, height/2, width/3, width/3);
 
         // Configuració de Dades (textos, valors, colors)
         s.setTexts(textos);

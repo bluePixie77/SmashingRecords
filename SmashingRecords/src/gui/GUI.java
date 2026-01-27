@@ -4,7 +4,7 @@ import gui.smashRecColors.Colors;
 import gui.smashRecFonts.Fonts;
 import gui.smashRecPantallas.*;
 import processing.core.PApplet;
-import processing.core.PImage;
+import processing.core.PImage; // no da error pero no se dibuja el paged table de las estadísticas
 
 import static gui.smashRecFonts.Sizes.*;
 

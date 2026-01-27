@@ -12,6 +12,8 @@ public class GUI {
 
     // Enumerado para las pantallas
     public enum PANTALLA {INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR, AGREGAR_CONCERT}
+    public enum CatEstadistica { VINILOS, CDS, CONCIERTOS }
+    public CatEstadistica categoriaActual = CatEstadistica.VINILOS;
 
     // Pantalla actual
     public PANTALLA pantallaActual;
@@ -20,6 +22,7 @@ public class GUI {
 
     // Botones
     public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk;
+    public Button bCatVinilos, bCatCDs, bCatConciertos;
 
     // Colores
     public Colors appColors;
@@ -89,6 +92,7 @@ public class GUI {
         setTextFields(p5);
         setBotones(p5);
         setPagedCards(p5);
+        setEstadisticas(p5);
         setOthers(p5);
     }
 
@@ -110,6 +114,17 @@ public class GUI {
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
         rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width * 0.95f, p5.height * 0.15f, p5.width * 0.020f);
+
+        float xB = p5.width * 0.25f;
+        float yB = p5.height * 0.15f;
+        float wB = 120;
+        float hB = 40;
+
+        bCatVinilos = new Button(p5, appColors, "Vinilos", xB, yB, wB, hB);
+        bCatCDs = new Button(p5, appColors, "CDs", xB + wB + 10, yB, wB, hB);
+        bCatConciertos = new Button(p5, appColors, "Conciertos", xB + (wB + 10)*2, yB, wB, hB);
+        // Al empezar, Vinilos está seleccionado, así que lo "desactivamos" visualmente
+        actualizarEstadoBotones();
     }
 
     public void setTextFields(PApplet p5) {
@@ -171,33 +186,21 @@ public class GUI {
         pcConcert.setImages(imgDisc1, imgDisc2);
     }
     public void setEstadisticas(PApplet p5) {
-        // Definimos el área donde se verá el gráfico
-        float gx = p5.width * 0.25f;
-        float gy = p5.height * 0.25f;
-        float gw = p5.width * 0.70f;
-        float gh = p5.height * 0.60f;
-
-        // Inicializamos los 3 gráficos como EstadistCard
-        BarsDiagram g1 = new BarsDiagram("Distribución por Género", gx, gy, gw, gh);
-        g1.setValues(new float[]{40, 30, 20});
-        g1.setTexts(new String[]{"Rock", "Pop", "Jazz"});
-        g1.setColors(new int[]{p5.color(255,0,0), p5.color(0,255,0), p5.color(0,0,255)});
-
-        SectorDiagram g2 = new SectorDiagram("Proporción ratings", gx + gw/2, gy + gh/2, 150, 150);
-        // g2.setValues...
-
-        LinesDiagram g3 = new LinesDiagram("Evolución Mensual", gx, gy, gw, gh);
-        // g3.setValues...
-
-        misGraficos = new StatsCard[]{g1, g2, g3};
-
-        // Configuramos la PagedCard para mostrar 1 solo elemento por página (1x1)
+        // 1. Inicializar la tabla (1 fila, 1 columna para que el gráfico sea grande)
         pcStats = new PagedCard2D(p5, appColors, 1, 1, Card.tipoCard.ESTADIST);
-        pcStats.setDimensions(gx, gy, gw, gh);
+        pcStats.setDimensions(p5.width * 0.25f, p5.height * 0.25f, p5.width * 0.70f, p5.height * 0.60f);
 
-        // Aquí es vital que tu clase PagedCard2D tenga un método para aceptar
-        // un array de objetos Card directamente
-        pcStats.setCards();
+        // 2. Crear los 3 objetos de gráficos
+        misGraficos = new StatsCard[3];
+        misGraficos[0] = new SectorDiagram("Ratings", pcStats.x + pcStats.w/2, pcStats.y + pcStats.h/2, pcStats.w, pcStats.h);
+        misGraficos[1] = new LinesDiagram("Evolución", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
+        misGraficos[2] = new BarsDiagram("Géneros", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
+
+        // 3. LLAMADA CLAVE: Pasar el array de objetos directamente
+        pcStats.setCards(misGraficos);
+
+        // 4. Cargar datos iniciales
+        actualizarDatosGraficos(p5);
     }
     public void setOthers(PApplet p5){
         // Construcción checkboxstarlist
@@ -419,4 +422,33 @@ public class GUI {
             tFAgregar[i].display(p5);
         }
     }
+// otros
+    public void actualizarDatosGraficos(PApplet p5) {
+        float[] dataSectores, dataLineas, dataBarras;
+        String[] tagsSectores, tagsLineas, tagsBarras;
+
+       // if (categoriaActual == CatEstadistica.VINILOS)
+            dataSectores = new float[]{10, 25, 40, 15, 10}; // Ratings 1-5 estrellas
+            tagsSectores = new String[]{"1*", "2*", "3*", "4*", "5*"};
+            dataLineas = new float[]{2, 5, 8, 12}; // Años
+            tagsLineas = new String[]{"2021", "2022", "2023", "2024"};
+            dataBarras = new float[]{30, 50, 20}; // Géneros
+            tagsBarras = new String[]{"Punk", "Pop", "Indie"};
+
+        // Inyectamos los datos en los objetos que ya existen en el array
+        ((SectorDiagram)misGraficos[0]).setValues(dataSectores);
+        ((SectorDiagram)misGraficos[0]).setTexts(tagsSectores);
+
+        ((LinesDiagram)misGraficos[1]).setValues(dataLineas);
+        ((LinesDiagram)misGraficos[1]).setTexts(tagsLineas);
+
+        ((BarsDiagram)misGraficos[2]).setValues(dataBarras);
+        ((BarsDiagram)misGraficos[2]).setTexts(tagsBarras);
+    }
+    public void actualizarEstadoBotones() {
+        bCatVinilos.setEnabled(categoriaActual != CatEstadistica.VINILOS);
+        bCatCDs.setEnabled(categoriaActual != CatEstadistica.CDS);
+        bCatConciertos.setEnabled(categoriaActual != CatEstadistica.CONCIERTOS);
+    }
+
 }

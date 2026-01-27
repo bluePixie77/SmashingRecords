@@ -262,6 +262,23 @@ public class Main extends PApplet {
             } else if (gui.b5.mouseOverButton(this)) {
                 println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
+            } else if (gui.bCatVinilos.mouseOverButton(this) && gui.bCatVinilos.enabled) {
+                gui.categoriaActual = GUI.CatEstadistica.VINILOS;
+                gui.actualizarDatosGraficos(this);
+                gui.actualizarEstadoBotones();
+            } else if (gui.bCatCDs.mouseOverButton(this) && gui.bCatCDs.enabled) {
+                gui.categoriaActual = GUI.CatEstadistica.CDS;
+                gui.actualizarDatosGraficos(this);
+                gui.actualizarEstadoBotones();
+            } else if (gui.bCatConciertos.mouseOverButton(this) && gui.bCatConciertos.enabled) {
+                gui.categoriaActual = GUI.CatEstadistica.CONCIERTOS;
+                gui.actualizarDatosGraficos(this);
+                gui.actualizarEstadoBotones();
+            }
+            // Navegación de páginas (cambiar de tipo de gráfico)
+            if (gui.pcStats != null) {
+                if (gui.bNext.mouseOverButton(this)) gui.pcStats.nextPage();
+                if (gui.bPrev.mouseOverButton(this)) gui.pcStats.prevPage();
             }
         }else if(gui.pantallaActual == GUI.PANTALLA.AGREGAR || gui.pantallaActual == GUI.PANTALLA.AGREGAR_CONCERT){
             if(gui.bOk.mouseOverButton(this) || gui.bCancelar.mouseOverButton(this)){

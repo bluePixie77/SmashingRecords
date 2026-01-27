@@ -21,7 +21,7 @@ public class PagedCard2D extends PApplet{
     public Colors appColors;
     int bg, titles, text, white;
 
-    float x, y, w, h;
+    public float x, y, w, h;
     float wc, hc;
     int selectedCard = -1;
 
@@ -84,6 +84,15 @@ public class PagedCard2D extends PApplet{
             cards[numCard].setDimensions(xCard, yCard, wc, hc, 10);
             cards[numCard].setCardColors(appColors.getFirstColor(), appColors.getSecondColor(), appColors.getThirdColor(), appColors.getFourthColor());
         }
+    }
+    // para estadísticas
+    public void setCards(Card[] objetosGraficos) {
+        this.cards = objetosGraficos;
+        this.numCards = objetosGraficos.length;
+
+        // Calculamos el total de páginas basado en el número de objetos
+        // (numCards - 1) para evitar que si tienes 3 cartas en 1x1 te diga que hay 4 páginas
+        this.numTotalPages = (this.numCards - 1) / this.numCardsPage;
     }
 
 

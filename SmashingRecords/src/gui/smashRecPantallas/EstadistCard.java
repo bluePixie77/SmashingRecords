@@ -4,8 +4,13 @@ import processing.core.PApplet;
 
 public class EstadistCard extends Card{
 
-    public EstadistCard(String[] info) { super(info); }
+    // Usamos el constructor de Card que ya tienes
+    public EstadistCard(String title, String subTitle, float x, float y, float w, float h) {
+        super(title, subTitle, x, y, w, h);
+    }
 
+    // Sobrescribimos el display original de Card
+    // PagedCard2D llamará a este método
     public void display(PApplet p5, boolean selected) {
         p5.pushStyle();
         // Fondo de la Card
@@ -26,9 +31,7 @@ public class EstadistCard extends Card{
         p5.textAlign(p5.LEFT);
         p5.fill(negro);
         p5.textSize(14);
-        p5.text(title, x + 10, y + fotoSize + 25);     // Nombre Album
-        p5.textSize(11);
-        p5.text(subtitle, x + 10, y + fotoSize + 40);  // Autor
+        p5.text(title, x + 10, y + fotoSize + 25);     // Nombre Estadística
         p5.popStyle();
     }
 }

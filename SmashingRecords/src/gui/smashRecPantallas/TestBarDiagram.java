@@ -27,7 +27,7 @@ public class TestBarDiagram extends PApplet {
 
     public void setup(){
         // Creació del Diagrama de Barres
-        s = new BarsDiagram(50, 50, width/1.2f, height/1.2f);
+        s = new BarsDiagram("Diagrama de Barras", 50, 50, width/1.2f, height/1.2f);
 
         // Configuració de Dades (textos, valors, colors)
         s.setTexts(textos);

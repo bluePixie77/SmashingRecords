@@ -2,7 +2,7 @@ package gui.smashRecPantallas;
 
 import processing.core.PApplet;
 
-public class BarsDiagram {
+public class BarsDiagram extends EstadistCard {
 
     // Dimensions del diagrama de Barres
     float x, y, w, h;
@@ -18,12 +18,11 @@ public class BarsDiagram {
 
     // Constructor
 
-    public BarsDiagram(float x, float y, float w, float h){
-        this.x = x; this.y = y; this.w = w; this.h = h;
+    public BarsDiagram(String title, float x, float y, float w, float h) {
+        super(title, "Estadística de Barras", x, y, w, h);
     }
 
     // Setters
-
     public void setTexts(String[] t){
         this.texts = t;
     }
@@ -45,12 +44,11 @@ public class BarsDiagram {
         this.colors = c;
     }
 
-    // Dibuixa el Diagrama de Sectors
-
+    // Dibujo Diagrama de Sectores
     public void display(PApplet p5){
         p5.pushStyle();
 
-        float widthBar = w / (float) this.values.length;
+        float widthBar = this.w / (float) this.values.length;
 
         for(int i=0; i<this.values.length; i++){
 

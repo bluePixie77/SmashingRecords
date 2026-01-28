@@ -178,6 +178,7 @@ public class Main extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
                 for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
                     tf.w = width * 0.50f;
+                    tf.x = width * 0.38f;
                 }
             }else if(gui.bNext.mouseOverButton(this)){
                 gui.pcMusica.nextPage();
@@ -211,6 +212,7 @@ public class Main extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
                 for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
                     tf.w = width * 0.50f;
+                    tf.x = width * 0.38f;
                 }
             }else if(gui.bNext.mouseOverButton(this)){
                 gui.pcMusica.nextPage();
@@ -244,6 +246,7 @@ public class Main extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR_CONCERT;
                 for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
                     tf.w = width * 0.30f;
+                    tf.x = width * 0.70f;
                 }
             }else if(gui.bNext.mouseOverButton(this) && gui.bNext.isEnabled()){
                 gui.pcConcert.nextPage();

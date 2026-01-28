@@ -136,8 +136,8 @@ public class GUI {
 
         tFAgregar = new TextField[4]; // Array de textFields
 
-        float startX = p5.width * 0.45f;      // Alineado a la derecha de la imagen
-        float startY = p5.height * 0.25f;     // Debajo de los botones OK/Cancelar
+        float startX = p5.width * 0.38f;      // Alineado a la derecha de la imagen
+        float startY = p5.height * 0.27f;     // Debajo de los botones OK/Cancelar
         float fieldW = p5.width * 0.50f;      // Ancho del campo
         float fieldH = p5.height * 0.05f;     // Alto del campo
         float spacing = p5.height * 0.10f;    // Espacio vertical entre campos
@@ -370,7 +370,7 @@ public class GUI {
         p5.text("AGREGAR CONCIERTO", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
-        p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.65f, p5.width*0.3f);
+        p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.62f, p5.width*0.3f);
 
         displayTFAgregar(p5, "Lugar / Recinto", "Ciudad");
         tANotasAgregar.display(p5);

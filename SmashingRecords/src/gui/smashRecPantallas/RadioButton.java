@@ -34,7 +34,6 @@ public class RadioButton {
 
         // Dibuixa el CheckBox
         public void display(PApplet p5){
-
             p5.pushStyle();
             p5.stroke(borderColor);
             p5.strokeWeight(2);

@@ -134,7 +134,7 @@ public class GUI {
         // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
         tFBuscador = new TextField(p5, appColors, 60, p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
 
-        tFAgregar = new TextField[4];
+        tFAgregar = new TextField[4]; // Array de textFields
 
         float startX = p5.width * 0.45f;      // Alineado a la derecha de la imagen
         float startY = p5.height * 0.25f;     // Debajo de los botones OK/Cancelar
@@ -444,7 +444,6 @@ public class GUI {
             tFAgregar[i].display(p5);
         }
     }
-// otros
     public void actualizarDatosGraficos(PApplet p5) {
         float[] dataSectores, dataLineas, dataBarras;
         String[] tagsSectores, tagsLineas, tagsBarras;
@@ -483,16 +482,10 @@ public class GUI {
             ((BarsDiagram) misGraficos[2]).setValues(dataBarras);
             ((BarsDiagram) misGraficos[2]).setTexts(tagsBarras);
             ((BarsDiagram) misGraficos[2]).setColors(this.paletaGraficos);
-
-
-       /* int[] coloresPrueba = { p5.color(255, 100, 100), p5.color(100, 255, 100),
-                p5.color(100, 100, 255), p5.color(255, 255, 100),
-                p5.color(255, 100, 255) };*/
     }
     public void actualizarEstadoBotones() {
         bCatVinilos.setEnabled(categoriaActual != CatEstadistica.VINILOS);
         bCatCDs.setEnabled(categoriaActual != CatEstadistica.CDS);
         bCatConciertos.setEnabled(categoriaActual != CatEstadistica.CONCIERTOS);
     }
-
 }

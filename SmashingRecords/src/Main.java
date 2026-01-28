@@ -176,6 +176,9 @@ public class Main extends PApplet {
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+                for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
+                    tf.w = width * 0.50f;
+                }
             }else if(gui.bNext.mouseOverButton(this)){
                 gui.pcMusica.nextPage();
             }
@@ -206,6 +209,9 @@ public class Main extends PApplet {
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
+                for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
+                    tf.w = width * 0.50f;
+                }
             }else if(gui.bNext.mouseOverButton(this)){
                 gui.pcMusica.nextPage();
             }
@@ -236,7 +242,10 @@ public class Main extends PApplet {
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR_CONCERT;
-            }else if(gui.bNext.mouseOverButton(this)){
+                for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
+                    tf.w = width * 0.30f;
+                }
+            }else if(gui.bNext.mouseOverButton(this) && gui.bNext.isEnabled()){
                 gui.pcConcert.nextPage();
             }
             else if(gui.bPrev.mouseOverButton(this) && gui.bPrev.isEnabled()){
@@ -287,6 +296,9 @@ public class Main extends PApplet {
             }
             gui.cbl.checkMouse(this);
             gui.tANotasAgregar.isPressed(this);
+            for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
+                tf.isPressed(this);
+            }
         }
         /*  b1 // Vinilos
             b2 // CDs
@@ -317,8 +329,7 @@ public class Main extends PApplet {
            gui.cbl.checkCursor(this) ||
            gui.bCatVinilos.updateHandCursor(p5) ||
            gui.bCatCDs.updateHandCursor(p5) ||
-           gui.bCatConciertos.updateHandCursor(p5) ||
-           gui.pcStats.checkMouseOver(p5)) {
+           gui.bCatConciertos.updateHandCursor(p5)) {
                 cursor(HAND);
         }else{
             cursor(ARROW);

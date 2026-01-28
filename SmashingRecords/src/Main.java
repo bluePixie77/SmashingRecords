@@ -314,7 +314,11 @@ public class Main extends PApplet {
            gui.bPrev.mouseOverButton(p5) && gui.bPrev.isEnabled() ||
            gui.bCancelar.mouseOverButton(p5) && gui.bCancelar.isEnabled() ||
            gui.bOk.mouseOverButton(p5) && gui.bOk.isEnabled() ||
-           gui.cbl.checkCursor(this)){
+           gui.cbl.checkCursor(this) ||
+           gui.bCatVinilos.updateHandCursor(p5) ||
+           gui.bCatCDs.updateHandCursor(p5) ||
+           gui.bCatConciertos.updateHandCursor(p5) ||
+           gui.pcStats.checkMouseOver(p5)) {
                 cursor(HAND);
         }else{
             cursor(ARROW);

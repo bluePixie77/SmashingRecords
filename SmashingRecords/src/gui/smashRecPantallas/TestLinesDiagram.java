@@ -47,7 +47,7 @@ public class TestLinesDiagram extends PApplet {
         background(255);
 
         // Dibuix del Diagrama de Línies
-        s.display(this);
+        s.displayDiagram(this);
     }
 
     // ******************* KEYBOARD interaction ***************************** //

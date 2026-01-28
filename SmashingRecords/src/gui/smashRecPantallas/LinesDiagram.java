@@ -40,9 +40,7 @@ public class LinesDiagram extends StatsCard{
 
     // Dibuixa el Diagrama de Sectors
 
-    public void display(PApplet p5){
-
-
+    public void displayDiagram(PApplet p5){
         p5.pushStyle();
 
         p5.stroke(0); p5.strokeWeight(2);

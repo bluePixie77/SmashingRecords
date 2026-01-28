@@ -46,6 +46,7 @@ public class GUI {
     public PagedCard2D pcStats;
 
     public StatsCard[] misGraficos;
+    public int[] paletaGraficos;
 
     // Dades de les cards
     String[][] infoAlbum = {
@@ -166,6 +167,15 @@ public class GUI {
         titles = appColors.getFirstColor();
         text = appColors.getFourthColor();
         white = appColors.getThirdColor();
+
+        paletaGraficos = new int[] {
+                bg,
+                titles,
+                text,
+                white,
+                p5.color(255, 200, 50),
+        };
+
     }
 
     public void setPagedCards(PApplet p5) {
@@ -303,7 +313,15 @@ public class GUI {
         p5.push();
         p5.background(bg);
         displaySidebar(p5);
-        tFBuscador.display(p5);
+       // tFBuscador.display(p5);
+
+        bCatVinilos.display(p5);
+        bCatCDs.display(p5);
+        bCatConciertos.display(p5);
+        bNext.display(p5);
+        bPrev.display(p5);
+
+        pcStats.display(p5);
 
         p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
         p5.text("Estadísticas", p5.width * 0.25f, p5.height * 0.10f);
@@ -427,23 +445,45 @@ public class GUI {
         float[] dataSectores, dataLineas, dataBarras;
         String[] tagsSectores, tagsLineas, tagsBarras;
 
-       // if (categoriaActual == CatEstadistica.VINILOS)
+        if (categoriaActual == CatEstadistica.VINILOS) {
             dataSectores = new float[]{10, 25, 40, 15, 10}; // Ratings 1-5 estrellas
+            tagsSectores = new String[]{"1*", "2*", "3*", "4*", "5*"};
+            dataLineas = new float[]{4, 2, 1, 10}; // Años
+            tagsLineas = new String[]{"2021", "2022", "2023", "2024"};
+            dataBarras = new float[]{42, 24, 20}; // Géneros
+            tagsBarras = new String[]{"Punk", "Pop", "Indie"};
+        }else if (categoriaActual == CatEstadistica.CDS) {
+            dataSectores = new float[]{3, 2, 1, 10, 40}; // Ratings 1-5 estrellas
             tagsSectores = new String[]{"1*", "2*", "3*", "4*", "5*"};
             dataLineas = new float[]{2, 5, 8, 12}; // Años
             tagsLineas = new String[]{"2021", "2022", "2023", "2024"};
-            dataBarras = new float[]{30, 50, 20}; // Géneros
+            dataBarras = new float[]{70, 33, 32}; // Géneros
             tagsBarras = new String[]{"Punk", "Pop", "Indie"};
+        } else {// categoriaActual == CatEstadistica.CONCIERTOS
+            dataSectores = new float[]{1, 2, 41, 14, 70}; // Ratings 1-5 estrellas
+            tagsSectores = new String[]{"1*", "2*", "3*", "4*", "5*"};
+            dataLineas = new float[]{1, 2, 7, 14}; // Años
+            tagsLineas = new String[]{"2021", "2022", "2023", "2024"};
+            dataBarras = new float[]{20, 56, 21}; // Géneros
+            tagsBarras = new String[]{"Punk", "Pop", "Indie"};
+        }
+            // Inyectamos los datos en los objetos que ya existen en el array
+            ((SectorDiagram) misGraficos[0]).setValues(dataSectores);
+            ((SectorDiagram) misGraficos[0]).setTexts(tagsSectores);
+            ((SectorDiagram) misGraficos[0]).setColors(this.paletaGraficos);
 
-        // Inyectamos los datos en los objetos que ya existen en el array
-        ((SectorDiagram)misGraficos[0]).setValues(dataSectores);
-        ((SectorDiagram)misGraficos[0]).setTexts(tagsSectores);
+            ((LinesDiagram) misGraficos[1]).setValues(dataLineas);
+            ((LinesDiagram) misGraficos[1]).setTexts(tagsLineas);
+            ((LinesDiagram) misGraficos[1]).setColors(bg);
 
-        ((LinesDiagram)misGraficos[1]).setValues(dataLineas);
-        ((LinesDiagram)misGraficos[1]).setTexts(tagsLineas);
+            ((BarsDiagram) misGraficos[2]).setValues(dataBarras);
+            ((BarsDiagram) misGraficos[2]).setTexts(tagsBarras);
+            ((BarsDiagram) misGraficos[2]).setColors(this.paletaGraficos);
 
-        ((BarsDiagram)misGraficos[2]).setValues(dataBarras);
-        ((BarsDiagram)misGraficos[2]).setTexts(tagsBarras);
+
+       /* int[] coloresPrueba = { p5.color(255, 100, 100), p5.color(100, 255, 100),
+                p5.color(100, 100, 255), p5.color(255, 255, 100),
+                p5.color(255, 100, 255) };*/
     }
     public void actualizarEstadoBotones() {
         bCatVinilos.setEnabled(categoriaActual != CatEstadistica.VINILOS);

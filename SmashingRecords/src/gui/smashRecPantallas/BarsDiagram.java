@@ -44,7 +44,7 @@ public class BarsDiagram extends StatsCard {
     }
 
     // Dibujo Diagrama de Sectores
-    public void display(PApplet p5){
+    public void displayDiagram(PApplet p5){
         p5.pushStyle();
 
         float widthBar = this.w / (float) this.values.length;

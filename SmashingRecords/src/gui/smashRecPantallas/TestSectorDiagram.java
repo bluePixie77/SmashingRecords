@@ -41,7 +41,7 @@ public class TestSectorDiagram extends PApplet {
         background(255);
 
         // Dibuix del Diagrama de Barres
-        s.display(this);
+        s.displayDiagram(this);
     }
 
     // ******************* KEYBOARD interaction ***************************** //

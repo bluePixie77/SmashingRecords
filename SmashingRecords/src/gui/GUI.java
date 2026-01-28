@@ -26,7 +26,7 @@ public class GUI {
 
     // Colores
     public Colors appColors;
-    int bg, titles, text, white;
+    int black, gris, white, narFuerte, narFlojo, yellow, pink;
 
     // Texto
     Fonts appFonts;
@@ -106,7 +106,7 @@ public class GUI {
         b5 = new Button(p5, appColors, "Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
         b6 = new Button(p5, appColors, "Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
         b7 = new Button(p5, appColors, "Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
-        bNext = new Button(p5, appColors, ">", p5.width * 0.90f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
+        bNext = new Button(p5, appColors, ">", p5.width * 0.93f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
         bPrev = new Button(p5, appColors, "<", p5.width * 0.24f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
         bCancelar = new Button(p5, appColors, "CANCELAR", p5.width * 0.75f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
         bOk       = new Button(p5, appColors, "OK", p5.width * 0.85f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
@@ -163,26 +163,30 @@ public class GUI {
     }
 
     public void setColors(PApplet p5) {
-        bg = appColors.getFourthColor();
-        titles = appColors.getFirstColor();
-        text = appColors.getFourthColor();
+        black = appColors.getFourthColor();
+        gris = appColors.getFifthColor();
         white = appColors.getThirdColor();
+        narFuerte = appColors.getFirstColor();
+        narFlojo = appColors.getSecondColor();
+        yellow = appColors.getSixthColor();
+        pink = appColors.getSeventhColor();
 
         paletaGraficos = new int[] {
-                bg,
-                titles,
-                text,
-                white,
-                p5.color(255, 200, 50),
+                narFuerte,
+                narFlojo,
+                yellow,
+                pink,
+                gris,
+                black,
+                white
         };
-
     }
 
     public void setPagedCards(PApplet p5) {
         // MÚSICA (Vinilos y CDs)
         pcMusica = new PagedCard2D(p5, appColors, 2, 4, Card.tipoCard.ALBUM);
-        // X comienza en 22% para dejar espacio a la Sidebar (20%)
-        pcMusica.setDimensions(p5.width * 0.22f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
+        // X comienza en 24% para dejar espacio a la Sidebar (20%)
+        pcMusica.setDimensions(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
         pcMusica.setData(infoAlbum);
         pcMusica.setCards();
         pcMusica.setImages(imgDisc1, imgDisc2);
@@ -190,7 +194,7 @@ public class GUI {
         // CONCIERTOS
         pcConcert = new PagedCard2D(p5, appColors, 3, 2, Card.tipoCard.CONCERT);
         // (Mismas dimensiones, para mantener simetría)
-        pcConcert.setDimensions(p5.width * 0.22f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
+        pcConcert.setDimensions(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
         pcConcert.setData(infoConcert); // Antes decía pcMusica
         pcConcert.setCards(); // Antes decía pcMusica
         pcConcert.setImages(imgDisc1, imgDisc2);
@@ -198,11 +202,11 @@ public class GUI {
     public void setEstadisticas(PApplet p5) {
         // 1. Inicializar la tabla (1 fila, 1 columna para que el gráfico sea grande)
         pcStats = new PagedCard2D(p5, appColors, 1, 1, Card.tipoCard.ESTADIST);
-        pcStats.setDimensions(p5.width * 0.25f, p5.height * 0.25f, p5.width * 0.70f, p5.height * 0.60f);
+        pcStats.setDimensions(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
 
         // 2. Crear los 3 objetos de gráficos
         misGraficos = new StatsCard[3];
-        misGraficos[0] = new SectorDiagram("Ratings", pcStats.x + pcStats.w/2, pcStats.y + pcStats.h/2, pcStats.w, pcStats.h);
+        misGraficos[0] = new SectorDiagram("Ratings", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
         misGraficos[1] = new LinesDiagram("Evolución", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
         misGraficos[2] = new BarsDiagram("Géneros", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
 
@@ -220,20 +224,20 @@ public class GUI {
     // PANTALLAS DE LA GUI
     public void displayPantallaInicioSesion(PApplet p5) {
         p5.push();
-            p5.background(bg);
+            p5.background(black);
             p5.rectMode(p5.CENTER);
             p5.textAlign(p5.CENTER);
-            p5.fill(bg); p5.strokeWeight(2); p5.stroke(white);
+            p5.fill(black); p5.strokeWeight(2); p5.stroke(white);
             p5.rect(p5.width * 0.5f, p5.height * 0.5f, p5.width * 0.33f, p5.height * 0.80f);
 
             displayLogoMayor(p5); // logo en dimensión grande
 
-            p5.textFont(appFonts.getSecondFont()); p5.fill(titles); p5.textSize(medidaTitulo-14);
+            p5.textFont(appFonts.getSecondFont()); p5.fill(narFuerte); p5.textSize(medidaTitulo-14);
             p5.text("THE SMASHING RECORDS", p5.width*0.5f, p5.height*0.16f);
         p5.pop();
         p5.push();
             p5.textFont(appFonts.getThirdFont());
-            p5.fill(titles);
+            p5.fill(narFuerte);
             p5.textSize(medidaIntermedia);
             p5.text("Correo electrónico", p5.width * 0.36f, p5.height * 0.49f);
             tFInicioSesion1.display(p5);
@@ -246,7 +250,7 @@ public class GUI {
 
     public void displayPantallaUsuario(PApplet p5) {
         p5.push();
-        p5.background(bg);
+        p5.background(black);
         displaySidebar(p5);
 
         p5.circle(p5.width * 0.60f, p5.height * 0.20f, p5.width * 0.14f);
@@ -265,24 +269,24 @@ public class GUI {
 
     public void displayPantallaVinilos(PApplet p5) {
         p5.push();
-        p5.background(bg);
+        p5.background(black);
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
         displayDisposicionMusica(p5);
 
-        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo);
         p5.text("VINILOS", p5.width * 0.25f, p5.height * 0.10f);
         p5.pop();
     }
 
     public void displayPantallaCDs(PApplet p5) {
         p5.push();
-        p5.background(bg);
+        p5.background(black);
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
         displayDisposicionMusica(p5);
 
-        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo);
         p5.text("CD's", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.fill(white);
@@ -292,7 +296,7 @@ public class GUI {
 
     public void displayPantallaConciertos(PApplet p5) {
         p5.push();
-        p5.background(bg);
+        p5.background(black);
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
         p5.push();
@@ -301,7 +305,7 @@ public class GUI {
             bPrev.display(p5);
         p5.pop();
 
-        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo);
         p5.text("Conciertos", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.fill(white);
@@ -311,7 +315,7 @@ public class GUI {
 
     public void displayPantallaEstadisticas(PApplet p5) {
         p5.push();
-        p5.background(bg);
+        p5.background(black);
         displaySidebar(p5);
        // tFBuscador.display(p5);
 
@@ -323,14 +327,14 @@ public class GUI {
 
         pcStats.display(p5);
 
-        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo);
         p5.text("Estadísticas", p5.width * 0.25f, p5.height * 0.10f);
         p5.pop();
     }
 
     public void displayPantallaAgregarMusica(PApplet p5) {
         p5.push();
-        p5.background(bg);
+        p5.background(black);
         displayLogo(p5);
         bCancelar.display(p5);
         bOk.display(p5);
@@ -340,7 +344,7 @@ public class GUI {
         p5.text(cbl.getNumSelected()+"/5", p5.width*0.32f, p5.height*0.77f);
 
         // Título dinámico según el origen
-        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo);
         String txtTitulo = ((pantallaAnterior == PANTALLA.VINILOS) ? "AGREGAR VINILO" : "AGREGAR CD");
         p5.text(txtTitulo, p5.width * 0.25f, p5.height * 0.10f);
 
@@ -353,7 +357,7 @@ public class GUI {
     }
     public void displayPantallaAgregarConcert(PApplet p5) {
         p5.push();
-        p5.background(bg);
+        p5.background(black);
         displayLogo(p5);
         bCancelar.display(p5);
         bOk.display(p5);
@@ -362,7 +366,7 @@ public class GUI {
         p5.fill(white);
         p5.text(cbl.getNumSelected()+"/5", p5.width*0.32f, p5.height*0.77f);
 
-        p5.textFont(appFonts.getFontAt(0)); p5.fill(titles); p5.textSize(medidaTitulo);
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo);
         p5.text("AGREGAR CONCIERTO", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
@@ -396,7 +400,7 @@ public class GUI {
 
     public void displaySidebar(PApplet p5) {
         p5.pop();
-            p5.fill(bg); p5.strokeWeight(2); p5.stroke(white);
+            p5.fill(black); p5.strokeWeight(2); p5.stroke(white);
             p5.rect(0, 0, p5.width * 0.20f, p5.height);
             displayLogo(p5);
             p5.textFont(appFonts.getFontAt(2));
@@ -474,7 +478,7 @@ public class GUI {
 
             ((LinesDiagram) misGraficos[1]).setValues(dataLineas);
             ((LinesDiagram) misGraficos[1]).setTexts(tagsLineas);
-            ((LinesDiagram) misGraficos[1]).setColors(bg);
+            ((LinesDiagram) misGraficos[1]).setColors(black);
 
             ((BarsDiagram) misGraficos[2]).setValues(dataBarras);
             ((BarsDiagram) misGraficos[2]).setTexts(tagsBarras);

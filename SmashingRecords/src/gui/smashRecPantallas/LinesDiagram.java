@@ -44,8 +44,8 @@ public class LinesDiagram extends StatsCard{
         p5.pushStyle();
         // 1. DEFINIR MÁRGENES (Ajusta estos valores para cambiar el tamaño)
         float marginLR = 60;   // Margen izquierdo (para que el eje Y no pegue al borde)
-        float marginT = 80;   // Margen superior (espacio para el título)
-        float marginB = 80;   // Margen inferior (espacio para etiquetas de texto)
+        float marginT = 100;   // Margen superior (espacio para el título)
+        float marginB = 70;   // Margen inferior (espacio para etiquetas de texto)
 
         // 2. CALCULAR ÁREA ÚTIL
         float xEje = this.x + marginLR;

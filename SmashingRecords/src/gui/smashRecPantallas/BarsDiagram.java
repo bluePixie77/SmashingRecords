@@ -49,8 +49,8 @@ public class BarsDiagram extends StatsCard {
 
         // 1. DEFINIR MÁRGENES (Iguales a LinesDiagram para coherencia visual)
         float marginLR = 60;   // Margen izquierdo y derecho
-        float marginT = 80;    // Margen superior (espacio título)
-        float marginB = 80;    // Margen inferior (espacio etiquetas)
+        float marginT = 110;    // Margen superior (espacio título)
+        float marginB = 70;    // Margen inferior (espacio etiquetas)
 
         // 2. CALCULAR ÁREA ÚTIL
         float xInicio = this.x + marginLR;

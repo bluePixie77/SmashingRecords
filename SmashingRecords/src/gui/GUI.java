@@ -478,7 +478,7 @@ public class GUI {
 
             ((LinesDiagram) misGraficos[1]).setValues(dataLineas);
             ((LinesDiagram) misGraficos[1]).setTexts(tagsLineas);
-            ((LinesDiagram) misGraficos[1]).setColors(black);
+            ((LinesDiagram) misGraficos[1]).setColors(narFuerte);
 
             ((BarsDiagram) misGraficos[2]).setValues(dataBarras);
             ((BarsDiagram) misGraficos[2]).setTexts(tagsBarras);

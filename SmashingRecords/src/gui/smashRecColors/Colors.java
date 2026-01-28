@@ -11,12 +11,14 @@ public class Colors {
 
     // Setter (colores de la app)
     public void setColors(PApplet p5){
-        this.colors = new int[5];
+        this.colors = new int[7];
         this.colors[0] = p5.color(0xFFE03C00); // Naranja fuerte
         this.colors[1] = p5.color(0xFFE47738); // Naranja flojo
-        this.colors[2] = p5.color(255); // Blanco
+        this.colors[2] = p5.color(0xFFFFFFFF); // Blanco
         this.colors[3] = p5.color(0xFF020202); // Negro
-        this.colors[4] = p5.color(100);        // Gris
+        this.colors[4] = p5.color(0xFF646464); // Gris
+        this.colors[5] = p5.color(0xFFFFC832); // Amarillo
+        this.colors[6] = p5.color(0xFFE56399); // Rosa
     }
 
     // Getters
@@ -26,6 +28,9 @@ public class Colors {
     public int getThirdColor(){ return this.colors[2]; }
     public int getFourthColor(){ return this.colors[3]; }
     public int getFifthColor(){ return this.colors[4]; }
+    public int getSixthColor(){ return this.colors[5]; }
+    public int getSeventhColor(){ return this.colors[6]; }
+
 
     public int getColorAt(int i){ return this.colors[i]; }
 

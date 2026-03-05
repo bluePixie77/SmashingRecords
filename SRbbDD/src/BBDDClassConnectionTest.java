@@ -18,7 +18,4 @@ public class BBDDClassConnectionTest {
             System.out.println(g[i]);
         }
     }
-
-
-
 }

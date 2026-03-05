@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DataBase {
@@ -30,5 +31,21 @@ public class DataBase {
         catch(Exception e) {
             System.out.println(e);
         }
+    }
+
+    public String getInfo(String nomTaula, String nomColumna, String nomClau, String identificador){
+        try{ // query
+            String q =  " SELECT " + nomColumna +
+                        " FROM " + nomTaula +
+                        " WHERE "+ nomClau  + " = '" + identificador + "' ";
+            System.out.println(q);
+            ResultSet rs= query.executeQuery(q); // Conjunt de resultats (com una col·lecció)
+            rs.next();
+            return rs.getString(nomColumna);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return "";
     }
 }

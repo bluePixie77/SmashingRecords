@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DataBase {
@@ -30,5 +31,58 @@ public class DataBase {
         catch(Exception e) {
             System.out.println(e);
         }
+    }
+
+    // Retorna la informació d'una casella en base a un filtre
+    public String getInfo(String nomTaula, String nomColumna, String nomClau, String identificador){
+        try{ // query
+            String q =  " SELECT " + nomColumna +
+                    " FROM " + nomTaula +
+                    " WHERE "+ nomClau  + " = '" + identificador + "' ";
+            System.out.println(q);
+            ResultSet rs= query.executeQuery(q); // Conjunt de resultats (com una col·lecció)
+            rs.next();
+            return rs.getString(nomColumna);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return "";
+    }
+
+    // Retorna el número total de files d'una taula
+    public int getNumFilesTaula(String nomTaula){
+        String q = "SELECT COUNT(*) AS num FROM "+ nomTaula; // * vol dir tot
+        try{
+            ResultSet rs = query.executeQuery(q);
+            rs.next();
+            return rs.getInt("num");
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    // Retorna totes les caselles d'una columna
+    public String[] getInfoArray(String nomTaula, String nomColumna){
+        int n = getNumFilesTaula(nomTaula);
+        String[] info = new String[n];
+        String q = "SELECT "+ nomColumna +
+                   " FROM " + nomTaula +
+                   " ORDER BY " + nomColumna + " ASC";
+        System.out.println(q);
+        try{
+            ResultSet rs = query.executeQuery(q);
+            int f=0;
+            while(rs.next()){
+                info[f] = rs.getString(1);
+                f++;
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return info;
     }
 }

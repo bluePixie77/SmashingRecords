@@ -68,15 +68,15 @@ public class DataBase {
     public String[] getInfoArray(String nomTaula, String nomColumna){
         int n = getNumFilesTaula(nomTaula);
         String[] info = new String[n];
-        String q = "SELECT "+ nomColumna +
+        String q = " SELECT " + nomColumna +
                    " FROM " + nomTaula +
-                   " ORDER BY " + nomColumna + " ASC";
+                   " ORDER BY " + nomColumna + " ASC"; // ASC: ascendentment, DES: descendentment
         System.out.println(q);
         try{
             ResultSet rs = query.executeQuery(q);
-            int f=0;
+            int f=0;    // Recorregut col·lecció ResultSet (múltiples dades)
             while(rs.next()){
-                info[f] = rs.getString(1);
+                info[f] = rs.getString(nomColumna);
                 f++;
             }
         }

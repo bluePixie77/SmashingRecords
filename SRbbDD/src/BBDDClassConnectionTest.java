@@ -12,6 +12,11 @@ public class BBDDClassConnectionTest {
 
         int f = db.getNumFilesTaula("Género");
         System.out.println("\n"+f);
+
+        String[] g = db.getInfoArray("Ubicación", "Nombre");
+        for(int i=0;i<g.length;i++){
+            System.out.println(g[i]);
+        }
     }
 
 

@@ -210,7 +210,7 @@ public class GUI {
         misGraficos[1] = new LinesDiagram("Evolución", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
         misGraficos[2] = new BarsDiagram("Géneros", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
 
-        // 3. LLAMADA CLAVE: Pasar el array de objetos directamente
+        // 3. Pasar el array de objetos directamente
         pcStats.setCards(misGraficos);
 
         // 4. Cargar datos iniciales

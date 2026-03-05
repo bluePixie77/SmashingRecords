@@ -1,6 +1,3 @@
-import gui.smashRecPantallas.Button;
-import gui.smashRecPantallas.Card;
-import gui.smashRecPantallas.PagedCard2D;
 import processing.core.PApplet;
 import gui.GUI;
 import processing.core.PImage;
@@ -10,6 +7,7 @@ public class Main extends PApplet {
     // Atributs
         // GUI
     GUI gui;
+    public static DataBase db;
 
     /* Load Images
     PImage[] imgs;
@@ -31,6 +29,9 @@ public class Main extends PApplet {
     }
     public void setup(){
         gui = new GUI(this);
+
+        db = new DataBase("admin", "l0n3lyr04d", "SmashingRecords");
+        db.connect();
 
 //        // Dimensiones
 //        float buttonW = 60, buttonH = 60;                  // Botones Cards

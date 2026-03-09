@@ -85,4 +85,15 @@ public class DataBase {
         }
         return info;
     }
+
+    public String[][] getInfoArray2D(){
+        int nf = getNumFilesTaula("N");
+        String [][] info = new String[nf][3];
+        String q = "SELECT numero, nom, curs FROM unitat ORDER BY numero ASC";
+        System.out.println(q);
+        try{
+           // ResultSet rs = query.executeQuery(q);
+
+        }
+    }
 }

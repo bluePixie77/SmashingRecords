@@ -17,5 +17,17 @@ public class BBDDClassConnectionTest {
         for(int i=0;i<g.length;i++){
             System.out.println(g[i]);
         }
+
+        // Numero d'usuaris
+        int n = db.getNumFilesTaula("Usuario");
+        System.out.printf("Hi ha %d clients. \n", n);
+
+        //
+        String pass = db.getPasswordAmbCorreu("mmm@hotmail.com");
+        System.out.println(pass);
+
+        // Correus de tots els usuaris ordenats alfabèticament
+        String[] correus = db.getCorreosTodosUsuarios();
+        db.printArray1D(correus);
     }
 }

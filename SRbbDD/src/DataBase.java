@@ -162,4 +162,26 @@ public class DataBase {
         }
         return null;
     }
+
+    public String[][] getInfoTotsUsuarios(){
+        String q = "SELECT CorreoElectrónico, Contraseña, Descripción FROM Usuario ORDER BY CorreoElectrónico ASC";
+        System.out.println(q);
+        try{
+            int numFiles = getNumFilesTaula("Usuario");
+            String[][] info = new String[numFiles][3];
+            ResultSet rs = query.executeQuery(q);
+            int f=0;
+            while(rs.next()){
+                info[f][0] = rs.getString("CorreoElectrónico");
+                info[f][1] = rs.getString("Contraseña");
+                info[f][2] = rs.getString("Descripción");
+                f++;
+            }
+            return info;
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
 }

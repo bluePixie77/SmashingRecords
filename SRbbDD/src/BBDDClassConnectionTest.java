@@ -29,5 +29,9 @@ public class BBDDClassConnectionTest {
         // Correus de tots els usuaris ordenats alfabèticament
         String[] correus = db.getCorreosTodosUsuarios();
         db.printArray1D(correus);
+
+        // Tota la info de la taula Usuario
+        String[][] infoUsuarios = db.getInfoTotsUsuarios();
+        db.printArray2D(infoUsuarios);
     }
 }

@@ -168,7 +168,7 @@ public class DataBase {
         System.out.println(q);
         try{
             int numFiles = getNumFilesTaula("Usuario");
-            String[][] info = new String[numFiles][3];
+            String[][] info = new String[numFiles][4];
             ResultSet rs = query.executeQuery(q);
             int f=0;
             while(rs.next()){
@@ -183,5 +183,50 @@ public class DataBase {
             System.out.println(e);
         }
         return null;
+    }
+
+    public String[][] getInfoConciertoMarta(){
+
+        String qF = "SELECT COUNT(*) AS n " +
+                "FROM Concierto c, Usuario u " +
+                "WHERE c.Correo_Usuario=u.CorreoElectrónico AND u.NombreUsuario='Marta' ";
+        System.out.println(qF);
+
+        int numFiles = getNumFilesQuery(qF);
+        String[][] info = new String[numFiles][4];
+
+        String q = "SELECT c.Título, c.Artista AS art, c.Fecha, u.CorreoElectrónico AS correo " +
+                   "FROM Concierto c, Usuario u " +
+                   "WHERE c.Correo_Usuario=u.CorreoElectrónico AND u.NombreUsuario='Marta' "+
+                   "ORDER BY c.Artista ASC";
+        System.out.println(q);
+        try {
+           ResultSet rs = query.executeQuery(q);
+           int f=0;
+           while(rs.next()){
+               info[f][0] = rs.getString("titulo");
+               info[f][1] = rs.getString("artista");
+               info[f][2] = String.valueOf( rs.getInt("fecha"));
+               info[f][3] = rs.getString("correo");
+               f++;
+           }
+
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return info;
+    }
+
+    public int getNumFilesQuery(String q){ // SELECT COUNT(*) AS n
+        try{
+            ResultSet rs = query.executeQuery(q);
+            rs.next();
+            return rs.getInt('n');
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return 0;
     }
 }

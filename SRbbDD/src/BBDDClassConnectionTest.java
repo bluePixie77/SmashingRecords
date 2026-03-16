@@ -33,5 +33,9 @@ public class BBDDClassConnectionTest {
         // Tota la info de la taula Usuario
         String[][] infoUsuarios = db.getInfoTotsUsuarios();
         db.printArray2D(infoUsuarios);
+
+        //
+        String[][] infoMarta = db.getInfoConciertoMarta();
+        db.printArray2D(infoMarta);
     }
 }

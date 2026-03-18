@@ -35,7 +35,8 @@ public class BBDDClassConnectionTest {
         db.printArray2D(infoUsuarios);
 
         //
-        String[][] infoMarta = db.getInfoConciertoMarta();
+        System.out.println();
+        String[][] infoMarta = db.getInfoConciertoMartas();
         db.printArray2D(infoMarta);
     }
 }

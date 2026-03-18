@@ -120,7 +120,7 @@ public class DataBase {
         System.out.println();
         for(int i=0;i<info.length;i++){
             System.out.printf("%d: ", i);
-            for(int j=0;j<info.length;j++){
+            for(int j=0;j<info[i].length;j++){
                 System.out.printf("%s \t", info[i][j]);
             }
             System.out.println();
@@ -185,7 +185,7 @@ public class DataBase {
         return null;
     }
 
-    public String[][] getInfoConciertoMarta(){
+    public String[][] getInfoConciertoMartas(){
 
         String qF = "SELECT COUNT(*) AS n " +
                 "FROM Concierto c, Usuario u " +
@@ -204,9 +204,9 @@ public class DataBase {
            ResultSet rs = query.executeQuery(q);
            int f=0;
            while(rs.next()){
-               info[f][0] = rs.getString("titulo");
-               info[f][1] = rs.getString("artista");
-               info[f][2] = String.valueOf( rs.getInt("fecha"));
+               info[f][0] = rs.getString("Título");
+               info[f][1] = rs.getString("art"); // alias definido en la query
+               info[f][2] = String.valueOf( rs.getInt("Fecha"));
                info[f][3] = rs.getString("correo");
                f++;
            }
@@ -222,7 +222,7 @@ public class DataBase {
         try{
             ResultSet rs = query.executeQuery(q);
             rs.next();
-            return rs.getInt('n');
+            return rs.getInt("n");
         }
         catch(Exception e){
             System.out.println(e);

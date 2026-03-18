@@ -20,12 +20,12 @@ public class DataBase {
         this.dataBaseName = dataBaseName;
     }
 
-    // Mètodes
+    // Métodos
     public void connect(){
         try {
             c = DriverManager.getConnection("jdbc:mysql://localhost:8889/"+dataBaseName, user, password);
             query = c.createStatement();
-            System.out.println("Connectat a la BBDD! :) ");
+            System.out.println("Conectado a la BBDD! :) ");
             connectat = true;
         }
         catch(Exception e) {
@@ -33,7 +33,7 @@ public class DataBase {
         }
     }
 
-    // Retorna la informació d'una casella en base a un filtre
+    // Retorno de la información de una casilla en base a un filtro
     public String getInfo(String nomTaula, String nomColumna, String nomClau, String identificador){
         try{ // query
             String q =  " SELECT " + nomColumna +   // SELECT nomColumna AS N (canviar/possar nom N)
@@ -51,7 +51,7 @@ public class DataBase {
         return "";
     }
 
-    // Retorna el número total de files d'una taula
+    // Retorno del número total de filas de una tabla
     public int getNumFilesTaula(String nomTaula){
         String q = "SELECT COUNT(*) AS num FROM "+ nomTaula; // * vol dir tot
         try{
@@ -65,7 +65,7 @@ public class DataBase {
         return 0;
     }
 
-    // Retorna totes les caselles d'una columna
+    // Retorno de todas las casillas de una columna
     public String[] getInfoArray(String nomTaula, String nomColumna){
         int n = getNumFilesTaula(nomTaula);
         String[] info = new String[n];
@@ -127,7 +127,7 @@ public class DataBase {
         }
     }
 
-    // Retorn contrasenya d'un client amb un cert correu
+    // Retorno contraseña cliente con un cierto correo
     public String getPasswordAmbCorreu(String correu){
         String q = "SELECT Contraseña FROM Usuario WHERE CorreoElectrónico = '" + correu + "'";
         System.out.println(q);

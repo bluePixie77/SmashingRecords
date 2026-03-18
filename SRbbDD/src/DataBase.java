@@ -189,15 +189,15 @@ public class DataBase {
 
         String qF = "SELECT COUNT(*) AS n " +
                 "FROM Concierto c, Usuario u " +
-                "WHERE c.Correo_Usuario=u.CorreoElectrónico AND u.NombreUsuario='Marta' ";
+                "WHERE c.NombreUsuario=u.NombreUsuario AND u.CorreoElectrónico='xxx@gmail.com' ";
         System.out.println(qF);
 
         int numFiles = getNumFilesQuery(qF);
         String[][] info = new String[numFiles][4];
 
-        String q = "SELECT c.Título, c.Artista AS art, c.Fecha, u.CorreoElectrónico AS correo " +
+        String q = "SELECT c.Título, c.Artista AS art, c.Fecha, u.NombreUsuario AS nom " +
                    "FROM Concierto c, Usuario u " +
-                   "WHERE c.Correo_Usuario=u.CorreoElectrónico AND u.NombreUsuario='Marta' "+
+                   "WHERE c.NombreUsuario=u.NombreUsuario AND u.CorreoElectrónico='xxx@gmail.com' "+
                    "ORDER BY c.Artista ASC";
         System.out.println(q);
         try {
@@ -206,8 +206,8 @@ public class DataBase {
            while(rs.next()){
                info[f][0] = rs.getString("Título");
                info[f][1] = rs.getString("art"); // alias definido en la query
-               info[f][2] = String.valueOf( rs.getInt("Fecha"));
-               info[f][3] = rs.getString("correo");
+               info[f][2] = rs.getString("Fecha"); //String.valueOf( rs.getInt("Fecha"));
+               info[f][3] = rs.getString("nom");
                f++;
            }
 

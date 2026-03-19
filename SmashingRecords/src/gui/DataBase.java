@@ -1,3 +1,5 @@
+package gui;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -87,6 +89,29 @@ public class DataBase {
         return info;
     }
 
+    public String[][] getInfoArrayPetit2DConcert(){
+        int nf = getNumFilesTaula("Concierto");
+        String[][] info = new String[nf][2];
+        String q = "SELECT Título, Artista FROM Concierto ORDER BY Artista ASC";
+        System.out.println(q);
+        try{
+            ResultSet rs = query.executeQuery(q);
+            int f=0;
+            while(rs.next()){
+                info[f][0] = rs.getString("Título"); // String.valueOf( rs.getInt("numero"));
+                info[f][1] = rs.getString("Artista");
+                //info[f][2] = rs.getString("descripción"); // String.valueOf( rs.getInt("curs"));
+                f++;
+            }
+            return info;
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return info;
+    }
+
+    /*
     public String[][] getInfoArray2D(){
         int nf = getNumFilesTaula("unitat");
         String[][] info = new String[nf][3];
@@ -109,6 +134,29 @@ public class DataBase {
 
         return info;
     }
+     */
+    /*
+    public String[][] getInfoTaulaUnitatCurs(int curs){
+        int numFiles = getNumRowsQuery("SELECT COUNT(*) AS n FROM unitat WHERE curs = '"+curs+"'");
+        int numCols  = 3;
+        String[][] info = new String[numFiles][numCols];
+        try {
+            ResultSet rs = query.executeQuery( "SELECT numero, nom, curs FROM unitat WHERE curs= '"+curs+"'");
+            int nr = 0;
+            while (rs.next()) {
+                info[nr][0] = String.valueOf(rs.getInt("numero"));
+                info[nr][1] = rs.getString("nom");
+                info[nr][2] = String.valueOf(rs.getInt("curs"));
+                nr++;
+            }
+            return info;
+        }
+        catch(Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+     */
 
     public void printArray1D(String[] info){
         System.out.println();

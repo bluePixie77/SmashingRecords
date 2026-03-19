@@ -28,7 +28,7 @@ public class Card {
     public Card(String[] info){
         this.title = info[0];
         this.subtitle = info[1];
-        this.section = info[3];
+        this.section = info.length>2 ? info[3] : "";
     }
 
     //Setters

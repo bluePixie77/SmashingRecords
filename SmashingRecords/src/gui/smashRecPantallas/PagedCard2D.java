@@ -95,7 +95,6 @@ public class PagedCard2D extends PApplet{
         this.numTotalPages = (this.numCards - 1) / this.numCardsPage;
     }
 
-
     public void setImages(PImage img1, PImage img2) {
         PImage img;
         for(int numCard=0; numCard<numCards; numCard++){

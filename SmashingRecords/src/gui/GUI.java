@@ -1,5 +1,6 @@
 package gui;
 
+import com.sun.tools.javac.Main;
 import gui.smashRecColors.Colors;
 import gui.smashRecFonts.Fonts;
 import gui.smashRecPantallas.*;
@@ -15,6 +16,7 @@ public class GUI {
     public enum CatEstadistica { VINILOS, CDS, CONCIERTOS }
     public CatEstadistica categoriaActual = CatEstadistica.VINILOS;
 
+
     // Pantalla actual
     public PANTALLA pantallaActual;
     public PANTALLA pantallaAnterior;
@@ -27,6 +29,8 @@ public class GUI {
     // Colores
     public Colors appColors;
     int black, gris, white, narFuerte, narFlojo, yellow, pink;
+
+    DataBase db;
 
     // Texto
     Fonts appFonts;
@@ -62,25 +66,16 @@ public class GUI {
             {"Album 9", "Autor 9", "Data 9", "Secció 9", "Descripció 9"},
             {"Album 10", "Autor 10", "Data 10", "Secció 10", "Descripció 10"},
     };
-    String[][] infoConcert = {
-            {"Concert 0", "Autor 0", "Data 0", "Lloc 0", "Descripció 0"},
-            {"Concert 1", "Autor 1", "Data 1", "Lloc 1", "Descripció 1"},
-            {"Concert 2", "Autor 2", "Data 2", "Lloc 2", "Descripció 2"},
-            {"Concert 3", "Autor 3", "Data 3", "Lloc 1", "Descripció 3"},
-            {"Concert 4", "Autor 4", "Data 4", "Lloc 1", "Descripció 4"},
-            {"Concert 5", "Autor 5", "Data 5", "Lloc 2", "Descripció 5"},
-            {"Concert 6", "Autor 6", "Data 6", "Lloc 2", "Descripció 6"},
-            {"Concert 7", "Autor 7", "Data 7", "Lloc 1", "Descripció 7"},
-            {"Concert 8", "Autor 8", "Data 8", "Lloc 8", "Descripció 8"},
-            {"Concert 9", "Autor 9", "Data 9", "Lloc 9", "Descripció 9"},
-            {"Concert 10", "Autor 10", "Data 10", "Lloc 10", "Descripció 10"},
-    };
+    String[][] infoConcert;
 
     // Otros
     public CheckBoxStarList cbl;
 
     // Constructor de GUI
-    public GUI(PApplet p5) {
+    public GUI(PApplet p5, DataBase db) {
+
+        this.db = db;
+
         pantallaActual = PANTALLA.INICIO;
 
         appColors = new Colors(p5);
@@ -160,6 +155,8 @@ public class GUI {
 
         imgDisc1 = p5.loadImage("data/musicPredetBlackBG.png");
         imgDisc2 = p5.loadImage("data/musicPredetWhiteBG.png");
+
+        infoConcert = db.getInfoArrayPetit2DConcert();
     }
 
     public void setColors(PApplet p5) {
@@ -183,6 +180,8 @@ public class GUI {
     }
 
     public void setPagedCards(PApplet p5) {
+       int files = db.getNumFilesTaula("Concierto");
+
         // MÚSICA (Vinilos y CDs)
         pcMusica = new PagedCard2D(p5, appColors, 2, 4, Card.tipoCard.ALBUM);
         // X comienza en 24% para dejar espacio a la Sidebar (20%)
@@ -192,11 +191,11 @@ public class GUI {
         pcMusica.setImages(imgDisc1, imgDisc2);
 
         // CONCIERTOS
-        pcConcert = new PagedCard2D(p5, appColors, 3, 2, Card.tipoCard.CONCERT);
+        pcConcert = new PagedCard2D(p5, appColors, 4, 2, Card.tipoCard.CONCERT);
         // (Mismas dimensiones, para mantener simetría)
         pcConcert.setDimensions(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
-        pcConcert.setData(infoConcert); // Antes decía pcMusica
-        pcConcert.setCards(); // Antes decía pcMusica
+        pcConcert.setData(infoConcert);
+        pcConcert.setCards();
         pcConcert.setImages(imgDisc1, imgDisc2);
     }
     public void setEstadisticas(PApplet p5) {
@@ -256,6 +255,8 @@ public class GUI {
         p5.circle(p5.width * 0.60f, p5.height * 0.20f, p5.width * 0.14f);
         p5.textAlign(p5.CENTER);
         p5.textSize(medidaSubtitulo); p5.textFont(appFonts.getThirdFont()); p5.fill(white);
+
+        //db.getNomUsuario
         p5.text("Nombre: Jane Doe", p5.width * 0.60f, p5.height * 0.38f);
         p5.text("Correo: janeDoe@gmail.com", p5.width * 0.60f, p5.height * 0.45f);
         b7.display(p5); // Cerrar sesión

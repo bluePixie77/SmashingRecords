@@ -1,3 +1,4 @@
+import gui.DataBase;
 import processing.core.PApplet;
 import gui.GUI;
 import processing.core.PImage;
@@ -28,10 +29,12 @@ public class Main extends PApplet {
         fullScreen();
     }
     public void setup(){
-        gui = new GUI(this);
-
         db = new DataBase("admin", "l0n3lyr04d", "SmashingRecords");
         db.connect();
+
+        gui = new GUI(this, db);
+
+
 
 //        // Dimensiones
 //        float buttonW = 60, buttonH = 60;                  // Botones Cards

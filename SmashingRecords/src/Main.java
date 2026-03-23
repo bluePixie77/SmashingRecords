@@ -34,8 +34,6 @@ public class Main extends PApplet {
 
         gui = new GUI(this, db);
 
-
-
 //        // Dimensiones
 //        float buttonW = 60, buttonH = 60;                  // Botones Cards
 //        float cardsW = width*0.75f, cardsH = height*0.75f; // Espacio total para las Cards

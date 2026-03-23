@@ -277,4 +277,20 @@ public class DataBase {
         }
         return 0;
     }
+
+    // INSERTS
+    public void insertaUsuario(String n, String p){
+        String q = "INSERT INTO Usuario (nombre, contraseña)" +
+                "VALUES ('" + n + "', '" + p + "')";
+        System.out.println(q);
+
+        try{
+            query.execute(q);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+
 }

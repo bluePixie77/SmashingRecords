@@ -1,6 +1,5 @@
 package gui;
 
-import com.sun.tools.javac.Main;
 import gui.smashRecColors.Colors;
 import gui.smashRecFonts.Fonts;
 import gui.smashRecPantallas.*;
@@ -23,7 +22,7 @@ public class GUI {
     public boolean enablePantalla;
 
     // Botones
-    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk;
+    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk, bEliminarMultimedia;
     public Button bCatVinilos, bCatCDs, bCatConciertos;
 
     // Colores
@@ -105,7 +104,7 @@ public class GUI {
         bPrev = new Button(p5, appColors, "<", p5.width * 0.24f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
         bCancelar = new Button(p5, appColors, "CANCELAR", p5.width * 0.75f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
         bOk       = new Button(p5, appColors, "OK", p5.width * 0.85f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
-
+        bEliminarMultimedia = new Button(p5, appColors, "ELIMINAR", p5.width * 0.60f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
 
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
@@ -339,6 +338,7 @@ public class GUI {
         displayLogo(p5);
         bCancelar.display(p5);
         bOk.display(p5);
+        bEliminarMultimedia.display(p5);
 
         cbl.display(p5);
         p5.fill(white);
@@ -362,6 +362,7 @@ public class GUI {
         displayLogo(p5);
         bCancelar.display(p5);
         bOk.display(p5);
+        bEliminarMultimedia.display(p5);
 
         cbl.display(p5);
         p5.fill(white);

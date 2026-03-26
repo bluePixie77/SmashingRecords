@@ -110,19 +110,40 @@ public class Main extends PApplet {
         pushStyle();
         if(loginWrong && gui.pantallaActual== GUI.PANTALLA.INICIO){
             fill(255);
-            text("Nom y/o contraseña incorrecto", width/2, height/2);
+            text("Nom y/o contraseña incorrecto", 500, 500);
         }
         popStyle();
     }
 
+    public void keyTyped(){
+        gui.tFInicioSesion1.keyTyped(key);
+        gui.tFInicioSesion2.keyTyped(key);
+        gui.tFBuscador.keyTyped(key);
+        gui.tANotasUsuario.keyTyped(key);
+        gui.tANotasAgregar.keyTyped(key);
+        for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
+            tf.keyTyped(key);
+        }
+
+    }
     public void keyPressed(){
-       /* if(key=='0'){
+        gui.tFInicioSesion1.keyPressed(keyCode);
+        gui.tFInicioSesion2.keyPressed(keyCode);
+        gui.tFBuscador.keyPressed(keyCode);
+        gui.tANotasUsuario.keyPressed(keyCode);
+        gui.tANotasAgregar.keyPressed(keyCode);
+        for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
+            tf.keyPressed(keyCode);
+        }
+
+        /* if(key=='0'){
             gui.pantallaActual = GUI.PANTALLA.INICIO;
         } else if(key=='1'){
             gui.pantallaActual = GUI.PANTALLA.USUARIO;
         }else if(key=='2'){
             gui.pantallaActual = GUI.PANTALLA.VINILOS;
-        }*/
+        }
+
         gui.tFInicioSesion1.keyPressed(key, keyCode);
         gui.tFInicioSesion2.keyPressed(key, keyCode);
        // gui.tFNotasUsuario.keyPressed(key, keyCode);
@@ -132,6 +153,7 @@ public class Main extends PApplet {
         for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
             tf.keyPressed(key, keyCode);
         }
+        */
     }
 
     public void mousePressed(){
@@ -192,7 +214,7 @@ public class Main extends PApplet {
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
-                for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
+                for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) { // bucle for each
                     tf.w = width * 0.50f;
                     tf.x = width * 0.38f;
                 }
@@ -311,6 +333,8 @@ public class Main extends PApplet {
         }else if(gui.pantallaActual == GUI.PANTALLA.AGREGAR || gui.pantallaActual == GUI.PANTALLA.AGREGAR_CONCERT){
             if(gui.bOk.mouseOverButton(this) || gui.bCancelar.mouseOverButton(this)){
                 // Volvemos exactamente de donde vinimos
+                gui.pantallaActual = gui.pantallaAnterior;
+            }else if(gui.bEliminarMultimedia.mouseOverButton(this)){
                 gui.pantallaActual = gui.pantallaAnterior;
             }
             gui.cbl.checkMouse(this);

@@ -77,6 +77,23 @@ public class TextField {
             }
         }
     }
+    public void keyPressed(int keyCode) {
+        if (!selected) return;
+
+        if (keyCode == BACKSPACE) {
+            removeText();
+        }
+    }
+
+    // Gestiona entrada de text real (inclou accents)
+    public void keyTyped(char key) {
+        if (!selected) return;
+
+        // Evita caracteres de control
+        if (key == '\n' || key == '\r' || key == '\b') return;
+
+        addText(key);
+    }
 
     // Añadir la letra c al final del texto
     public void addText(char c) {

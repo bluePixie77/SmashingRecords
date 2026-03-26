@@ -279,19 +279,35 @@ public class DataBase {
     }
 
     // INSERTS
-    public void insertaUsuario(String n, String p){
+    public void insertaUsuario(String n, String p) {
         String q = "INSERT INTO Usuario (nombre, contraseña)" +
                 "VALUES ('" + n + "', '" + p + "')";
         System.out.println(q);
 
-        try{
+        try {
             query.execute(q);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+    // Verificar Usuario
+    public boolean loginCorrecto(String n, String p) {
+        String q = "SELECT COUNT(*) AS N " +
+                   "FROM Usuario " +
+                   "WHERE NombreUsuario = '"+ n +"' AND Contraseña = '"+p+"'";
+        System.out.println(q);
+
+        try{
+            ResultSet rs = query.executeQuery(q);
+            rs.next();
+            int nn = rs.getInt("N");
+            return (nn == 1);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
 
 
 

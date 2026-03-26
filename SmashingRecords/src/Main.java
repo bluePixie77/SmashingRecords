@@ -9,6 +9,7 @@ public class Main extends PApplet {
         // GUI
     GUI gui;
     public static DataBase db;
+    boolean loginWrong = false;
 
     /* Load Images
     PImage[] imgs;
@@ -106,6 +107,12 @@ public class Main extends PApplet {
 
         // Actualitza forma del cursor
         updateCursor(this);
+        pushStyle();
+        if(loginWrong && gui.pantallaActual== GUI.PANTALLA.INICIO){
+            fill(255);
+            text("Nom y/o contraseña incorrecto", width/2, height/2);
+        }
+        popStyle();
     }
 
     public void keyPressed(){
@@ -128,14 +135,21 @@ public class Main extends PApplet {
     }
 
     public void mousePressed(){
-        if(gui.pantallaActual== GUI.PANTALLA.INICIO){
-            if(gui.b6.mouseOverButton(this)){
+        if(gui.pantallaActual== GUI.PANTALLA.INICIO) {
+            if (gui.b6.mouseOverButton(this)) {
                 println("B6 has been pressed.");
-                gui.pantallaActual = GUI.PANTALLA.USUARIO;
+                String nom = gui.tFInicioSesion1.getText();
+                String pass = gui.tFInicioSesion2.getText();
+                if (db.loginCorrecto(nom, pass)) {
+                    gui.pantallaActual = GUI.PANTALLA.USUARIO;
+                } else {
+                    loginWrong = true;
+                }
             }
             gui.tFInicioSesion1.isPressed(this);
             gui.tFInicioSesion2.isPressed(this);
         }
+
         else if(gui.pantallaActual== GUI.PANTALLA.USUARIO){
             if(gui.b1.mouseOverButton(this)){
                 println("B1 has been pressed.");
@@ -309,7 +323,7 @@ public class Main extends PApplet {
             b2 // CDs
             b3 // Conciertos
             b4 // Estadísticas
-            b5 // Sesión
+            b5 // Sesión (de la sidebar)
             b6 // Iniciar sesión
             b7 // Cerrar sesión */
         /*if(b.mouseOverButton(this)){

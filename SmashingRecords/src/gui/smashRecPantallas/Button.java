@@ -39,7 +39,7 @@ public class Button {
 
     // Getters
     public boolean isEnabled(){
-        return  this.enabled;
+        return this.enabled;
     }
 
     // Dibuja el botó

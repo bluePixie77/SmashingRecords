@@ -335,6 +335,7 @@ public class Main extends PApplet {
                 // Volvemos exactamente de donde vinimos
                 gui.pantallaActual = gui.pantallaAnterior;
             }else if(gui.bEliminarMultimedia.mouseOverButton(this)){
+                System.out.println("MULTIMEDIA ELIMINADA");
                 gui.pantallaActual = gui.pantallaAnterior;
             }
             gui.cbl.checkMouse(this);
@@ -369,6 +370,7 @@ public class Main extends PApplet {
            gui.bPrev.mouseOverButton(p5) && gui.bPrev.isEnabled() ||
            gui.bCancelar.mouseOverButton(p5) && gui.bCancelar.isEnabled() ||
            gui.bOk.mouseOverButton(p5) && gui.bOk.isEnabled() ||
+           gui.bEliminarMultimedia.mouseOverButton(p5) && gui.bEliminarMultimedia.isEnabled() ||
            gui.cbl.checkCursor(this) ||
            gui.bCatVinilos.updateHandCursor(p5) ||
            gui.bCatCDs.updateHandCursor(p5) ||

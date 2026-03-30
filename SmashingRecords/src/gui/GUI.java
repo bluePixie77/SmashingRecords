@@ -7,10 +7,42 @@ import processing.core.PApplet;
 import processing.core.PImage; // no da error pero no se dibuja el paged table de las estadísticas
 
 import static gui.smashRecFonts.Sizes.*;
-
+/**
+ * Clase principal de la interfaz gráfica de usuario (GUI) de la aplicación
+ * The Smashing Records. Gestiona todas las pantallas, componentes visuales
+ * y la lógica de navegación entre vistas.
+ *
+ * <p>La GUI se organiza en torno a un conjunto de pantallas definidas por el
+ * enumerado {@link PANTALLA}. Cada pantalla agrupa un subconjunto de los
+ * componentes visuales declarados en esta clase (botones, campos de texto,
+ * tarjetas paginadas, etc.), que son inicializados en el constructor y
+ * reutilizados a lo largo del ciclo de vida de la aplicación.</p>
+ *
+ * <p>Esta clase depende de la librería Processing ({@code PApplet}) para el
+ * renderizado 2D y de {@link DataBase} para obtener datos persistentes que
+ * se muestran en las distintas vistas.</p>
+ *
+ * @author  Equipo SmashRecords
+ * @version 1.0
+ */
 public class GUI {
 
-    // Enumerado para las pantallas
+    // ─── Enumerados ───────────────────────────────────────────────────────────
+
+    /**
+     * Identifica cada una de las pantallas navegables de la aplicación.
+     *
+     * <ul>
+     *   <li>{@code INICIO}         – Pantalla de inicio de sesión.</li>
+     *   <li>{@code USUARIO}        – Perfil y notas del usuario autenticado.</li>
+     *   <li>{@code VINILOS}        – Catálogo de vinilos.</li>
+     *   <li>{@code CDS}            – Catálogo de CDs.</li>
+     *   <li>{@code CONCIERTOS}     – Catálogo de conciertos.</li>
+     *   <li>{@code ESTADISTICAS}   – Panel de estadísticas y gráficos.</li>
+     *   <li>{@code AGREGAR}        – Formulario para añadir un vinilo o CD.</li>
+     *   <li>{@code AGREGAR_CONCERT}– Formulario para añadir un concierto.</li>
+     * </ul>
+     */
     public enum PANTALLA {INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR, AGREGAR_CONCERT}
     public enum CatEstadistica { VINILOS, CDS, CONCIERTOS }
     public CatEstadistica categoriaActual = CatEstadistica.VINILOS;

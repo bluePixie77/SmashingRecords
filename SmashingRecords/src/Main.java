@@ -5,6 +5,10 @@ import gui.GUI;
 import processing.core.PImage;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main extends PApplet {
 
@@ -13,15 +17,13 @@ public class Main extends PApplet {
     GUI gui;
     public static DataBase db;
     boolean loginWrong = false;
-
+    File file;
+    String rutaCarpeta = "C:\\Users\\tonim\\Desktop\\imatges\\";
     /*Imatges de les cards
     PImage img1, img2;
     String titol="";
     File file;
     String rutaCarpeta = "C:\\Usuaris\\mariaramis\\Escriptori\\";*/
-
-    // Botó
-    Button bLoad, bSave;
     
     public static void main(String[] args) {
         PApplet.main("Main");
@@ -209,9 +211,18 @@ public class Main extends PApplet {
             else if(gui.bPrev.mouseOverButton(this) && gui.bPrev.isEnabled()){
                 gui.pcMusica.prevPage();
             }
-            else {
-                gui.pcMusica.checkCardSelection(this);
+            else if(gui.bLoadImage.mouseOverButton(this)){
+                // Obrim el dialeg
+                selectInput("Selecciona una imatge ...", "fileSelected");
+            }else if(gui.bSaveImageToDB.mouseOverButton(this)){
+                // Guardar la imatge en una carpeta de l'ordinador
+                copiar(file, rutaCarpeta, titol);
+                copy();
             }
+            else{
+                    gui.pcMusica.checkCardSelection(this);
+                }
+
             gui.tFBuscador.isPressed(this);
         }else if(gui.pantallaActual== GUI.PANTALLA.CDS){
             if(gui.b1.mouseOverButton(this)){
@@ -359,7 +370,8 @@ public class Main extends PApplet {
            gui.cbl.checkCursor(this) ||
            gui.bCatVinilos.updateHandCursor(p5) ||
            gui.bCatCDs.updateHandCursor(p5) ||
-           gui.bCatConciertos.updateHandCursor(p5)) {
+           gui.bCatConciertos.updateHandCursor(p5)) ||
+           gui.bLoadImage.mouseOverButton(p5) || gui.bSaveImageToDB.mouseOverButton(p5)){
                 cursor(HAND);
         }else{
             cursor(ARROW);
@@ -375,4 +387,32 @@ public class Main extends PApplet {
             numImg++;
         }
     }*/
+
+    // Carrega Imatge
+    public void fileSelected(File selection) {
+        if (selection == null) {
+            println("No s'ha seleccionat cap fitxer.");
+        } else {
+            // Referència al fitxer imatge
+            file = selection;
+
+            // Obtenim la ruta del fitxer seleccionat
+            String rutaImatge = selection.getAbsolutePath();
+
+            img = loadImage(rutaImatge);  // Actualitzam imatge
+            titol = selection.getName();  // Actualitzam títol (igual)
+        }
+    }
+    // Copia un fitxer a una altra ubicació
+    public void copiar(File file, String rutaCopia, String titol){
+        Path original = Paths.get(file.getAbsolutePath());
+        Path copia    = Paths.get(rutaCopia+"/"+titol);
+        try{
+            Files.copy(original, copia);
+            println("OK: fitxer copiat a la carpeta.");
+        } catch (IOException e) {
+            println("ERROR: No s'ha pogut copiar el fitxer.");
+        }
+    }
+
 }

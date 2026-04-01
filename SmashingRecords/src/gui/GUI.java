@@ -77,7 +77,7 @@ public class GUI {
     // Imatges de la GUI
     public RoundButton rBFilter, rBHeart, rBPlus;
     RadioButton radioB1, radioB2, radioB3;
-    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDisc1, imgDisc2;
+    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDisc1, imgDisc2, imgElegida;
     String[] imgs = {"starON.png", "starOFF.png"};
 
     String titol="";
@@ -149,7 +149,7 @@ public class GUI {
 
         // Creació del Botó
         bLoadImage = new Button(p5, appColors, "LOAD", 50, p5.height-120, 200, 80);
-        bSaveImageToDB= new Button(p5, appColors, "SAVE TO DB", 300, p5.height-120, 200, 80);
+        bSaveImageToDB= new Button(p5, appColors, "SAVE", 300, p5.height-120, 200, 80);
 
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
@@ -390,8 +390,8 @@ public class GUI {
         p5.text(cbl.getNumSelected()+"/5", p5.width*0.32f, p5.height*0.77f);
 
         // Dibuixa la imatge
-        if(imgDisc1!=null){
-            p5.image(imgDisc1, 50, 50, 700, 600);
+        if(imgElegida!=null){
+            p5.image(imgElegida, 50, 50, 700, 600);
             p5.textSize(34); p5.textAlign(p5.RIGHT);
             p5.fill(0);
             p5.text(titol, 750, 750);
@@ -401,9 +401,9 @@ public class GUI {
             p5.rect(50, 50, 700, 600);
             p5.textSize(34); p5.textAlign(p5.RIGHT);
             p5.text("Sense imatge", 750, 750);
+            // canviar per imatge predet / automàtica
         }
-
-        // Dibuixa el botó
+        // Dibuixa els botons
         bLoadImage.display(p5);
         bSaveImageToDB.display(p5);
 

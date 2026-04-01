@@ -1,7 +1,10 @@
 import gui.DataBase;
+import gui.smashRecPantallas.Button;
 import processing.core.PApplet;
 import gui.GUI;
 import processing.core.PImage;
+
+import java.io.File;
 
 public class Main extends PApplet {
 
@@ -11,16 +14,14 @@ public class Main extends PApplet {
     public static DataBase db;
     boolean loginWrong = false;
 
-    /* Load Images
-    PImage[] imgs;
-    String[] titulo;
-    int numImg = 0;
-
-    Button b;*/
-
-    // Imatges de les cards
+    /*Imatges de les cards
     PImage img1, img2;
-    //
+    String titol="";
+    File file;
+    String rutaCarpeta = "C:\\Usuaris\\mariaramis\\Escriptori\\";*/
+
+    // Botó
+    Button bLoad, bSave;
     
     public static void main(String[] args) {
         PApplet.main("Main");
@@ -45,9 +46,9 @@ public class Main extends PApplet {
         b = new Button(this, gui.appColors, "Vinilos", 0, height * 0.25f, width * 0.20f, height * 0.05f);*/
 
         // Paged Card
-            // Imatges de les Categories
+           /* Imatges de les Categories
         img1 = loadImage("data/musicPredetBlackBG.png");
-        img2 = loadImage("data/musicPredetWhiteBG.png");
+        img2 = loadImage("data/musicPredetWhiteBG.png");*/
 
            /* // Creació de les PagedTables ?
         pcMusica = new PagedCard2D(this, gui.appColors,2, 4, Card.tipoCard.ALBUM);
@@ -82,35 +83,19 @@ public class Main extends PApplet {
                              break;
             case AGREGAR_CONCERT:gui.displayPantallaAgregarConcert(this);
                              break;
-
         }
         updateCursor(this);
 
-        /* Load imgs
-        for(int i=0; i<imgs.length; i++){
-            if(imgs[i] != null){
-                image(imgs[i], 50 + i*350, 50, 350, 600);
-                textSize(34);
-                textAlign(RIGHT);
-                fill(0);
-                text(titulo[i], 750, 350 + i*350);
-            } else {
-                fill(255);
-                rect(50+  i*350, 50, 350 , 600);
-                textSize(34);
-                textAlign(RIGHT);
-                text(i+ "¨: Sense imatge", 750, 350 + i*350);
-            }
-        }
-        // Dibuixa el botó
-        b.display(this);*/
+        // Actualitza el cursor
+        updateCursor(this);
+
 
         // Actualitza forma del cursor
         updateCursor(this);
         pushStyle();
         if(loginWrong && gui.pantallaActual== GUI.PANTALLA.INICIO){
-            fill(255);
-            text("Nom y/o contraseña incorrecto", 500, 500);
+            fill(255, 0, 0); textAlign(CENTER, CENTER); textSize(8); textFont(gui.appFonts.getThirdFont());
+            text("Nom y/o contraseña incorrecto", width*0.5f, height*0.68f);
         }
         popStyle();
     }

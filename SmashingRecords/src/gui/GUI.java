@@ -6,6 +6,8 @@ import gui.smashRecPantallas.*;
 import processing.core.PApplet;
 import processing.core.PImage; // no da error pero no se dibuja el paged table de las estadísticas
 
+import java.io.File;
+
 import static gui.smashRecFonts.Sizes.*;
 /**
  * Clase principal de la interfaz gráfica de usuario (GUI) de la aplicación
@@ -29,6 +31,9 @@ public class GUI {
 
     // ─── Enumerados ───────────────────────────────────────────────────────────
 
+
+    // crear textfields ubicació i género per vinils/Cds
+    // fer permetre inserció fotos elegides pel propi usuari
     /**
      * Identifica cada una de las pantallas navegables de la aplicación.
      *
@@ -54,8 +59,8 @@ public class GUI {
     public boolean enablePantalla;
 
     // Botones
-    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk, bEliminarMultimedia;
-    public Button bCatVinilos, bCatCDs, bCatConciertos;
+    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk, bEliminarMultimedia,
+            bCatVinilos, bCatCDs, bCatConciertos, bLoadImage, bSaveImageToDB;
 
     // Colores
     public Colors appColors;
@@ -64,7 +69,7 @@ public class GUI {
     DataBase db;
 
     // Texto
-    Fonts appFonts;
+    public Fonts appFonts;
     public TextField tFInicioSesion1, tFInicioSesion2, tFBuscador;
     public TextField[] tFAgregar;
     public TextArea tANotasUsuario, tANotasAgregar;
@@ -74,6 +79,10 @@ public class GUI {
     RadioButton radioB1, radioB2, radioB3;
     PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDisc1, imgDisc2;
     String[] imgs = {"starON.png", "starOFF.png"};
+
+    String titol="";
+    File file;
+    String rutaCarpeta = "C:\\Usuaris\\mariaramis\\Escriptori\\";
 
     // Paged Cards
     public PagedCard2D pcMusica;   // Vinilos y CDs
@@ -137,6 +146,10 @@ public class GUI {
         bCancelar = new Button(p5, appColors, "CANCELAR", p5.width * 0.75f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
         bOk       = new Button(p5, appColors, "OK", p5.width * 0.85f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
         bEliminarMultimedia = new Button(p5, appColors, "ELIMINAR", p5.width * 0.60f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
+
+        // Creació del Botó
+        bLoadImage = new Button(p5, appColors, "LOAD", 50, p5.height-120, 200, 80);
+        bSaveImageToDB= new Button(p5, appColors, "SAVE TO DB", 300, p5.height-120, 200, 80);
 
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
@@ -376,6 +389,24 @@ public class GUI {
         p5.fill(white);
         p5.text(cbl.getNumSelected()+"/5", p5.width*0.32f, p5.height*0.77f);
 
+        // Dibuixa la imatge
+        if(imgDisc1!=null){
+            p5.image(imgDisc1, 50, 50, 700, 600);
+            p5.textSize(34); p5.textAlign(p5.RIGHT);
+            p5.fill(0);
+            p5.text(titol, 750, 750);
+        }
+        else{
+            p5.fill(255);
+            p5.rect(50, 50, 700, 600);
+            p5.textSize(34); p5.textAlign(p5.RIGHT);
+            p5.text("Sense imatge", 750, 750);
+        }
+
+        // Dibuixa el botó
+        bLoadImage.display(p5);
+        bSaveImageToDB.display(p5);
+
         // Título dinámico según el origen
         p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo);
         String txtTitulo = ((pantallaAnterior == PANTALLA.VINILOS) ? "AGREGAR VINILO" : "AGREGAR CD");
@@ -465,8 +496,8 @@ public class GUI {
         p5.pop();
     }
 
-    public void displayTFAgregar(PApplet p5, String titulo2, String titulo4) {
-        String[] labels = {"Título", titulo2, "Fecha", titulo4};
+    public void displayTFAgregar(PApplet p5, String titulo1, String titulo2) {
+        String[] labels = {"Título", titulo1, "Fecha", titulo2};
         p5.textFont(appFonts.getThirdFont());
         p5.fill(white);
         p5.textSize(medidaIntermedia);

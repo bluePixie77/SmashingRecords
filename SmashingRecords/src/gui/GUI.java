@@ -83,7 +83,7 @@ public class GUI {
 
     public String titol="";
     public File file;
-    public String rutaCarpeta = "/Usuaris/mariaramis/Desktop/";
+    public String rutaCarpeta = "/Users/mariaramis/Desktop/";
     public String rutaCarpetaWin = "C:\\Usuaris\\mariaramis\\Escriptori\\";
 
     // Paged Cards

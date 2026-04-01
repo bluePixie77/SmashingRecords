@@ -17,8 +17,7 @@ public class Main extends PApplet {
     GUI gui;
     public static DataBase db;
     boolean loginWrong = false;
-    File file;
-    String rutaCarpeta = "C:\\Users\\tonim\\Desktop\\imatges\\";
+
     /*Imatges de les cards
     PImage img1, img2;
     String titol="";
@@ -211,17 +210,9 @@ public class Main extends PApplet {
             else if(gui.bPrev.mouseOverButton(this) && gui.bPrev.isEnabled()){
                 gui.pcMusica.prevPage();
             }
-            else if(gui.bLoadImage.mouseOverButton(this)){
-                // Obrim el dialeg
-                selectInput("Selecciona una imatge ...", "fileSelected");
-            }else if(gui.bSaveImageToDB.mouseOverButton(this)){
-                // Guardar la imatge en una carpeta de l'ordinador
-                copiar(file, rutaCarpeta, titol);
-                copy();
-            }
             else{
                     gui.pcMusica.checkCardSelection(this);
-                }
+            }
 
             gui.tFBuscador.isPressed(this);
         }else if(gui.pantallaActual== GUI.PANTALLA.CDS){
@@ -333,6 +324,13 @@ public class Main extends PApplet {
             }else if(gui.bEliminarMultimedia.mouseOverButton(this)){
                 System.out.println("MULTIMEDIA ELIMINADA");
                 gui.pantallaActual = gui.pantallaAnterior;
+            }else if(gui.bLoadImage.mouseOverButton(this)){
+                // Obrim el dialeg
+                selectInput("Selecciona una imatge ...", "fileSelected");
+            }else if(gui.bSaveImageToDB.mouseOverButton(this)){
+                // Guardar la imatge en una carpeta de l'ordinador
+                copiar(gui.file, gui.rutaCarpeta, gui.titol);
+                copy();
             }
             gui.cbl.checkMouse(this);
             gui.tANotasAgregar.isPressed(this);
@@ -347,9 +345,6 @@ public class Main extends PApplet {
             b5 // Sesión (de la sidebar)
             b6 // Iniciar sesión
             b7 // Cerrar sesión */
-        /*if(b.mouseOverButton(this)){
-            selectInput("Selecciona una imatge...", "fileSelected");
-        }*/
     }
 
     public void updateCursor(PApplet p5){
@@ -370,23 +365,13 @@ public class Main extends PApplet {
            gui.cbl.checkCursor(this) ||
            gui.bCatVinilos.updateHandCursor(p5) ||
            gui.bCatCDs.updateHandCursor(p5) ||
-           gui.bCatConciertos.updateHandCursor(p5)) ||
+           gui.bCatConciertos.updateHandCursor(p5) ||
            gui.bLoadImage.mouseOverButton(p5) || gui.bSaveImageToDB.mouseOverButton(p5)){
                 cursor(HAND);
-        }else{
+           }else{
             cursor(ARROW);
         }
     }
-  /*  public void fileSelected(File selection){
-        if(selection == null){
-            System.out.println("No file selected.");
-        }else{
-            String rutaImage = selection.getAbsolutePath();
-            imgs[numImg] = loadImage(rutaImage);
-            titulo[numImg] = selection.getName();
-            numImg++;
-        }
-    }*/
 
     // Carrega Imatge
     public void fileSelected(File selection) {
@@ -394,15 +379,16 @@ public class Main extends PApplet {
             println("No s'ha seleccionat cap fitxer.");
         } else {
             // Referència al fitxer imatge
-            file = selection;
+            gui.file = selection;
 
             // Obtenim la ruta del fitxer seleccionat
             String rutaImatge = selection.getAbsolutePath();
 
-            img = loadImage(rutaImatge);  // Actualitzam imatge
-            titol = selection.getName();  // Actualitzam títol (igual)
+            gui.imgElegida = loadImage(rutaImatge);  // Actualitzam imatge
+            gui.titol = selection.getName();  // Actualitzam títol (igual)
         }
     }
+
     // Copia un fitxer a una altra ubicació
     public void copiar(File file, String rutaCopia, String titol){
         Path original = Paths.get(file.getAbsolutePath());
@@ -414,5 +400,4 @@ public class Main extends PApplet {
             println("ERROR: No s'ha pogut copiar el fitxer.");
         }
     }
-
 }

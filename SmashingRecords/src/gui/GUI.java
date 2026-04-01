@@ -77,12 +77,14 @@ public class GUI {
     // Imatges de la GUI
     public RoundButton rBFilter, rBHeart, rBPlus;
     RadioButton radioB1, radioB2, radioB3;
-    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDisc1, imgDisc2, imgElegida;
+    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDisc1, imgDisc2;
+    public PImage imgElegida;
     String[] imgs = {"starON.png", "starOFF.png"};
 
-    String titol="";
-    File file;
-    String rutaCarpeta = "C:\\Usuaris\\mariaramis\\Escriptori\\";
+    public String titol="";
+    public File file;
+    public String rutaCarpeta = "/Usuaris/mariaramis/Desktop/";
+    public String rutaCarpetaWin = "C:\\Usuaris\\mariaramis\\Escriptori\\";
 
     // Paged Cards
     public PagedCard2D pcMusica;   // Vinilos y CDs
@@ -116,7 +118,7 @@ public class GUI {
 
         this.db = db;
 
-        pantallaActual = PANTALLA.INICIO;
+        pantallaActual = PANTALLA.USUARIO;
 
         appColors = new Colors(p5);
         appFonts = new Fonts(p5);
@@ -148,8 +150,8 @@ public class GUI {
         bEliminarMultimedia = new Button(p5, appColors, "ELIMINAR", p5.width * 0.60f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
 
         // Creació del Botó
-        bLoadImage = new Button(p5, appColors, "LOAD", 50, p5.height-120, 200, 80);
-        bSaveImageToDB= new Button(p5, appColors, "SAVE", 300, p5.height-120, 200, 80);
+        bLoadImage = new Button(p5, appColors, "LOAD", p5.width*0.6f, p5.height*0.7f, 200, 80);
+        bSaveImageToDB= new Button(p5, appColors, "SAVE", p5.width*0.7f, p5.height*0.7f, 200, 80);
 
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
@@ -439,6 +441,12 @@ public class GUI {
 
         displayTFAgregar(p5, "Lugar / Recinto", "Ciudad");
         tANotasAgregar.display(p5);
+        p5.pop();
+    }
+
+    public void displayPantallaAgregarFoto(PApplet p5) {
+        p5.push();
+
         p5.pop();
     }
 

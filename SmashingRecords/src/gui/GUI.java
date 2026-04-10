@@ -58,6 +58,8 @@ public class GUI {
     public PANTALLA pantallaAnterior;
     public boolean enablePantalla;
 
+    public String usuarioActual = "";
+
     // Botones
     public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk, bEliminarMultimedia,
             bCatVinilos, bCatCDs, bCatConciertos, bLoadImage, bSaveImageToDB;
@@ -75,16 +77,16 @@ public class GUI {
     public TextArea tANotasUsuario, tANotasAgregar;
 
     // Imatges de la GUI
-    public RoundButton rBFilter, rBHeart, rBPlus;
+    public RoundButton rBFilter, rBHeart, rBPlus, rBDelete;
     RadioButton radioB1, radioB2, radioB3;
-    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDisc1, imgDisc2;
+    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDelete, imgDisc1, imgDisc2;
     public PImage imgElegida;
     String[] imgs = {"starON.png", "starOFF.png"};
 
     public String titol="";
     public File file;
     public String rutaCarpeta = "/Users/mariaramis/Desktop/";
-    public String rutaCarpetaWin = "C:\\Usuaris\\mariaramis\\Escriptori\\";
+    public String rutaCarpetaWindows = "C:\\Usuaris\\mariaramis\\Escriptori\\";
 
     // Paged Cards
     public PagedCard2D pcMusica;   // Vinilos y CDs
@@ -93,6 +95,13 @@ public class GUI {
 
     public StatsCard[] misGraficos;
     public int[] paletaGraficos;
+
+    // Pantalla agregar
+    public RadioButtonGroup rbgUbicacion, rbgOrigen;
+    public CheckBox[] cbGenero;
+    public String[] nombresGenero = {"Altres", "Country", "Indie", "Pop", "Rock"};
+    public String[] nombresUbicacion = {"Zona 1", "Zona 2", "Zona 3", "Zona 4", "Zona 5"};
+    public String[] nombresOrigen = {"Comprado", "Regalo", "Heredado", "Otro"};
 
     // Dades de les cards
     String[][] infoAlbum = {
@@ -118,7 +127,7 @@ public class GUI {
 
         this.db = db;
 
-        pantallaActual = PANTALLA.USUARIO;
+        pantallaActual = PANTALLA.INICIO;
 
         appColors = new Colors(p5);
         appFonts = new Fonts(p5);
@@ -131,7 +140,7 @@ public class GUI {
         setBotones(p5);
         setPagedCards(p5);
         setEstadisticas(p5);
-        setOthers(p5);
+        setRadioButtonsYCheckboxes(p5);
     }
 
     // Setter botones
@@ -156,6 +165,7 @@ public class GUI {
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
         rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width * 0.95f, p5.height * 0.15f, p5.width * 0.020f);
+        rBDelete = new RoundButton(p5, appColors, imgDelete, p5.width*0.60f, p5.height * 0.13f, p5.width * 0.020f);
 
         float xB = p5.width * 0.25f;
         float yB = p5.height * 0.15f;
@@ -175,17 +185,23 @@ public class GUI {
         // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
         tFBuscador = new TextField(p5, appColors, 60, p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
 
-        tFAgregar = new TextField[4]; // Array de textFields
-
-        float startX = p5.width * 0.38f;      // Alineado a la derecha de la imagen
-        float startY = p5.height * 0.27f;     // Debajo de los botones OK/Cancelar
-        float fieldW = p5.width * 0.50f;      // Ancho del campo
-        float fieldH = p5.height * 0.05f;     // Alto del campo
-        float spacing = p5.height * 0.10f;    // Espacio vertical entre campos
-
-        for (int i = 0; i < tFAgregar.length; i++) {
-            tFAgregar[i] = new TextField(p5, appColors, 40, startX, startY + (i * spacing), fieldW, fieldH);
-        }
+        // 1. Ampliamos a 5 para separar Edición de Lugar
+        tFAgregar = new TextField[5];
+        float startX = p5.width * 0.38f;
+        float startY = p5.height * 0.27f;
+        float fieldW = p5.width * 0.50f;
+        float fieldH = p5.height * 0.05f;
+        float spacing = p5.height * 0.10f;
+        // Campos fijos
+        tFAgregar[0] = new TextField(p5, appColors, 40, startX, startY, fieldW, fieldH);            // Título
+        tFAgregar[1] = new TextField(p5, appColors, 40, startX, startY + spacing, fieldW, fieldH);  // Artista
+        // Campo 2: Año o Fecha (Corto para Vinilo, Largo para Concierto)
+        tFAgregar[2] = new TextField(p5, appColors, 40, startX, startY + (2 * spacing), fieldW, fieldH);
+        // Campo 3: SOLO EDICIÓN (Posición fija al lado del año)
+        float shortW = fieldW * 0.35f;
+        tFAgregar[3] = new TextField(p5, appColors, 40, startX + shortW + (p5.width * 0.05f), startY + (2 * spacing), fieldW - shortW - (p5.width * 0.05f), fieldH);
+        // Campo 4: SOLO LUGAR (Posición fija debajo de fecha)
+        tFAgregar[4] = new TextField(p5, appColors, 40, startX, startY + (3 * spacing), fieldW, fieldH);
 
         tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 40, 10);
         tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.8f, p5.width * 0.3f, p5.height * 0.20f, 40, 4);
@@ -198,6 +214,7 @@ public class GUI {
         imgFilter = p5.loadImage("data/imgFilter.png");
         imgHeart = p5.loadImage("data/imgHeart.png");
         imgPlus = p5.loadImage("data/imgPlus.png");
+        imgDelete = p5.loadImage("data/imgDelete.png");
 
         imgDisc1 = p5.loadImage("data/musicPredetBlackBG.png");
         imgDisc2 = p5.loadImage("data/musicPredetWhiteBG.png");
@@ -261,10 +278,41 @@ public class GUI {
         // 4. Cargar datos iniciales
         actualizarDatosGraficos(p5);
     }
-    public void setOthers(PApplet p5){
+
+    public void setRadioButtonsYCheckboxes(PApplet p5) {
         // Construcción checkboxstarlist
         cbl = new CheckBoxStarList(p5, 5, imgs, p5.width*0.05f, p5.height*0.72f, p5.width*0.05f, p5.height*0.065f);
         cbl.setCheckBoxStars(3);
+        // --- GÉNERO (CheckBoxes, selección múltiple) ---
+        cbGenero = new CheckBox[nombresGenero.length];
+        float xCB = p5.width * 0.38f;
+        float yCB = p5.height * 0.75f;
+        for (int i = 0; i < nombresGenero.length; i++) {
+            cbGenero[i] = new CheckBox(p5, (int)(xCB + i * p5.width*0.10f), (int)yCB, 20);
+            // el texto lo dibujamos en display manualmente
+        }
+
+        // --- UBICACIÓN (RadioButtons, selección única) ---
+        rbgUbicacion = new RadioButtonGroup(nombresUbicacion.length);
+        RadioButton[] rbsUbic = new RadioButton[nombresUbicacion.length];
+        float xRBU = p5.width * 0.38f;
+        float yRBU = p5.height * 0.85f;
+        for (int i = 0; i < nombresUbicacion.length; i++) {
+            rbsUbic[i] = new RadioButton(p5, (int)(xRBU + i * p5.width*0.12f), (int)yRBU, 10);
+            rbsUbic[i].setText(nombresUbicacion[i]);
+        }
+        rbgUbicacion.setRadioButtons(rbsUbic[0], rbsUbic[1], rbsUbic[2], rbsUbic[3], rbsUbic[4]);
+
+        // --- ORIGEN (RadioButtons, selección única) ---
+        rbgOrigen = new RadioButtonGroup(nombresOrigen.length);
+        RadioButton[] rbsOrig = new RadioButton[nombresOrigen.length];
+        float xRBO = p5.width * 0.38f;
+        float yRBO = p5.height * 0.92f;
+        for (int i = 0; i < nombresOrigen.length; i++) {
+            rbsOrig[i] = new RadioButton(p5, (int)(xRBO + i * p5.width*0.12f), (int)yRBO, 10);
+            rbsOrig[i].setText(nombresOrigen[i]);
+        }
+        rbgOrigen.setRadioButtons(rbsOrig[0], rbsOrig[1], rbsOrig[2], rbsOrig[3]);
     }
     // PANTALLAS DE LA GUI
     public void displayPantallaInicioSesion(PApplet p5) {
@@ -298,7 +346,7 @@ public class GUI {
         p5.background(black);
         displaySidebar(p5);
 
-        p5.circle(p5.width * 0.60f, p5.height * 0.20f, p5.width * 0.14f);
+        p5.circle(p5.width * 0.35f, p5.height * 0.25f, p5.width * 0.20f);
         p5.textAlign(p5.CENTER);
         p5.textSize(medidaSubtitulo); p5.textFont(appFonts.getThirdFont()); p5.fill(white);
 
@@ -387,20 +435,22 @@ public class GUI {
         bOk.display(p5);
         bEliminarMultimedia.display(p5);
 
+        rBDelete.display(p5);
+
         cbl.display(p5);
         p5.fill(white);
         p5.text(cbl.getNumSelected()+"/5", p5.width*0.32f, p5.height*0.77f);
 
         // Dibuixa la imatge
         if(imgElegida!=null){
-            p5.image(imgElegida, 50, 50, 700, 600);
+            p5.image(imgElegida, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
             p5.textSize(34); p5.textAlign(p5.RIGHT);
             p5.fill(0);
             p5.text(titol, 750, 750);
         }
         else{
             p5.fill(255);
-            p5.rect(50, 50, 700, 600);
+            p5.rect(p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
             p5.textSize(34); p5.textAlign(p5.RIGHT);
             p5.text("Sense imatge", 750, 750);
             // canviar per imatge predet / automàtica
@@ -414,6 +464,21 @@ public class GUI {
         String txtTitulo = ((pantallaAnterior == PANTALLA.VINILOS) ? "AGREGAR VINILO" : "AGREGAR CD");
         p5.text(txtTitulo, p5.width * 0.25f, p5.height * 0.10f);
 
+        // Género
+        p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
+        p5.text("Género:", p5.width * 0.38f, p5.height * 0.72f);
+        for (int i = 0; i < cbGenero.length; i++) {
+            cbGenero[i].display(p5);
+            p5.fill(white); p5.textSize(18);
+            p5.text(nombresGenero[i], p5.width * 0.38f + i * p5.width*0.10f + 25, p5.height * 0.755f);
+        }
+        // Ubicación
+        p5.text("Ubicación:", p5.width * 0.38f, p5.height * 0.82f);
+        rbgUbicacion.display(p5);
+        // Origen
+        p5.text("Origen:", p5.width * 0.38f, p5.height * 0.89f);
+        rbgOrigen.display(p5);
+
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
         p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
 
@@ -421,6 +486,7 @@ public class GUI {
         tANotasAgregar.display(p5);
         p5.pop();
     }
+
     public void displayPantallaAgregarConcert(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -428,6 +494,8 @@ public class GUI {
         bCancelar.display(p5);
         bOk.display(p5);
         bEliminarMultimedia.display(p5);
+
+        rBDelete.display(p5);
 
         cbl.display(p5);
         p5.fill(white);
@@ -504,19 +572,31 @@ public class GUI {
         p5.pop();
     }
 
-    public void displayTFAgregar(PApplet p5, String titulo1, String titulo2) {
-        String[] labels = {"Título", titulo1, "Fecha", titulo2};
-        p5.textFont(appFonts.getThirdFont());
-        p5.fill(white);
-        p5.textSize(medidaIntermedia);
+    public void displayTFAgregar(PApplet p5, String label2, String label4) {
+        p5.textFont(appFonts.getThirdFont()); p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
+        // Título y Artista siempre se ven
+        p5.text("Nombre copia", tFAgregar[0].x, tFAgregar[0].y - 10); tFAgregar[0].display(p5);
+        p5.text("Artista", tFAgregar[1].x, tFAgregar[1].y - 10); tFAgregar[1].display(p5);
 
-        for (int i = 0; i < tFAgregar.length; i++) {
-            p5.textAlign(p5.LEFT);
-            // Texto descriptivo sobre el campo
-            p5.text(labels[i], tFAgregar[i].x, tFAgregar[i].y - 10);
-            tFAgregar[i].display(p5);
+        if (pantallaActual == PANTALLA.AGREGAR_CONCERT) {
+            // VISTA CONCIERTO
+            p5.text("Fecha", tFAgregar[2].x, tFAgregar[2].y - 10);
+            tFAgregar[2].w = p5.width * 0.50f; // Ancho total para la fecha
+            tFAgregar[2].display(p5);
+
+            p5.text("Lugar / Recinto", tFAgregar[4].x, tFAgregar[4].y - 10);
+            tFAgregar[4].display(p5);
+        } else {
+            // VISTA VINILO-CD
+            p5.text("Año", tFAgregar[2].x, tFAgregar[2].y - 10);
+            tFAgregar[2].w = (p5.width * 0.50f) * 0.35f; // Ancho corto para el año
+            tFAgregar[2].display(p5);
+
+            p5.text("Edición", tFAgregar[3].x, tFAgregar[3].y - 10);
+            tFAgregar[3].display(p5);
         }
     }
+
     public void actualizarDatosGraficos(PApplet p5) {
         float[] dataSectores, dataLineas, dataBarras;
         String[] tagsSectores, tagsLineas, tagsBarras;

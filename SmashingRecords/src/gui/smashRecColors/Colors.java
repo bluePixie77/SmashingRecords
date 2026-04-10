@@ -12,7 +12,7 @@ public class Colors {
     // Setter (colores de la app)
     public void setColors(PApplet p5){
         this.colors = new int[7];
-        this.colors[0] = p5.color(0xFFE03C00); // Naranja fuerte
+        this.colors[0] = p5.color(0xFFE1480B); // Naranja fuerte
         this.colors[1] = p5.color(0xFFE47738); // Naranja flojo
         this.colors[2] = p5.color(0xFFFFFFFF); // Blanco
         this.colors[3] = p5.color(0xFF020202); // Negro

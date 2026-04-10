@@ -6,7 +6,7 @@ public class RadioButtonGroup {
 
     // Propietats
     RadioButton[] rbuttons;
-    int selectedOption;
+    public int selectedOption;
 
     public RadioButtonGroup(int n){
         rbuttons = new RadioButton[n];

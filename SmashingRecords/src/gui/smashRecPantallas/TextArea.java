@@ -60,6 +60,11 @@ public class TextArea {
 
     }
 
+    // Getters
+    public String getText() {
+        return this.text;
+    }
+
     // Dibuixa el Camp de Text
     public void display(PApplet p5) {
         p5.pushStyle();

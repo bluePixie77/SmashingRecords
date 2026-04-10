@@ -149,6 +149,7 @@ public class Main extends PApplet {
                 String nom = gui.tFInicioSesion1.getText();
                 String pass = gui.tFInicioSesion2.getText();
                 if (db.loginCorrecto(nom, pass)) {
+                    gui.usuarioActual = nom;
                     gui.pantallaActual = GUI.PANTALLA.USUARIO;
                 } else {
                     loginWrong = true;
@@ -318,7 +319,52 @@ public class Main extends PApplet {
                 if (gui.bPrev.mouseOverButton(this)) gui.pcStats.prevPage();
             }
         }else if(gui.pantallaActual == GUI.PANTALLA.AGREGAR || gui.pantallaActual == GUI.PANTALLA.AGREGAR_CONCERT){
-            if(gui.bOk.mouseOverButton(this) || gui.bCancelar.mouseOverButton(this)){
+            if(gui.bOk.mouseOverButton(this)){
+                // 1. RECOGER CAMPOS COMUNES
+                String titulo  = gui.tFAgregar[0].getText();
+                String artista = gui.tFAgregar[1].getText();
+                String fecha   = gui.tFAgregar[2].getText(); // En Vinilos es "Año", en Conciertos es "Fecha"
+                String notas   = gui.tANotasAgregar.getText();
+
+                // 2. RECOGER RATING (Estrellas)
+                int estrellas = gui.cbl.getNumSelected();
+
+                // 3. LÓGICA DE GÉNEROS MÚLTIPLES
+                String generosFinal = "";
+                for (int i = 0; i < gui.cbGenero.length; i++) {
+                    if (gui.cbGenero[i].isChecked()) {
+                        if (!generosFinal.isEmpty()) {
+                            generosFinal += ", ";
+                        }
+                        generosFinal += gui.nombresGenero[i];
+                    }
+                }
+                if(generosFinal.equals("")) generosFinal = "Altres";
+
+                // 4. DETERMINAR QUÉ INSERT LLAMAR SEGÚN LA PANTALLA
+                if(gui.pantallaAnterior == GUI.PANTALLA.VINILOS || gui.pantallaAnterior == GUI.PANTALLA.CDS){
+                    // --- CASO VINILO / CD ---
+                    char tipo = (gui.pantallaAnterior == GUI.PANTALLA.VINILOS) ? 'V' : 'C';
+                    String ubi = gui.nombresUbicacion[gui.rbgUbicacion.selectedOption];
+                    String ori = gui.nombresOrigen[gui.rbgOrigen.selectedOption];
+
+                    // Recogemos EDICIÓN del campo índice 3
+                    String edicion = gui.tFAgregar[3].getText();
+
+                    db.insertarViniloCD(titulo, artista, fecha, edicion, ubi, generosFinal, ori, notas, gui.usuarioActual, tipo, estrellas);
+
+                } else if(gui.pantallaAnterior == GUI.PANTALLA.CONCIERTOS){
+                    // --- CASO CONCIERTO ---
+                    // Recogemos LUGAR del campo índice 4
+                    String lugar = gui.tFAgregar[4].getText();
+
+                    db.insertarConcierto(titulo, artista, fecha, lugar, generosFinal, notas, gui.usuarioActual, estrellas);
+                }
+
+                // Volver a la pantalla de la que veníamos
+                gui.pantallaActual = gui.pantallaAnterior;
+            }
+            if(gui.bCancelar.mouseOverButton(this)){
                 // Volvemos exactamente de donde vinimos
                 gui.pantallaActual = gui.pantallaAnterior;
             }else if(gui.bEliminarMultimedia.mouseOverButton(this)){
@@ -337,6 +383,17 @@ public class Main extends PApplet {
             for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
                 tf.isPressed(this);
             }
+
+            // Checkboxes género
+            for (int i = 0; i < gui.cbGenero.length; i++) {
+                if (gui.cbGenero[i].onMouseOver(this)) {
+                    gui.cbGenero[i].toggle();
+                }
+            }
+            // RadioButtons
+            gui.rbgUbicacion.updateOnClick(this);
+            gui.rbgOrigen.updateOnClick(this);
+
         }
         /*  b1 // Vinilos
             b2 // CDs

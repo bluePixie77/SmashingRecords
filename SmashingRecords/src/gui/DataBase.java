@@ -291,6 +291,42 @@ public class DataBase {
         }
     }
 
+    public void insertarViniloCD(String titulo, String artista, String fecha, String edicion,
+                                 String ubicacion, String genero, String origen,
+                                 String notas, String nombreUsuario, char tipo, int rating) {
+        String valorFecha = (fecha == null || fecha.isEmpty()) ? "NULL" : "'" + fecha + "'";
+        String q = "INSERT INTO Vinilo_CD (Título, Artista, Fecha, Edición, Ubicación, Género, Origen, Notas, NombreUsuario, tipo, Rating) " +
+                "VALUES ('" + titulo + "', '" + artista + "', " + fecha + ", '" + edicion + "', '" +
+                ubicacion + "', '" + genero + "', '" + origen + "', '" +
+                notas + "', '" + nombreUsuario + "', '" + tipo + "', " + rating + ")";
+        System.out.println(q);
+        try {
+            query.execute(q);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void insertarConcierto(String titulo, String artista, String fecha,
+                                  String lugar, String genero, String notas,
+                                  String nombreUsuario, int rating) {
+        String q = "INSERT INTO Concierto (Título, Artista, Fecha, Lugar, Género, Notas, NombreUsuario, Rating) " +
+                "VALUES ('" + titulo   + "', " +
+                "'" + artista  + "', " +
+                "'" + fecha    + "', " +
+                "'" + lugar    + "', " +
+                "'" + genero   + "', " +
+                "'" + notas    + "', " +
+                "'" + nombreUsuario + "', " +
+                      rating + ")";
+        System.out.println(q);
+        try {
+            query.execute(q);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     // Verificar Usuario
     public boolean loginCorrecto(String n, String p) {
         String q = "SELECT COUNT(*) AS N " +

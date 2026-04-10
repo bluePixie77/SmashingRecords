@@ -73,7 +73,8 @@ public class GUI {
     // Texto
     public Fonts appFonts;
     public TextField tFInicioSesion1, tFInicioSesion2, tFBuscador;
-    public TextField[] tFAgregar;
+    public TextField[] tFMusica;   // Para Vinilo/CD (Título, Artista, Año, Edición)
+    public TextField[] tFConcierto; // Para Conciertos (Título, Artista, Fecha, Lugar)
     public TextArea tANotasUsuario, tANotasAgregar;
 
     // Imatges de la GUI
@@ -185,23 +186,27 @@ public class GUI {
         // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
         tFBuscador = new TextField(p5, appColors, 60, p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
 
-        // 1. Ampliamos a 5 para separar Edición de Lugar
-        tFAgregar = new TextField[5];
         float startX = p5.width * 0.38f;
         float startY = p5.height * 0.27f;
         float fieldW = p5.width * 0.50f;
         float fieldH = p5.height * 0.05f;
         float spacing = p5.height * 0.10f;
-        // Campos fijos
-        tFAgregar[0] = new TextField(p5, appColors, 40, startX, startY, fieldW, fieldH);            // Título
-        tFAgregar[1] = new TextField(p5, appColors, 40, startX, startY + spacing, fieldW, fieldH);  // Artista
-        // Campo 2: Año o Fecha (Corto para Vinilo, Largo para Concierto)
-        tFAgregar[2] = new TextField(p5, appColors, 40, startX, startY + (2 * spacing), fieldW, fieldH);
-        // Campo 3: SOLO EDICIÓN (Posición fija al lado del año)
-        float shortW = fieldW * 0.35f;
-        tFAgregar[3] = new TextField(p5, appColors, 40, startX + shortW + (p5.width * 0.05f), startY + (2 * spacing), fieldW - shortW - (p5.width * 0.05f), fieldH);
-        // Campo 4: SOLO LUGAR (Posición fija debajo de fecha)
-        tFAgregar[4] = new TextField(p5, appColors, 40, startX, startY + (3 * spacing), fieldW, fieldH);
+
+        // --- CONFIGURACIÓN MÚSICA (4 campos) ---
+        tFMusica = new TextField[4];
+        tFMusica[0] = new TextField(p5, appColors, 40, startX, startY, fieldW, fieldH); // Titulo
+        tFMusica[1] = new TextField(p5, appColors, 40, startX, startY + spacing, fieldW, fieldH); // Artista
+        float shortW = fieldW * 0.30f;
+        float gap = p5.width * 0.02f;
+        tFMusica[2] = new TextField(p5, appColors, 40, startX, startY + (spacing*2), shortW, fieldH); // Año
+        tFMusica[3] = new TextField(p5, appColors, 40, startX + shortW + gap, startY + (spacing*2), fieldW - shortW - gap, fieldH); // Edición
+
+        // --- CONFIGURACIÓN CONCIERTOS (4 campos) ---
+        tFConcierto = new TextField[4];
+        tFConcierto[0] = new TextField(p5, appColors, 40, startX, startY, fieldW, fieldH); // Titulo
+        tFConcierto[1] = new TextField(p5, appColors, 40, startX, startY + spacing, fieldW, fieldH); // Artista
+        tFConcierto[2] = new TextField(p5, appColors, 40, startX, startY + (spacing*2), fieldW, fieldH); // Fecha
+        tFConcierto[3] = new TextField(p5, appColors, 40, startX, startY + (spacing*3), fieldW, fieldH); // Lugar
 
         tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 40, 10);
         tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.8f, p5.width * 0.3f, p5.height * 0.20f, 40, 4);
@@ -482,7 +487,12 @@ public class GUI {
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
         p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
 
-        displayTFAgregar(p5, "Artista/Banda", "Género");
+        p5.fill(white); p5.textSize(medidaIntermedia);
+        p5.text("Título", tFMusica[0].x, tFMusica[0].y - 10); tFMusica[0].display(p5);
+        p5.text("Artista", tFMusica[1].x, tFMusica[1].y - 10); tFMusica[1].display(p5);
+        p5.text("Año", tFMusica[2].x, tFMusica[2].y - 10); tFMusica[2].display(p5);
+        p5.text("Edición", tFMusica[3].x, tFMusica[3].y - 10); tFMusica[3].display(p5);
+
         tANotasAgregar.display(p5);
         p5.pop();
     }
@@ -507,7 +517,12 @@ public class GUI {
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
         p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.62f, p5.width*0.3f);
 
-        displayTFAgregar(p5, "Lugar / Recinto", "Ciudad");
+        p5.fill(white); p5.textSize(medidaIntermedia);
+        p5.text("Título", tFConcierto[0].x, tFConcierto[0].y - 10); tFConcierto[0].display(p5);
+        p5.text("Artista", tFConcierto[1].x, tFConcierto[1].y - 10); tFConcierto[1].display(p5);
+        p5.text("Fecha", tFConcierto[2].x, tFConcierto[2].y - 10); tFConcierto[2].display(p5);
+        p5.text("Lugar / Recinto", tFConcierto[3].x, tFConcierto[3].y - 10); tFConcierto[3].display(p5);
+
         tANotasAgregar.display(p5);
         p5.pop();
     }
@@ -570,31 +585,6 @@ public class GUI {
         bNext.display(p5);
         bPrev.display(p5);
         p5.pop();
-    }
-
-    public void displayTFAgregar(PApplet p5, String label2, String label4) {
-        p5.textFont(appFonts.getThirdFont()); p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
-        // Título y Artista siempre se ven
-        p5.text("Nombre copia", tFAgregar[0].x, tFAgregar[0].y - 10); tFAgregar[0].display(p5);
-        p5.text("Artista", tFAgregar[1].x, tFAgregar[1].y - 10); tFAgregar[1].display(p5);
-
-        if (pantallaActual == PANTALLA.AGREGAR_CONCERT) {
-            // VISTA CONCIERTO
-            p5.text("Fecha", tFAgregar[2].x, tFAgregar[2].y - 10);
-            tFAgregar[2].w = p5.width * 0.50f; // Ancho total para la fecha
-            tFAgregar[2].display(p5);
-
-            p5.text("Lugar / Recinto", tFAgregar[4].x, tFAgregar[4].y - 10);
-            tFAgregar[4].display(p5);
-        } else {
-            // VISTA VINILO-CD
-            p5.text("Año", tFAgregar[2].x, tFAgregar[2].y - 10);
-            tFAgregar[2].w = (p5.width * 0.50f) * 0.35f; // Ancho corto para el año
-            tFAgregar[2].display(p5);
-
-            p5.text("Edición", tFAgregar[3].x, tFAgregar[3].y - 10);
-            tFAgregar[3].display(p5);
-        }
     }
 
     public void actualizarDatosGraficos(PApplet p5) {

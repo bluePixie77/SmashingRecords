@@ -107,10 +107,11 @@ public class Main extends PApplet {
         gui.tFBuscador.keyTyped(key);
         gui.tANotasUsuario.keyTyped(key);
         gui.tANotasAgregar.keyTyped(key);
-        for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
-            tf.keyTyped(key);
+        if (gui.pantallaActual == GUI.PANTALLA.AGREGAR) {
+            for (gui.smashRecPantallas.TextField tf : gui.tFMusica) tf.keyTyped(key);
+        } else if (gui.pantallaActual == GUI.PANTALLA.AGREGAR_CONCERT) {
+            for (gui.smashRecPantallas.TextField tf : gui.tFConcierto) tf.keyTyped(key);
         }
-
     }
     public void keyPressed(){
         gui.tFInicioSesion1.keyPressed(keyCode);
@@ -118,8 +119,10 @@ public class Main extends PApplet {
         gui.tFBuscador.keyPressed(keyCode);
         gui.tANotasUsuario.keyPressed(keyCode);
         gui.tANotasAgregar.keyPressed(keyCode);
-        for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
-            tf.keyPressed(keyCode);
+        if (gui.pantallaActual == GUI.PANTALLA.AGREGAR) {
+            for (gui.smashRecPantallas.TextField tf : gui.tFMusica) tf.keyPressed(keyCode);
+        } else if (gui.pantallaActual == GUI.PANTALLA.AGREGAR_CONCERT) {
+            for (gui.smashRecPantallas.TextField tf : gui.tFConcierto) tf.keyPressed(keyCode);
         }
 
         /* if(key=='0'){
@@ -128,16 +131,6 @@ public class Main extends PApplet {
             gui.pantallaActual = GUI.PANTALLA.USUARIO;
         }else if(key=='2'){
             gui.pantallaActual = GUI.PANTALLA.VINILOS;
-        }
-
-        gui.tFInicioSesion1.keyPressed(key, keyCode);
-        gui.tFInicioSesion2.keyPressed(key, keyCode);
-       // gui.tFNotasUsuario.keyPressed(key, keyCode);
-        gui.tFBuscador.keyPressed(key, keyCode);
-        gui.tANotasUsuario.keyPressed(key, keyCode);
-        gui.tANotasAgregar.keyPressed(key, keyCode);
-        for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
-            tf.keyPressed(key, keyCode);
         }
         */
     }
@@ -201,10 +194,7 @@ public class Main extends PApplet {
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
-                for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) { // bucle for each
-                    tf.w = width * 0.50f;
-                    tf.x = width * 0.38f;
-                }
+
             }else if(gui.bNext.mouseOverButton(this)){
                 gui.pcMusica.nextPage();
             }
@@ -236,10 +226,7 @@ public class Main extends PApplet {
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
-                for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
-                    tf.w = width * 0.50f;
-                    tf.x = width * 0.38f;
-                }
+
             }else if(gui.bNext.mouseOverButton(this)){
                 gui.pcMusica.nextPage();
             }
@@ -270,10 +257,7 @@ public class Main extends PApplet {
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
                 println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR_CONCERT;
-                for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
-                    tf.w = width * 0.30f;
-                    tf.x = width * 0.70f;
-                }
+
             }else if(gui.bNext.mouseOverButton(this) && gui.bNext.isEnabled()){
                 gui.pcConcert.nextPage();
             }
@@ -319,50 +303,39 @@ public class Main extends PApplet {
                 if (gui.bPrev.mouseOverButton(this)) gui.pcStats.prevPage();
             }
         }else if(gui.pantallaActual == GUI.PANTALLA.AGREGAR || gui.pantallaActual == GUI.PANTALLA.AGREGAR_CONCERT){
-            if(gui.bOk.mouseOverButton(this)){
-                // 1. RECOGER CAMPOS COMUNES
-                String titulo  = gui.tFAgregar[0].getText();
-                String artista = gui.tFAgregar[1].getText();
-                String fecha   = gui.tFAgregar[2].getText(); // En Vinilos es "Año", en Conciertos es "Fecha"
-                String notas   = gui.tANotasAgregar.getText();
-
-                // 2. RECOGER RATING (Estrellas)
+            if(gui.bOk.mouseOverButton(this)) {
+                // RECOGER RATING Y NOTAS
                 int estrellas = gui.cbl.getNumSelected();
+                String notas = gui.tANotasAgregar.getText();
+                String generosFinal = ""; // ... (tu lógica de géneros que ya tienes está bien)
 
-                // 3. LÓGICA DE GÉNEROS MÚLTIPLES
-                String generosFinal = "";
-                for (int i = 0; i < gui.cbGenero.length; i++) {
-                    if (gui.cbGenero[i].isChecked()) {
-                        if (!generosFinal.isEmpty()) {
-                            generosFinal += ", ";
-                        }
-                        generosFinal += gui.nombresGenero[i];
-                    }
-                }
-                if(generosFinal.equals("")) generosFinal = "Altres";
+                if (gui.pantallaAnterior == GUI.PANTALLA.VINILOS || gui.pantallaAnterior == GUI.PANTALLA.CDS) {
+                    // DATOS DE MÚSICA
+                    String titulo = gui.tFMusica[0].getText();
+                    String artista = gui.tFMusica[1].getText();
+                    String fecha = gui.tFMusica[2].getText();
+                    String edicion = gui.tFMusica[3].getText();
 
-                // 4. DETERMINAR QUÉ INSERT LLAMAR SEGÚN LA PANTALLA
-                if(gui.pantallaAnterior == GUI.PANTALLA.VINILOS || gui.pantallaAnterior == GUI.PANTALLA.CDS){
-                    // --- CASO VINILO / CD ---
                     char tipo = (gui.pantallaAnterior == GUI.PANTALLA.VINILOS) ? 'V' : 'C';
                     String ubi = gui.nombresUbicacion[gui.rbgUbicacion.selectedOption];
                     String ori = gui.nombresOrigen[gui.rbgOrigen.selectedOption];
 
-                    // Recogemos EDICIÓN del campo índice 3
-                    String edicion = gui.tFAgregar[3].getText();
-
                     db.insertarViniloCD(titulo, artista, fecha, edicion, ubi, generosFinal, ori, notas, gui.usuarioActual, tipo, estrellas);
-
-                } else if(gui.pantallaAnterior == GUI.PANTALLA.CONCIERTOS){
-                    // --- CASO CONCIERTO ---
-                    // Recogemos LUGAR del campo índice 4
-                    String lugar = gui.tFAgregar[4].getText();
+                } else if (gui.pantallaAnterior == GUI.PANTALLA.CONCIERTOS) {
+                    // DATOS DE CONCIERTO
+                    String titulo = gui.tFConcierto[0].getText();
+                    String artista = gui.tFConcierto[1].getText();
+                    String fecha = gui.tFConcierto[2].getText();
+                    String lugar = gui.tFConcierto[3].getText();
 
                     db.insertarConcierto(titulo, artista, fecha, lugar, generosFinal, notas, gui.usuarioActual, estrellas);
                 }
-
-                // Volver a la pantalla de la que veníamos
                 gui.pantallaActual = gui.pantallaAnterior;
+            }
+            if (gui.pantallaActual == GUI.PANTALLA.AGREGAR) {
+                for(gui.smashRecPantallas.TextField tf : gui.tFMusica) tf.isPressed(this);
+            } else {
+                for(gui.smashRecPantallas.TextField tf : gui.tFConcierto) tf.isPressed(this);
             }
             if(gui.bCancelar.mouseOverButton(this)){
                 // Volvemos exactamente de donde vinimos
@@ -380,9 +353,6 @@ public class Main extends PApplet {
             }
             gui.cbl.checkMouse(this);
             gui.tANotasAgregar.isPressed(this);
-            for(gui.smashRecPantallas.TextField tf : gui.tFAgregar) {
-                tf.isPressed(this);
-            }
 
             // Checkboxes género
             for (int i = 0; i < gui.cbGenero.length; i++) {

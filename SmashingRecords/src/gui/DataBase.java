@@ -334,12 +334,12 @@ public class DataBase {
         return -1;
     }
 
-    public void insertarImagen(String nombreArchivo, String tituloVinilo, String tituloConcierto) {
-        String valVinilo    = (tituloVinilo    != null && !tituloVinilo.isEmpty())    ? "'" + tituloVinilo    + "'" : "NULL";
-        String valConcierto = (tituloConcierto != null && !tituloConcierto.isEmpty()) ? "'" + tituloConcierto + "'" : "NULL";
+    public void insertarImagen(String nombreArchivo, int idVinilo, int idConcierto) {
+        String valVinilo    = (idVinilo    != -1) ? String.valueOf(idVinilo)    : "NULL";
+        String valConcierto = (idConcierto != -1) ? String.valueOf(idConcierto) : "NULL";
 
         String q = "INSERT INTO Imagen (id, `id_Vinilo/CD`, id_Concierto) " +
-                   "VALUES ('" + nombreArchivo + "', " + valVinilo + ", " + valConcierto + ")";
+                "VALUES ('" + nombreArchivo + "', " + valVinilo + ", " + valConcierto + ")";
         System.out.println(q);
         try {
             query.execute(q);

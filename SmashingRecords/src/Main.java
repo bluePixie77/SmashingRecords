@@ -347,19 +347,16 @@ public class Main extends PApplet {
             }else if(gui.bLoadImage.mouseOverButton(this)){
                 // Obrim el dialeg
                 selectInput("Selecciona una imatge ...", "fileSelected");
-            }else if(gui.bSaveImageToDB.mouseOverButton(this)){
+            } else if(gui.bSaveImageToDB.mouseOverButton(this)){
                 if(gui.file != null && !gui.titol.isEmpty() && gui.ultimoIdInsertado != -1){
                     copiar(gui.file, gui.rutaCarpeta, gui.titol);
-
-                    String tituloActual = gui.tFMusica[0].getText();
-                    if(gui.pantallaAnterior == GUI.PANTALLA.VINILOS ||
-                            gui.pantallaAnterior == GUI.PANTALLA.CDS){
-                        db.insertarImagen(gui.titol, tituloActual, null);
+                    if(gui.pantallaAnterior == GUI.PANTALLA.VINILOS || gui.pantallaAnterior == GUI.PANTALLA.CDS){
+                        db.insertarImagen(gui.titol, gui.ultimoIdInsertado, -1);
                     } else if(gui.pantallaAnterior == GUI.PANTALLA.CONCIERTOS){
-                        db.insertarImagen(gui.titol, null, tituloActual);
+                        db.insertarImagen(gui.titol, -1, gui.ultimoIdInsertado);
                     }
                 } else {
-                    System.out.println("No hay imagen seleccionada.");
+                    System.out.println("No hay imagen seleccionada o no se ha insertado el elemento primero.");
                 }
             }
             gui.cbl.checkMouse(this);

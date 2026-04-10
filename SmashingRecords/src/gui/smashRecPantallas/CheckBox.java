@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 public class CheckBox {
     // Propietats
-    int x, y, w;
+    public int x, y, w;
 
     // Colors
     int bgColor, borderColor, checkedColor;
@@ -31,7 +31,6 @@ public class CheckBox {
 
     // Dibuixa el CheckBox
     public void display(PApplet p5){
-
         p5.pushStyle();
         p5.stroke(borderColor);
         p5.strokeWeight(2);

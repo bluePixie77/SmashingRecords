@@ -161,8 +161,8 @@ public class GUI {
         bEliminarMultimedia = new Button(p5, appColors, "ELIMINAR", p5.width * 0.60f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
 
         // Creació del Botó
-        bLoadImage = new Button(p5, appColors, "LOAD", p5.width*0.6f, p5.height*0.7f, 200, 80);
-        bSaveImageToDB= new Button(p5, appColors, "SAVE", p5.width*0.7f, p5.height*0.7f, 200, 80);
+        bLoadImage = new Button(p5, appColors, "LOAD", p5.width*0.38f, p5.height*0.57f, p5.width*0.2f, p5.height * 0.05f);
+        bSaveImageToDB= new Button(p5, appColors, "SAVE", p5.width*0.6f, p5.height*0.57f, p5.width*0.2f, p5.height * 0.05f);
 
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
@@ -454,16 +454,15 @@ public class GUI {
         // Dibuixa la imatge
         if(imgElegida!=null){
             p5.image(imgElegida, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
-            p5.textSize(34); p5.textAlign(p5.RIGHT);
-            p5.fill(0);
-            p5.text(titol, 750, 750);
+            p5.textSize(34); p5.textAlign(p5.LEFT);
+            p5.fill(white);
+            p5.text(titol, p5.width*0.38f, p5.height*0.67f);
         }
         else{
             p5.fill(255);
             p5.rect(p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
-            p5.textSize(34); p5.textAlign(p5.RIGHT);
-            p5.text("Sense imatge", 750, 750);
-            // canviar per imatge predet / automàtica
+            p5.textSize(34); p5.textAlign(p5.LEFT);
+            p5.text("Sense imatge", p5.width*0.38f, p5.height*0.67f);
         }
         // Dibuixa els botons
         bLoadImage.display(p5);
@@ -479,13 +478,15 @@ public class GUI {
         p5.text("Género:", p5.width * 0.38f, p5.height * 0.72f);
         for (int i = 0; i < cbGenero.length; i++) {
             cbGenero[i].display(p5);
-            p5.fill(white); p5.textSize(18);
-            p5.text(nombresGenero[i], p5.width * 0.38f + i * p5.width*0.10f + 25, p5.height * 0.755f);
+            p5.fill(white); p5.textSize(24);
+            p5.text(nombresGenero[i], p5.width * 0.38f + i * p5.width*0.10f + 25, p5.height * 0.77f);
         }
         // Ubicación
+        p5.textSize(medidaIntermedia);
         p5.text("Ubicación:", p5.width * 0.38f, p5.height * 0.82f);
         rbgUbicacion.display(p5);
         // Origen
+        p5.textSize(medidaIntermedia);
         p5.text("Origen:", p5.width * 0.38f, p5.height * 0.89f);
         rbgOrigen.display(p5);
 

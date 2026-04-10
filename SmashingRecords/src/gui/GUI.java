@@ -103,6 +103,7 @@ public class GUI {
     public String[] nombresGenero = {"Altres", "Country", "Indie", "Pop", "Rock"};
     public String[] nombresUbicacion = {"Zona 1", "Zona 2", "Zona 3", "Zona 4", "Otros"};
     public String[] nombresOrigen = {"Comprado", "Regalo", "Heredado", "Otro"};
+    public int ultimoIdInsertado = -1;
 
     // Dades de les cards
     String[][] infoAlbum = {
@@ -201,8 +202,8 @@ public class GUI {
         tFMusica[2] = new TextField(p5, appColors, 40, startX, startY + (spacing*2), shortW, fieldH); // Año
         tFMusica[3] = new TextField(p5, appColors, 40, startX + shortW + gap, startY + (spacing*2), fieldW - shortW - gap, fieldH); // Edición
 
-        float sX = p5.width * 0.65f;
-        float fW = p5.width * 0.35f;
+        float sX = p5.width * 0.68f;
+        float fW = p5.width * 0.3f;
         // --- CONFIGURACIÓN CONCIERTOS (4 campos) ---
         tFConcierto = new TextField[4];
         tFConcierto[0] = new TextField(p5, appColors, 40, sX, startY, fW, fieldH); // Titulo
@@ -448,6 +449,8 @@ public class GUI {
         p5.fill(white);
         p5.text(cbl.getNumSelected()+"/5", p5.width*0.32f, p5.height*0.77f);
 
+        p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
+
         // Dibuixa la imatge
         if(imgElegida!=null){
             p5.image(imgElegida, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
@@ -487,7 +490,6 @@ public class GUI {
         rbgOrigen.display(p5);
 
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
-        p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.3f, p5.width*0.3f);
 
         p5.fill(white); p5.textSize(medidaIntermedia);
         p5.text("Título", tFMusica[0].x, tFMusica[0].y - 10); tFMusica[0].display(p5);
@@ -519,7 +521,7 @@ public class GUI {
         p5.line(p5.width*0.23f, p5.height*0.20f, p5.width*0.97f, p5.height*0.20f);
         p5.image(imgDisc2, p5.width*0.05f, p5.height*0.24f, p5.width*0.62f, p5.width*0.3f);
 
-        p5.fill(white); p5.textSize(medidaIntermedia);
+        p5.textFont(appFonts.getFontAt(3)); p5.fill(white); p5.textSize(medidaIntermedia);
         p5.text("Título", tFConcierto[0].x, tFConcierto[0].y - 10); tFConcierto[0].display(p5);
         p5.text("Artista", tFConcierto[1].x, tFConcierto[1].y - 10); tFConcierto[1].display(p5);
         p5.text("Fecha", tFConcierto[2].x, tFConcierto[2].y - 10); tFConcierto[2].display(p5);

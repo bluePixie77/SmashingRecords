@@ -291,37 +291,59 @@ public class DataBase {
         }
     }
 
-    public void insertarViniloCD(String titulo, String artista, String fecha, String edicion,
-                                 String ubicacion, String genero, String origen,
-                                 String notas, String nombreUsuario, char tipo, int rating) {
+    public int insertarViniloCD(String titulo, String artista, String fecha, String edicion,
+                                String ubicacion, String genero, String origen,
+                                String notas, String nombreUsuario, char tipo, int rating) {
         String valorFecha = (fecha == null || fecha.isEmpty()) ? "NULL" : "'" + fecha + "'";
+        String valorNotas = (notas == null || notas.isEmpty()) ? "NULL" : "'" + notas + "'";
+        String valorEdicion = (edicion == null || edicion.isEmpty()) ? "NULL" : "'" + edicion + "'";
+
         String q = "INSERT INTO Vinilo_CD (Título, Artista, Fecha, Edición, Ubicación, Género, Origen, Notas, NombreUsuario, tipo, Rating) " +
-                "VALUES ('" + titulo + "', '" + artista + "', " + fecha + ", '" + edicion + "', '" +
-                ubicacion + "', '" + genero + "', '" + origen + "', '" +
-                notas + "', '" + nombreUsuario + "', '" + tipo + "', " + rating + ")";
+                "VALUES ('" + titulo + "', '" + artista + "', " + valorFecha + ", " + valorEdicion + ", '" +
+                ubicacion + "', '" + genero + "', '" + origen + "', " + valorNotas + ", '" +
+                nombreUsuario + "', '" + tipo + "', " + rating + ")";
         System.out.println(q);
         try {
-            query.execute(q);
+            query.execute(q, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = query.getGeneratedKeys();
+            if (rs.next()) return rs.getInt(1);
         } catch (Exception e) {
             System.out.println(e);
         }
+        return -1; // -1 indica error
     }
 
-    public void insertarConcierto(String titulo, String artista, String fecha,
-                                  String lugar, String genero, String notas,
-                                  String nombreUsuario, int rating) {
+    public int insertarConcierto(String titulo, String artista, String fecha,
+                                 String lugar, String genero, String notas,
+                                 String nombreUsuario, int rating) {
+        String valorFecha = (fecha == null || fecha.isEmpty()) ? "NULL" : "'" + fecha + "'";
+        String valorNotas = (notas == null || notas.isEmpty()) ? "NULL" : "'" + notas + "'";
+        String valorLugar = (lugar == null || lugar.isEmpty()) ? "NULL" : "'" + lugar + "'";
+
         String q = "INSERT INTO Concierto (Título, Artista, Fecha, Lugar, Género, Notas, NombreUsuario, Rating) " +
-                "VALUES ('" + titulo   + "', " +
-                "'" + artista  + "', " +
-                "'" + fecha    + "', " +
-                "'" + lugar    + "', " +
-                "'" + genero   + "', " +
-                "'" + notas    + "', " +
-                "'" + nombreUsuario + "', " +
-                      rating + ")";
+                "VALUES ('" + titulo + "', '" + artista + "', " + valorFecha + ", " + valorLugar + ", '" +
+                genero + "', " + valorNotas + ", '" + nombreUsuario + "', " + rating + ")";
+        System.out.println(q);
+        try {
+            query.execute(q, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = query.getGeneratedKeys();
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    public void insertarImagen(String nombreArchivo, String tituloVinilo, String tituloConcierto) {
+        String valVinilo    = (tituloVinilo    != null && !tituloVinilo.isEmpty())    ? "'" + tituloVinilo    + "'" : "NULL";
+        String valConcierto = (tituloConcierto != null && !tituloConcierto.isEmpty()) ? "'" + tituloConcierto + "'" : "NULL";
+
+        String q = "INSERT INTO Imagen (id, `id_Vinilo/CD`, id_Concierto) " +
+                   "VALUES ('" + nombreArchivo + "', " + valVinilo + ", " + valConcierto + ")";
         System.out.println(q);
         try {
             query.execute(q);
+            System.out.println("Imagen guardada en BD.");
         } catch (Exception e) {
             System.out.println(e);
         }

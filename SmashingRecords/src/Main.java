@@ -319,6 +319,7 @@ public class Main extends PApplet {
                     char tipo = (gui.pantallaAnterior == GUI.PANTALLA.VINILOS) ? 'V' : 'C';
                     String ubi = gui.nombresUbicacion[gui.rbgUbicacion.selectedOption];
                     String ori = gui.nombresOrigen[gui.rbgOrigen.selectedOption];
+                    gui.ultimoIdInsertado = db.insertarViniloCD(titulo, artista, fecha, edicion, ubi, generosFinal, ori, notas, gui.usuarioActual, tipo, estrellas);
 
                     db.insertarViniloCD(titulo, artista, fecha, edicion, ubi, generosFinal, ori, notas, gui.usuarioActual, tipo, estrellas);
                 } else if (gui.pantallaAnterior == GUI.PANTALLA.CONCIERTOS) {
@@ -327,7 +328,7 @@ public class Main extends PApplet {
                     String artista = gui.tFConcierto[1].getText();
                     String fecha = gui.tFConcierto[2].getText();
                     String lugar = gui.tFConcierto[3].getText();
-
+                    gui.ultimoIdInsertado = db.insertarConcierto(titulo, artista, fecha, lugar, generosFinal, notas, gui.usuarioActual, estrellas);
                     db.insertarConcierto(titulo, artista, fecha, lugar, generosFinal, notas, gui.usuarioActual, estrellas);
                 }
                 gui.pantallaActual = gui.pantallaAnterior;
@@ -347,9 +348,19 @@ public class Main extends PApplet {
                 // Obrim el dialeg
                 selectInput("Selecciona una imatge ...", "fileSelected");
             }else if(gui.bSaveImageToDB.mouseOverButton(this)){
-                // Guardar la imatge en una carpeta de l'ordinador
-                copiar(gui.file, gui.rutaCarpeta, gui.titol);
-                copy();
+                if(gui.file != null && !gui.titol.isEmpty() && gui.ultimoIdInsertado != -1){
+                    copiar(gui.file, gui.rutaCarpeta, gui.titol);
+
+                    String tituloActual = gui.tFMusica[0].getText();
+                    if(gui.pantallaAnterior == GUI.PANTALLA.VINILOS ||
+                            gui.pantallaAnterior == GUI.PANTALLA.CDS){
+                        db.insertarImagen(gui.titol, tituloActual, null);
+                    } else if(gui.pantallaAnterior == GUI.PANTALLA.CONCIERTOS){
+                        db.insertarImagen(gui.titol, null, tituloActual);
+                    }
+                } else {
+                    System.out.println("No hay imagen seleccionada.");
+                }
             }
             gui.cbl.checkMouse(this);
             gui.tANotasAgregar.isPressed(this);

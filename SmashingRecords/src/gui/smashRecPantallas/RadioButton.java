@@ -8,7 +8,7 @@ public class RadioButton {
         int x, y, r;
 
         // Colors
-        int bgColor, borderColor, checkedColor;
+        int white, borderColor, checkedColor;
 
         boolean checked;
         String text;
@@ -19,7 +19,7 @@ public class RadioButton {
             this.y = y;
             this.r = r;
             this.checked = false;
-            this.bgColor = p5.color(255);
+            this.white = p5.color(255);
             this.borderColor = p5.color(0);
             this.checkedColor = p5.color(180);
         }
@@ -37,7 +37,7 @@ public class RadioButton {
             p5.pushStyle();
             p5.stroke(borderColor);
             p5.strokeWeight(2);
-            p5.fill(bgColor);
+            p5.fill(white);
             p5.ellipse(x, y, 2*r, 2*r);
 
             if(this.checked){

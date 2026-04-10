@@ -101,7 +101,7 @@ public class GUI {
     public RadioButtonGroup rbgUbicacion, rbgOrigen;
     public CheckBox[] cbGenero;
     public String[] nombresGenero = {"Altres", "Country", "Indie", "Pop", "Rock"};
-    public String[] nombresUbicacion = {"Zona 1", "Zona 2", "Zona 3", "Zona 4", "Zona 5"};
+    public String[] nombresUbicacion = {"Zona 1", "Zona 2", "Zona 3", "Zona 4", "Otros"};
     public String[] nombresOrigen = {"Comprado", "Regalo", "Heredado", "Otro"};
 
     // Dades de les cards
@@ -201,12 +201,14 @@ public class GUI {
         tFMusica[2] = new TextField(p5, appColors, 40, startX, startY + (spacing*2), shortW, fieldH); // Año
         tFMusica[3] = new TextField(p5, appColors, 40, startX + shortW + gap, startY + (spacing*2), fieldW - shortW - gap, fieldH); // Edición
 
+        float sX = p5.width * 0.65f;
+        float fW = p5.width * 0.35f;
         // --- CONFIGURACIÓN CONCIERTOS (4 campos) ---
         tFConcierto = new TextField[4];
-        tFConcierto[0] = new TextField(p5, appColors, 40, startX, startY, fieldW, fieldH); // Titulo
-        tFConcierto[1] = new TextField(p5, appColors, 40, startX, startY + spacing, fieldW, fieldH); // Artista
-        tFConcierto[2] = new TextField(p5, appColors, 40, startX, startY + (spacing*2), fieldW, fieldH); // Fecha
-        tFConcierto[3] = new TextField(p5, appColors, 40, startX, startY + (spacing*3), fieldW, fieldH); // Lugar
+        tFConcierto[0] = new TextField(p5, appColors, 40, sX, startY, fW, fieldH); // Titulo
+        tFConcierto[1] = new TextField(p5, appColors, 40, sX, startY + spacing, fW, fieldH); // Artista
+        tFConcierto[2] = new TextField(p5, appColors, 40, sX, startY + (spacing*2), fW, fieldH); // Fecha
+        tFConcierto[3] = new TextField(p5, appColors, 40, sX, startY + (spacing*3), fW, fieldH); // Lugar
 
         tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 40, 10);
         tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.8f, p5.width * 0.3f, p5.height * 0.20f, 40, 4);
@@ -465,12 +467,12 @@ public class GUI {
         bSaveImageToDB.display(p5);
 
         // Título dinámico según el origen
-        p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo);
+        p5.textFont(appFonts.getFontAt(0)); p5.fill(narFuerte); p5.textSize(medidaTitulo); p5.textAlign(p5.LEFT);
         String txtTitulo = ((pantallaAnterior == PANTALLA.VINILOS) ? "AGREGAR VINILO" : "AGREGAR CD");
         p5.text(txtTitulo, p5.width * 0.25f, p5.height * 0.10f);
 
         // Género
-        p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
+        p5.textFont(appFonts.getFontAt(3)); p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
         p5.text("Género:", p5.width * 0.38f, p5.height * 0.72f);
         for (int i = 0; i < cbGenero.length; i++) {
             cbGenero[i].display(p5);

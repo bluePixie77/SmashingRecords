@@ -81,7 +81,7 @@ public class GUI {
     public TextArea tANotasUsuario, tANotasAgregar;
 
     // Imatges de la GUI
-    public RoundButton rBFilter, rBHeart, rBPlus, rBDelete;
+    public RoundButton rBFilter, rBHeart, rBPlus, rBDelete, rBHeartAgregar;
     RadioButton radioB1, radioB2, radioB3;
     PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDelete, imgDisc1, imgDisc2;
     public PImage imgElegida;
@@ -171,6 +171,7 @@ public class GUI {
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
         rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width * 0.95f, p5.height * 0.15f, p5.width * 0.020f);
         rBDelete = new RoundButton(p5, appColors, imgDelete, p5.width * 0.60f, p5.height * 0.13f, p5.width * 0.020f);
+        rBHeartAgregar = new RoundButton(p5, appColors, imgHeart, p5.width * 0.55f, p5.height * 0.13f, p5.width * 0.020f);
 
         float xB = p5.width * 0.25f;
         float yB = p5.height * 0.15f;
@@ -463,6 +464,7 @@ public class GUI {
         bEliminarMultimedia.display(p5);
 
         rBDelete.display(p5);
+        rBHeartAgregar.display(p5);
 
         cbl.display(p5);
         p5.fill(white);
@@ -483,7 +485,14 @@ public class GUI {
             p5.textAlign(p5.LEFT);
             p5.text("Sense imatge", p5.width * 0.38f, p5.height * 0.67f);
         }
-        // Dibuixa els botons
+
+        bLoadImage.x    = p5.width * 0.38f;
+        bLoadImage.y    = p5.height * 0.57f;
+        bLoadImage.w    = p5.width * 0.2f;
+        bSaveImageToDB.x = p5.width * 0.60f;
+        bSaveImageToDB.y = p5.height * 0.57f;
+        bSaveImageToDB.w = p5.width * 0.2f;
+
         bLoadImage.display(p5);
         bSaveImageToDB.display(p5);
 
@@ -542,6 +551,30 @@ public class GUI {
         bEliminarMultimedia.display(p5);
 
         rBDelete.display(p5);
+        rBHeartAgregar.display(p5);
+
+        // Imagen
+        if (imgElegida != null) {
+            p5.image(imgElegida, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.28f, p5.width * 0.28f);
+            p5.fill(white); p5.textSize(18); p5.textAlign(p5.LEFT);
+            p5.text(titol, p5.width * 0.05f, p5.height * 0.24f + p5.width * 0.28f + 20);
+        } else {
+            p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.28f, p5.width * 0.28f);
+            p5.textSize(24);
+            p5.textAlign(p5.LEFT);
+            p5.text("Sense imatge", p5.width * 0.38f, p5.height * 0.67f);
+        }
+
+        // Reposicionar botones para concierto
+        bLoadImage.x    = p5.width * 0.68f;
+        bLoadImage.y    = p5.height * 0.67f;
+        bLoadImage.w    = p5.width * 0.11f;
+        bSaveImageToDB.x = p5.width * 0.79f;
+        bSaveImageToDB.y = p5.height * 0.67f;
+        bSaveImageToDB.w = p5.width * 0.11f;
+
+        bLoadImage.display(p5);
+        bSaveImageToDB.display(p5);
 
         cbl.display(p5);
         p5.fill(white);

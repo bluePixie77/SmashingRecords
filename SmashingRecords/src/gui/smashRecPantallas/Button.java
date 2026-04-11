@@ -6,7 +6,7 @@ import processing.core.PApplet;
 public class Button {
 
     // Atributos o propiedades
-    float x, y, w, h; // Posición (x, y) i dimensiones(w, h);
+    public float x, y, w, h; // Posición (x, y) i dimensiones(w, h);
     int fillColor, strokeColor; // Colors del boto (fill / stroke).
     int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
     String textBoto;  // Text

@@ -13,7 +13,6 @@ public class CheckBoxStarList {
 
     // Constructor
     public CheckBoxStarList(PApplet p5, int nun, String[] imgs, float x, float y, float w, float h) {
-
         this.x = x;
         this.y = y;
         this.w = w;
@@ -92,5 +91,12 @@ public class CheckBoxStarList {
             }
         }
         return n;
+    }
+    public void reset() {
+        if (this.cbs != null) {
+            for (int i = 0; i < this.cbs.length; i++) {
+                this.cbs[i].setChecked(false);
+            }
+        }
     }
 }

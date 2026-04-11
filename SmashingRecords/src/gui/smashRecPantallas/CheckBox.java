@@ -67,4 +67,5 @@ public class CheckBox {
                 p5.mouseY>= this.y &&
                 p5.mouseY<= this.y + this.w;
     }
+
 }

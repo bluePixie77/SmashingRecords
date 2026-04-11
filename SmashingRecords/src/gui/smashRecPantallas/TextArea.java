@@ -60,6 +60,10 @@ public class TextArea {
 
     }
 
+    public void setText(String text){
+        this.text = text;
+    }
+
     // Getters
     public String getText() {
         return this.text;

@@ -321,7 +321,6 @@ public class Main extends PApplet {
                     String ori = gui.nombresOrigen[gui.rbgOrigen.selectedOption];
                     gui.ultimoIdInsertado = db.insertarViniloCD(titulo, artista, fecha, edicion, ubi, generosFinal, ori, notas, gui.usuarioActual, tipo, estrellas);
 
-                    db.insertarViniloCD(titulo, artista, fecha, edicion, ubi, generosFinal, ori, notas, gui.usuarioActual, tipo, estrellas);
                 } else if (gui.pantallaAnterior == GUI.PANTALLA.CONCIERTOS) {
                     // DATOS DE CONCIERTO
                     String titulo = gui.tFConcierto[0].getText();
@@ -329,8 +328,8 @@ public class Main extends PApplet {
                     String fecha = gui.tFConcierto[2].getText();
                     String lugar = gui.tFConcierto[3].getText();
                     gui.ultimoIdInsertado = db.insertarConcierto(titulo, artista, fecha, lugar, generosFinal, notas, gui.usuarioActual, estrellas);
-                    db.insertarConcierto(titulo, artista, fecha, lugar, generosFinal, notas, gui.usuarioActual, estrellas);
                 }
+                gui.resetPantallaAgregar();
                 gui.pantallaActual = gui.pantallaAnterior;
             }
             if (gui.pantallaActual == GUI.PANTALLA.AGREGAR) {
@@ -340,9 +339,11 @@ public class Main extends PApplet {
             }
             if(gui.bCancelar.mouseOverButton(this)){
                 // Volvemos exactamente de donde vinimos
+                gui.resetPantallaAgregar();
                 gui.pantallaActual = gui.pantallaAnterior;
             }else if(gui.bEliminarMultimedia.mouseOverButton(this)){
                 System.out.println("MULTIMEDIA ELIMINADA");
+                gui.resetPantallaAgregar();
                 gui.pantallaActual = gui.pantallaAnterior;
             }else if(gui.bLoadImage.mouseOverButton(this)){
                 // Obrim el dialeg

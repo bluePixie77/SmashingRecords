@@ -53,4 +53,18 @@ public class RadioButtonGroup {
         }
         return false;
     }
+
+    public void reset() {
+        // 1. Volvemos al valor por defecto (la primera opción)
+        this.selectedOption = rbuttons.length-1;
+
+        // 2. Recorremos los botones individuales y los desmarcamos
+        for (int i = 0; i < rbuttons.length; i++) {
+            if (i == 0) {
+                rbuttons[i].setChecked(true);  // La primera opción marcada
+            } else {
+                rbuttons[i].setChecked(false); // Las demás desmarcadas
+            }
+        }
+    }
 }

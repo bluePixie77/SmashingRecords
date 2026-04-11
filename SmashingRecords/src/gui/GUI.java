@@ -475,13 +475,13 @@ public class GUI {
         // Dibuixa la imatge
         if (imgElegida != null) {
             p5.image(imgElegida, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.3f, p5.width * 0.3f);
-            p5.textSize(34);
+            p5.textSize(24);
             p5.textAlign(p5.LEFT);
             p5.fill(white);
             p5.text(titol, p5.width * 0.38f, p5.height * 0.67f);
         } else {
             p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.3f, p5.width * 0.3f);
-            p5.textSize(34);
+            p5.textSize(24);
             p5.textAlign(p5.LEFT);
             p5.text("Sense imatge", p5.width * 0.38f, p5.height * 0.67f);
         }
@@ -555,21 +555,21 @@ public class GUI {
 
         // Imagen
         if (imgElegida != null) {
-            p5.image(imgElegida, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.28f, p5.width * 0.28f);
+            p5.image(imgElegida, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.62f, p5.width * 0.3f);
             p5.fill(white); p5.textSize(18); p5.textAlign(p5.LEFT);
-            p5.text(titol, p5.width * 0.05f, p5.height * 0.24f + p5.width * 0.28f + 20);
+            p5.text(titol, p5.width * 0.38f, p5.height * 0.77f);
         } else {
-            p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.28f, p5.width * 0.28f);
+            p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.62f, p5.width * 0.3f);
             p5.textSize(24);
             p5.textAlign(p5.LEFT);
-            p5.text("Sense imatge", p5.width * 0.38f, p5.height * 0.67f);
+            p5.text("Sense imatge", p5.width * 0.38f, p5.height * 0.77f);
         }
 
         // Reposicionar botones para concierto
-        bLoadImage.x    = p5.width * 0.68f;
+        bLoadImage.x    = p5.width * 0.72f;
         bLoadImage.y    = p5.height * 0.67f;
         bLoadImage.w    = p5.width * 0.11f;
-        bSaveImageToDB.x = p5.width * 0.79f;
+        bSaveImageToDB.x = p5.width * 0.83f;
         bSaveImageToDB.y = p5.height * 0.67f;
         bSaveImageToDB.w = p5.width * 0.11f;
 
@@ -577,7 +577,7 @@ public class GUI {
         bSaveImageToDB.display(p5);
 
         cbl.display(p5);
-        p5.fill(white);
+        p5.fill(white); p5.textSize(24);
         p5.text(cbl.getNumSelected() + "/5", p5.width * 0.32f, p5.height * 0.77f);
 
         p5.textFont(appFonts.getFontAt(0));
@@ -586,7 +586,6 @@ public class GUI {
         p5.text("AGREGAR CONCIERTO", p5.width * 0.25f, p5.height * 0.10f);
 
         p5.line(p5.width * 0.23f, p5.height * 0.20f, p5.width * 0.97f, p5.height * 0.20f);
-        p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.62f, p5.width * 0.3f);
 
         p5.textFont(appFonts.getFontAt(3));
         p5.fill(white);

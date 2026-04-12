@@ -85,7 +85,7 @@ public class GUI {
     // Imatges de la GUI
     public RoundButton rBFilter, rBHeart, rBPlus, rBDelete, rBHeartAgregar;
     RadioButton radioB1, radioB2, radioB3;
-    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDelete, imgDisc1, imgDisc2;
+    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDelete, imgDisc1, imgDefaultViniloCD, imgDefaultConcierto;
     public PImage imgElegida;
     String[] imgs = {"starON.png", "starOFF.png"};
 
@@ -119,20 +119,12 @@ public class GUI {
 
     public int totalActual = 0; // Estadística
 
-    // Dades de les cards
-    String[][] infoAlbum = {
-            {"Album 0", "Autor 0", "Data 0", "Secció 0", "Descripció 0"},
-            {"Album 1", "Autor 1", "Data 1", "Secció 1", "Descripció 1"},
-            {"Album 2", "Autor 2", "Data 2", "Secció 2", "Descripció 2"},
-            {"Album 3", "Autor 3", "Data 3", "Secció 1", "Descripció 3"},
-            {"Album 4", "Autor 4", "Data 4", "Secció 1", "Descripció 4"},
-            {"Album 5", "Autor 5", "Data 5", "Secció 2", "Descripció 5"},
-            {"Album 6", "Autor 6", "Data 6", "Secció 2", "Descripció 6"},
-            {"Album 7", "Autor 7", "Data 7", "Secció 1", "Descripció 7"},
-            {"Album 8", "Autor 8", "Data 8", "Secció 8", "Descripció 8"},
-            {"Album 9", "Autor 9", "Data 9", "Secció 9", "Descripció 9"},
-            {"Album 10", "Autor 10", "Data 10", "Secció 10", "Descripció 10"},
-    };
+    // Filtro y buscador
+    public int ordenActual = 0; // 0=TítA-Z, 1=TítZ-A, 2=ArtA-Z, 3=ArtZ-A
+    public int tiempoMensajeOrden = 0;
+    public String textoBusqueda = "";
+    public String[] datosUsuarioActual = {"", "", ""};
+
     String[][] infoConcert;
 
     // Otros
@@ -175,9 +167,9 @@ public class GUI {
 
         popUpConfirmacionEliminar = new PopUp(p5, appColors,
                 "¿Eliminar?",
-                "Esta acción eliminará el elemento de la base de datos.",
+                "Se eliminará el elemento de la base de datos.",
                 p5.width * 0.30f, p5.height * 0.30f,
-                p5.width * 0.40f, p5.height * 0.35f);
+                p5.width * 0.5f, p5.height * 0.35f);
 
         // Creació del Botó
         bLoadImage = new Button(p5, appColors, "LOAD", p5.width * 0.38f, p5.height * 0.57f, p5.width * 0.2f, p5.height * 0.05f);
@@ -248,7 +240,8 @@ public class GUI {
         imgDelete = p5.loadImage("data/imgDelete.png");
 
         imgDisc1 = p5.loadImage("data/musicPredetBlackBG.png");
-        imgDisc2 = p5.loadImage("data/musicPredetWhiteBG.png");
+        imgDefaultViniloCD = p5.loadImage("data/musicPredetWhiteBG.png");
+        imgDefaultConcierto = p5.loadImage("data/imgDefaultConcierto.png");
 
         infoConcert = db.getInfoArrayPetit2DConcert();
     }
@@ -281,7 +274,7 @@ public class GUI {
         pcMusica.setDimensions(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
 
         // CONCIERTOS
-        pcConcert = new PagedCard2D(p5, appColors, 4, 2, Card.tipoCard.CONCERT);
+        pcConcert = new PagedCard2D(p5, appColors, 3, 2, Card.tipoCard.CONCERT);
         // (Mismas dimensiones, para mantener simetría)
         pcConcert.setDimensions(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
 
@@ -300,9 +293,6 @@ public class GUI {
 
         // 3. Pasar el array de objetos directamente
         pcStats.setCards(misGraficos);
-
-        // 4. Cargar datos iniciales
-        actualizarDatosGraficos(p5);
     }
 
     public void setRadioButtonsYCheckboxes(PApplet p5) {
@@ -469,8 +459,8 @@ public class GUI {
         p5.textSize(medidaIntermedia);
         p5.textAlign(p5.LEFT);
         String labelTotal = (categoriaActual == CatEstadistica.VINILOS)   ? "Vinilos: "
-                : (categoriaActual == CatEstadistica.CDS)        ? "CDs: "
-                : "Conciertos: ";
+                          : (categoriaActual == CatEstadistica.CDS)       ? "CDs: "
+                          : "Conciertos: ";
         p5.text("TOTAL " + labelTotal + totalActual, bCatConciertos.x + bCatConciertos.w + 30, bCatVinilos.y + bCatVinilos.h * 0.7f);
 
         bNext.display(p5);
@@ -509,10 +499,10 @@ public class GUI {
             p5.fill(white);
             p5.text(titol, p5.width * 0.38f, p5.height * 0.67f);
         } else {
-            p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.3f, p5.width * 0.3f);
+            p5.image(imgDefaultViniloCD, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.3f, p5.width * 0.3f);
             p5.textSize(24);
             p5.textAlign(p5.LEFT);
-            p5.text("Sense imatge", p5.width * 0.38f, p5.height * 0.67f);
+            p5.text("Sin imatge", p5.width * 0.38f, p5.height * 0.67f);
         }
 
         bLoadImage.x    = p5.width * 0.38f;
@@ -618,9 +608,9 @@ public class GUI {
             p5.fill(white); p5.textSize(24); p5.textAlign(p5.LEFT);
             p5.text(titol, p5.width * 0.38f, p5.height * 0.77f);
         } else {
-            p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.62f, p5.width * 0.3f);
+            p5.image(imgDefaultConcierto, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.62f, p5.width * 0.3f);
             p5.fill(white); p5.textSize(24); p5.textAlign(p5.LEFT);
-            p5.text("Sense imatge", p5.width * 0.38f, p5.height * 0.77f);
+            p5.text("Sin imagen", p5.width * 0.38f, p5.height * 0.77f);
         }
 
         // Reposicionar botones para concierto
@@ -749,6 +739,14 @@ public class GUI {
             p5.textAlign(p5.RIGHT);
             p5.text("Lista de deseos", p5.width * 0.8f, p5.height * 0.09f);
         }
+        if (tiempoMensajeOrden > 0) {
+            p5.fill(narFuerte);
+            p5.textFont(appFonts.getFontAt(2));
+            p5.textSize(medidaIntermedia);
+            p5.textAlign(p5.LEFT);
+            p5.text("Orden: " + getTextoOrden(), p5.width * 0.24f, p5.height * 0.23f);
+            tiempoMensajeOrden--;
+        }
 
         p5.pop();
     }
@@ -787,10 +785,26 @@ public class GUI {
         float[] dataGeneros = new float[nombresGenero.length];
         for (int i = 0; i < nombresGenero.length; i++) dataGeneros[i] = generos[i];
 
+        // Orden colores
+        int[] coloresCalificacion = {
+                black,     // 0 estrellas
+                gris,      // 1 estrella
+                pink,      // 2 estrellas
+                yellow,    // 3 estrellas
+                narFlojo,  // 4 estrellas
+                narFuerte, // 5 estrellas
+        };
+        int[] coloresGeneros = {
+                gris,
+                yellow,
+                pink,
+                narFlojo,
+                narFuerte,
+        };
         // Inyectar en gráficos
         ((SectorDiagram) misGraficos[0]).setValues(dataRatings);
         ((SectorDiagram) misGraficos[0]).setTexts(tagsRatings);
-        ((SectorDiagram) misGraficos[0]).setColors(this.paletaGraficos);
+        ((SectorDiagram) misGraficos[0]).setColors(coloresCalificacion);
 
         ((LinesDiagram) misGraficos[1]).setValues(dataAnios.length > 0 ? dataAnios : new float[]{0});
         ((LinesDiagram) misGraficos[1]).setTexts(tagsAnios.length  > 0 ? tagsAnios : new String[]{"Sin datos"});
@@ -798,7 +812,7 @@ public class GUI {
 
         ((BarsDiagram) misGraficos[2]).setValues(dataGeneros);
         ((BarsDiagram) misGraficos[2]).setTexts(nombresGenero);
-        ((BarsDiagram) misGraficos[2]).setColors(this.paletaGraficos);
+        ((BarsDiagram) misGraficos[2]).setColors(coloresGeneros);
 
         // Actualizar total
         String tipoTotal = (categoriaActual == CatEstadistica.VINILOS) ? "V"
@@ -884,13 +898,24 @@ public class GUI {
         idSeleccionado = -1;
     }
     public void recargarCards(PApplet p5) {
+        String[] columnas = {"Título", "Título", "Artista", "Artista"};
+        String[] direcciones = {"ASC", "DESC", "ASC", "DESC"};
+        String col = columnas[ordenActual];
+        String dir = direcciones[ordenActual];
+
         String[][] data;
-        if (pantallaActual == PANTALLA.VINILOS) {
-            data = db.getVinilosUsuario(usuarioActual, mostrarListaDeseos);
-        } else if (pantallaActual == PANTALLA.CDS) {
-            data = db.getCDsUsuario(usuarioActual, mostrarListaDeseos);
-        } else {
-            data = db.getConciertosUsuario(usuarioActual, mostrarListaDeseos);
+        if(pantallaActual == PANTALLA.VINILOS) {
+            data = textoBusqueda.isEmpty()
+                    ? db.getVinilosUsuario(usuarioActual, mostrarListaDeseos, col, dir)
+                    : db.buscarMusica(usuarioActual, mostrarListaDeseos, "V", textoBusqueda, col, dir);
+        } else if(pantallaActual == PANTALLA.CDS) {
+            data = textoBusqueda.isEmpty()
+                    ? db.getCDsUsuario(usuarioActual, mostrarListaDeseos, col, dir)
+                    : db.buscarMusica(usuarioActual, mostrarListaDeseos, "C", textoBusqueda, col, dir);
+        } else{
+            data = textoBusqueda.isEmpty()
+                    ? db.getConciertosUsuario(usuarioActual, mostrarListaDeseos, col, dir)
+                    : db.buscarConciertos(usuarioActual, mostrarListaDeseos, textoBusqueda, col, dir);
         }
 
         PagedCard2D pc = (pantallaActual == PANTALLA.CONCIERTOS) ? pcConcert : pcMusica;
@@ -898,14 +923,14 @@ public class GUI {
         pc.setCards();
         if (data.length > 0) {   // solo reconstruir cards si hay datos
             pc.setCards();
-            // Asignar imagen a cada card: real si tiene nombre, imgDisc2 si no
+            PImage imgDefault = (pantallaActual == PANTALLA.CONCIERTOS) ? imgDefaultConcierto : imgDefaultViniloCD;
             for (int i = 0; i < pc.cards.length; i++) {
                 String nombreImg = data[i][3];
                 if (nombreImg != null && !nombreImg.isEmpty()) {
                     PImage img = p5.loadImage(rutaCarpeta + nombreImg);
-                    pc.cards[i].setImage(img != null ? img : imgDisc2);
+                    pc.cards[i].setImage(img != null ? img : imgDefault);
                 } else {
-                    pc.cards[i].setImage(imgDisc2);
+                    pc.cards[i].setImage(imgDefault);
                 }
             }
         }
@@ -959,6 +984,21 @@ public class GUI {
                 imgElegida = p5.loadImage(rutaCarpeta + nombreImg);
                 titol = nombreImg;
             }
+        }
+    }
+
+    // Filtro
+    public void ciclarOrden() {
+        ordenActual = (ordenActual + 1) % 4;
+        tiempoMensajeOrden = 120; // 2 segundos a 60fps
+    }
+    public String getTextoOrden() {
+        switch(ordenActual) {
+            case 0: return "Título A -> Z";
+            case 1: return "Título Z -> A";
+            case 2: return "Artista A -> Z";
+            case 3: return "Artista Z -> A";
+            default: return "";
         }
     }
 }

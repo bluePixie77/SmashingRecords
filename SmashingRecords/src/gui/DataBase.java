@@ -320,6 +320,21 @@ public class DataBase {
         return info;
     }
 
+    public String[] getDatosUsuario(String nombreUsuario) {
+        String q = "SELECT NombreUsuario, CorreoElectrónico, Descripción FROM Usuario WHERE NombreUsuario='" + nombreUsuario + "'";
+        try {
+            ResultSet rs = query.executeQuery(q);
+            if (rs.next()) {
+                return new String[]{
+                        rs.getString("NombreUsuario"),
+                        rs.getString("CorreoElectrónico"),
+                        rs.getString("Descripción") != null ? rs.getString("Descripción") : ""
+                };
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return new String[]{"", "", ""};
+    }
+
     public int getNumFilesQuery(String q){ // SELECT COUNT(*) AS n
         try{
             ResultSet rs = query.executeQuery(q);
@@ -471,12 +486,12 @@ public class DataBase {
 
 
     // SELECTS
-    public String[][] getVinilosUsuario(String usuario, boolean soloListaDeseos) {
+    public String[][] getVinilosUsuario(String usuario, boolean soloListaDeseos, String orderCol, String orderDir) {
         String filtroListaDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
         String q = "SELECT v.id, v.Título, v.Artista, COALESCE(i.id, '') AS imagen " +
                 "FROM Vinilo_CD v LEFT JOIN Imagen i ON i.`id_Vinilo/CD` = v.id " +
                 "WHERE v.tipo='V' AND v.NombreUsuario='" + usuario + "'" + filtroListaDeseos +
-                " ORDER BY v.Artista ASC";
+                " ORDER BY v." + orderCol + " " + orderDir;
         int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='V' AND NombreUsuario='" + usuario + "'" + filtroListaDeseos);
         String[][] info = new String[n][4];
         try {
@@ -493,12 +508,12 @@ public class DataBase {
         return info;
     }
 
-    public String[][] getCDsUsuario(String usuario, boolean soloListaDeseos) {
+    public String[][] getCDsUsuario(String usuario, boolean soloListaDeseos, String orderCol, String orderDir) {
         String filtroLDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
         String q = "SELECT v.id, v.Título, v.Artista, COALESCE(i.id, '') AS imagen " +
                 "FROM Vinilo_CD v LEFT JOIN Imagen i ON i.`id_Vinilo/CD` = v.id " +
                 "WHERE v.tipo='C' AND v.NombreUsuario='" + usuario + "'" + filtroLDeseos +
-                " ORDER BY v.Artista ASC";
+                " ORDER BY v." + orderCol + " " + orderDir;
         int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='C' AND NombreUsuario='" + usuario + "'" + filtroLDeseos);
         String[][] info = new String[n][4];
         try {
@@ -515,12 +530,12 @@ public class DataBase {
         return info;
     }
 
-    public String[][] getConciertosUsuario(String usuario, boolean soloListaDeseos) {
+    public String[][] getConciertosUsuario(String usuario, boolean soloListaDeseos, String orderCol, String orderDir) {
         String filtroListaDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
         String q = "SELECT c.id, c.Título, c.Artista, COALESCE(i.id, '') AS imagen " +
                 "FROM Concierto c LEFT JOIN Imagen i ON i.id_Concierto = c.id " +
                 "WHERE c.NombreUsuario='" + usuario + "'" + filtroListaDeseos +
-                " ORDER BY c.Artista ASC";
+                " ORDER BY c." + orderCol + " " + orderDir;
         int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Concierto WHERE NombreUsuario='" + usuario + "'" + filtroListaDeseos);
         String[][] info = new String[n][4];
         try {
@@ -654,6 +669,63 @@ public class DataBase {
             counts[i] = getNumFilesQuery(q);
         }
         return counts;
+    }
+
+    // Buscador
+    public String[][] buscarMusica(String usuario, boolean soloListaDeseos, String tipo,
+                                   String texto, String orderCol, String orderDir) {
+        String filtroLD = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
+        String busqueda = " AND (Título LIKE '%" + texto + "%'" +
+                " OR Artista LIKE '%" + texto + "%'" +
+                " OR Fecha LIKE '%" + texto + "%'" +
+                " OR CAST(Rating AS CHAR) LIKE '%" + texto + "%')";
+        String q = "SELECT v.id, v.Título, v.Artista, COALESCE(i.id,'') AS imagen " +
+                "FROM Vinilo_CD v LEFT JOIN Imagen i ON i.`id_Vinilo/CD` = v.id " +
+                "WHERE v.tipo='" + tipo + "' AND v.NombreUsuario='" + usuario + "'" +
+                filtroLD + busqueda +
+                " ORDER BY v." + orderCol + " " + orderDir;
+        int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD v WHERE v.tipo='" + tipo +
+                "' AND v.NombreUsuario='" + usuario + "'" + filtroLD + busqueda);
+        String[][] info = new String[n][4];
+        try {
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while (rs.next()) {
+                info[f][0] = String.valueOf(rs.getInt("id"));
+                info[f][1] = rs.getString("Título");
+                info[f][2] = rs.getString("Artista");
+                info[f][3] = rs.getString("imagen");
+                f++;
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return info;
+    }
+    public String[][] buscarConciertos(String usuario, boolean soloListaDeseos,
+                                       String texto, String orderCol, String orderDir) {
+        String filtroLD = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
+        String busqueda = " AND (Título LIKE '%" + texto + "%'" +
+                " OR Artista LIKE '%" + texto + "%'" +
+                " OR Fecha LIKE '%" + texto + "%'" +
+                " OR CAST(Rating AS CHAR) LIKE '%" + texto + "%')";
+        String q = "SELECT c.id, c.Título, c.Artista, COALESCE(i.id,'') AS imagen " +
+                "FROM Concierto c LEFT JOIN Imagen i ON i.id_Concierto = c.id " +
+                "WHERE c.NombreUsuario='" + usuario + "'" + filtroLD + busqueda +
+                " ORDER BY c." + orderCol + " " + orderDir;
+        int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Concierto c WHERE c.NombreUsuario='" +
+                usuario + "'" + filtroLD + busqueda);
+        String[][] info = new String[n][4];
+        try {
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while (rs.next()) {
+                info[f][0] = String.valueOf(rs.getInt("id"));
+                info[f][1] = rs.getString("Título");
+                info[f][2] = rs.getString("Artista");
+                info[f][3] = rs.getString("imagen");
+                f++;
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return info;
     }
 
     // DELETES

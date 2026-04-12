@@ -31,7 +31,7 @@ public class PopUp {
         if (!visible) return;
         float b = 40;
         p5.pushStyle();
-        p5.stroke(0); p5.strokeWeight(10); p5.fill(40, 40, 40);
+        p5.stroke(0); p5.strokeWeight(2); p5.fill(40, 40, 40);
         p5.rect(x, y, w, h, b / 2);
         p5.line(x, y + 2*b, x + w, y + 2*b);
         p5.fill(255, 100, 0); p5.textSize(38); p5.textAlign(p5.LEFT);

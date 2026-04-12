@@ -129,6 +129,14 @@ public class Main extends PApplet {
             for (gui.smashRecPantallas.TextField tf : gui.tFConcierto) tf.keyPressed(keyCode);
         }
 
+        if (keyCode == ENTER || keyCode == RETURN) {
+            if (gui.pantallaActual == GUI.PANTALLA.VINILOS ||
+                    gui.pantallaActual == GUI.PANTALLA.CDS ||
+                    gui.pantallaActual == GUI.PANTALLA.CONCIERTOS) {
+                gui.textoBusqueda = gui.tFBuscador.getText().trim();
+                gui.recargarCards(this);
+            }
+        }
         /* if(key=='0'){
             gui.pantallaActual = GUI.PANTALLA.INICIO;
         } else if(key=='1'){
@@ -161,25 +169,35 @@ public class Main extends PApplet {
                 gui.mostrarListaDeseos = false; // reset al entrar
                 //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b2.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
                 //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b3.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
                 //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b4.mouseOverButton(this)){
                 //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+                gui.actualizarDatosGraficos(this);
             }else if(gui.b5.mouseOverButton(this)){
                 //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }else if(gui.b7.mouseOverButton(this)){
                 //println("B7 has been pressed.");
+                gui.tFInicioSesion1.setText("");
+                gui.tFInicioSesion2.setText("");
+                gui.usuarioActual = "";
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
             }
             gui.tANotasUsuario.isPressed(this);
@@ -190,20 +208,27 @@ public class Main extends PApplet {
                 gui.mostrarListaDeseos = false;
                 //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b2.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
                 //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b3.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
                 //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b4.mouseOverButton(this)){
                 //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+                gui.actualizarDatosGraficos(this);
             }else if(gui.b5.mouseOverButton(this)){
                 //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
@@ -213,9 +238,11 @@ public class Main extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
 
             } else if (gui.rBHeart.mouseOverButton(this)) {
-            gui.mostrarListaDeseos = !gui.mostrarListaDeseos;
-            gui.recargarCards(this);
-
+                gui.mostrarListaDeseos = !gui.mostrarListaDeseos;
+                gui.recargarCards(this);
+            } else if (gui.rBFilter.mouseOverButton(this)) {
+                gui.ciclarOrden();
+                gui.recargarCards(this);
             } else if(gui.bNext.mouseOverButton(this)){
                 gui.pcMusica.nextPage();
             } else if(gui.bPrev.mouseOverButton(this) && gui.bPrev.isEnabled()){
@@ -237,20 +264,27 @@ public class Main extends PApplet {
                 gui.mostrarListaDeseos = false;
                 //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b2.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
                 //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b3.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
                 //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b4.mouseOverButton(this)){
                 //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+                gui.actualizarDatosGraficos(this);
             }else if(gui.b5.mouseOverButton(this)){
                 //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
@@ -262,7 +296,9 @@ public class Main extends PApplet {
             } else if(gui.rBHeart.mouseOverButton(this)) {
             gui.mostrarListaDeseos = !gui.mostrarListaDeseos;
             gui.recargarCards(this);
-
+            } else if (gui.rBFilter.mouseOverButton(this)) {
+                gui.ciclarOrden();
+                gui.recargarCards(this);
             } else if(gui.bNext.mouseOverButton(this)){
                 gui.pcMusica.nextPage();
             } else if(gui.bPrev.mouseOverButton(this) && gui.bPrev.isEnabled()){
@@ -284,20 +320,27 @@ public class Main extends PApplet {
                 gui.mostrarListaDeseos = false;
                 //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b2.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
                 //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b3.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
                 //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b4.mouseOverButton(this)){
                 //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+                gui.actualizarDatosGraficos(this);
             }else if(gui.b5.mouseOverButton(this)){
                 //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
@@ -307,6 +350,9 @@ public class Main extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR_CONCERT;
             } else if(gui.rBHeart.mouseOverButton(this)) {
                 gui.mostrarListaDeseos = !gui.mostrarListaDeseos;
+                gui.recargarCards(this);
+            } else if (gui.rBFilter.mouseOverButton(this)) {
+                gui.ciclarOrden();
                 gui.recargarCards(this);
             } else if(gui.bNext.mouseOverButton(this) && gui.bNext.isEnabled()){
                 gui.pcConcert.nextPage();
@@ -329,20 +375,27 @@ public class Main extends PApplet {
                 gui.mostrarListaDeseos = false;
                 //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             } else if (gui.b2.mouseOverButton(this)) {
                 gui.mostrarListaDeseos = false;
                 //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             } else if (gui.b3.mouseOverButton(this)) {
                 gui.mostrarListaDeseos = false;
                 //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
+                gui.textoBusqueda = "";
+                gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             } else if (gui.b4.mouseOverButton(this)) {
                 //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+                gui.actualizarDatosGraficos(this);
             } else if (gui.b5.mouseOverButton(this)) {
                 //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;

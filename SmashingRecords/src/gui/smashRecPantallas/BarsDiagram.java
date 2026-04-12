@@ -93,8 +93,8 @@ public class BarsDiagram extends StatsCard {
         }
 
         // Dibujar el total en una esquina del área útil
-        p5.fill(100); p5.textSize(14); p5.textAlign(p5.RIGHT);
-        p5.text("TOTAL: " + (int)total, xInicio + anchoGrafico, this.y + 35);
+        p5.fill(p5.color(0xFF646464)); p5.textSize(14); p5.textAlign(p5.RIGHT);
+        p5.text("TOTAL GÉNEROS MARCADOS: " + (int)total, xInicio + anchoGrafico, this.y + 35);
 
         p5.popStyle();
     }

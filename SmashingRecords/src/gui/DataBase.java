@@ -111,6 +111,60 @@ public class DataBase {
         return info;
     }
 
+    public String[][] getInfoArray2DVinilos(String nombreUsuario){
+        String q = "SELECT Título, Artista, Fecha, Género, Edición " +
+                "FROM Vinilo_CD " +
+                "WHERE tipo = 'V' AND NombreUsuario = '" + nombreUsuario + "' " +
+                "ORDER BY Artista ASC";
+        System.out.println(q);
+        int nf = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='V' AND NombreUsuario='" + nombreUsuario + "'");
+        String[][] info = new String[nf][5];
+        try {
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while(rs.next()){
+                info[f][0] = rs.getString("Título");
+                info[f][1] = rs.getString("Artista");
+                info[f][2] = rs.getString("Fecha") != null ? rs.getString("Fecha") : "";
+                info[f][3] = rs.getString("Género");
+                info[f][4] = rs.getString("Edición") != null ? rs.getString("Edición") : "";
+                f++;
+            }
+            return info;
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return info;
+    }
+
+    public String[][] getInfoArray2DCDs(String nombreUsuario){
+        String q = "SELECT Título, Artista, Fecha, Género, Edición " +
+                "FROM Vinilo_CD " +
+                "WHERE tipo = 'C' AND NombreUsuario = '" + nombreUsuario + "' " +
+                "ORDER BY Artista ASC";
+        System.out.println(q);
+        int nf = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='C' AND NombreUsuario='" + nombreUsuario + "'");
+        String[][] info = new String[nf][5];
+        try {
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while(rs.next()){
+                info[f][0] = rs.getString("Título");
+                info[f][1] = rs.getString("Artista");
+                info[f][2] = rs.getString("Fecha") != null ? rs.getString("Fecha") : "";
+                info[f][3] = rs.getString("Género");
+                info[f][4] = rs.getString("Edición") != null ? rs.getString("Edición") : "";
+                f++;
+            }
+            return info;
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return info;
+    }
+
+
+
     /*
     public String[][] getInfoArray2D(){
         int nf = getNumFilesTaula("unitat");
@@ -293,15 +347,15 @@ public class DataBase {
 
     public int insertarViniloCD(String titulo, String artista, String fecha, String edicion,
                                 String ubicacion, String genero, String origen,
-                                String notas, String nombreUsuario, char tipo, int rating) {
+                                String notas, String nombreUsuario, char tipo, int rating, char lDeseos) {
         String valorFecha = (fecha == null || fecha.isEmpty()) ? "NULL" : "'" + fecha + "'";
         String valorNotas = (notas == null || notas.isEmpty()) ? "NULL" : "'" + notas + "'";
         String valorEdicion = (edicion == null || edicion.isEmpty()) ? "NULL" : "'" + edicion + "'";
 
-        String q = "INSERT INTO Vinilo_CD (Título, Artista, Fecha, Edición, Ubicación, Género, Origen, Notas, NombreUsuario, tipo, Rating) " +
+        String q = "INSERT INTO Vinilo_CD (Título, Artista, Fecha, Edición, Ubicación, Género, Origen, Notas, NombreUsuario, tipo, Rating, ListaDeseos) " +
                 "VALUES ('" + titulo + "', '" + artista + "', " + valorFecha + ", " + valorEdicion + ", '" +
                 ubicacion + "', '" + genero + "', '" + origen + "', " + valorNotas + ", '" +
-                nombreUsuario + "', '" + tipo + "', " + rating + ")";
+                nombreUsuario + "', '" + tipo + "', " + rating + ", '" + lDeseos + "')";
         System.out.println(q);
         try {
             query.execute(q, Statement.RETURN_GENERATED_KEYS);
@@ -315,14 +369,14 @@ public class DataBase {
 
     public int insertarConcierto(String titulo, String artista, String fecha,
                                  String lugar, String genero, String notas,
-                                 String nombreUsuario, int rating) {
+                                 String nombreUsuario, int rating, char lDeseos) {
         String valorFecha = (fecha == null || fecha.isEmpty()) ? "NULL" : "'" + fecha + "'";
         String valorNotas = (notas == null || notas.isEmpty()) ? "NULL" : "'" + notas + "'";
         String valorLugar = (lugar == null || lugar.isEmpty()) ? "NULL" : "'" + lugar + "'";
 
-        String q = "INSERT INTO Concierto (Título, Artista, Fecha, Lugar, Género, Notas, NombreUsuario, Rating) " +
+        String q = "INSERT INTO Concierto (Título, Artista, Fecha, Lugar, Género, Notas, NombreUsuario, Rating, ListaDeseos) " +
                 "VALUES ('" + titulo + "', '" + artista + "', " + valorFecha + ", " + valorLugar + ", '" +
-                genero + "', " + valorNotas + ", '" + nombreUsuario + "', " + rating + ")";
+                genero + "', " + valorNotas + ", '" + nombreUsuario + "', " + rating + ", '" + lDeseos + "')";
         System.out.println(q);
         try {
             query.execute(q, Statement.RETURN_GENERATED_KEYS);
@@ -367,6 +421,66 @@ public class DataBase {
         return false;
     }
 
+    public String[][] getVinilosUsuario(String usuario, boolean soloListaDeseos) {
+        String filtroListaDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
+        String q = "SELECT v.Título, v.Artista, COALESCE(i.id, '') AS imagen " +
+                "FROM Vinilo_CD v LEFT JOIN Imagen i ON i.`id_Vinilo/CD` = v.id " +
+                "WHERE v.tipo='V' AND v.NombreUsuario='" + usuario + "'" + filtroListaDeseos +
+                " ORDER BY v.Artista ASC";
+        int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='V' AND NombreUsuario='" + usuario + "'" + filtroListaDeseos);
+        String[][] info = new String[n][3];
+        try {
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while (rs.next()) {
+                info[f][0] = rs.getString("Título");
+                info[f][1] = rs.getString("Artista");
+                info[f][2] = rs.getString("imagen"); // "" si no tiene imagen
+                f++;
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return info;
+    }
 
+    public String[][] getCDsUsuario(String usuario, boolean soloListaDeseos) {
+        String filtroLDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
+        String q = "SELECT v.Título, v.Artista, COALESCE(i.id, '') AS imagen " +
+                "FROM Vinilo_CD v LEFT JOIN Imagen i ON i.`id_Vinilo/CD` = v.id " +
+                "WHERE v.tipo='C' AND v.NombreUsuario='" + usuario + "'" + filtroLDeseos +
+                " ORDER BY v.Artista ASC";
+        int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='C' AND NombreUsuario='" + usuario + "'" + filtroLDeseos);
+        String[][] info = new String[n][3];
+        try {
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while (rs.next()) {
+                info[f][0] = rs.getString("Título");
+                info[f][1] = rs.getString("Artista");
+                info[f][2] = rs.getString("imagen");
+                f++;
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return info;
+    }
 
+    public String[][] getConciertosUsuario(String usuario, boolean soloListaDeseos) {
+        String filtroListaDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
+        String q = "SELECT c.Título, c.Artista, COALESCE(i.id, '') AS imagen " +
+                "FROM Concierto c LEFT JOIN Imagen i ON i.id_Concierto = c.id " +
+                "WHERE c.NombreUsuario='" + usuario + "'" + filtroListaDeseos +
+                " ORDER BY c.Artista ASC";
+        int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Concierto WHERE NombreUsuario='" + usuario + "'" + filtroListaDeseos);
+        String[][] info = new String[n][3];
+        try {
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while (rs.next()) {
+                info[f][0] = rs.getString("Título");
+                info[f][1] = rs.getString("Artista");
+                info[f][2] = rs.getString("imagen");
+                f++;
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return info;
+    }
 }

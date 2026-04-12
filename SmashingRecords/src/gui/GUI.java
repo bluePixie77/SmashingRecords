@@ -88,6 +88,8 @@ public class GUI {
     String[] imgs = {"starON.png", "starOFF.png"};
 
     public String titol = "";
+    public boolean esListaDeseos = false;
+    public boolean mostrarListaDeseos = false;
     public File file;
     public String rutaCarpeta = "/Users/mariaramis/Desktop/";
     public String rutaCarpetaWindows = "C:\\Usuaris\\mariaramis\\Escriptori\\";
@@ -103,10 +105,12 @@ public class GUI {
     // Pantalla agregar
     public RadioButtonGroup rbgUbicacion, rbgOrigen;
     public CheckBox[] cbGenero;
-    public String[] nombresGenero = {"Altres", "Country", "Indie", "Pop", "Rock"};
+    public String[] nombresGenero = {"Otro", "Country", "Indie", "Pop", "Rock"};
     public String[] nombresUbicacion = {"Zona 1", "Zona 2", "Zona 3", "Zona 4", "Otro"};
     public String[] nombresOrigen = {"Comprado", "Regalo", "Heredado", "Otro"};
     public int ultimoIdInsertado = -1;
+    public int tiempoMensajeGuardado = 0; // frames restantes para mostrar el mensaje
+    public boolean imagenGuardadaOk = false; // true = éxito, false = sin imagen
 
     // Dades de les cards
     String[][] infoAlbum = {
@@ -216,7 +220,7 @@ public class GUI {
         tFConcierto[3] = new TextField(p5, appColors, 40, sX, startY + (spacing * 3), fW, fieldH); // Lugar
 
         tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 40, 10);
-        tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.8f, p5.width * 0.3f, p5.height * 0.20f, 40, 4);
+        tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.82f, p5.width * 0.62f, p5.height * 0.18f, 65, 4);
     }
 
     public void setMedia(PApplet p5) {
@@ -259,19 +263,13 @@ public class GUI {
 
         // MÚSICA (Vinilos y CDs)
         pcMusica = new PagedCard2D(p5, appColors, 2, 4, Card.tipoCard.ALBUM);
-        // X comienza en 24% para dejar espacio a la Sidebar (20%)
         pcMusica.setDimensions(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
-        pcMusica.setData(infoAlbum);
-        pcMusica.setCards();
-        pcMusica.setImages(imgDisc1, imgDisc2);
 
         // CONCIERTOS
         pcConcert = new PagedCard2D(p5, appColors, 4, 2, Card.tipoCard.CONCERT);
         // (Mismas dimensiones, para mantener simetría)
         pcConcert.setDimensions(p5.width * 0.24f, p5.height * 0.25f, p5.width * 0.73f, p5.height * 0.65f);
-        pcConcert.setData(infoConcert);
-        pcConcert.setCards();
-        pcConcert.setImages(imgDisc1, imgDisc2);
+
     }
 
     public void setEstadisticas(PApplet p5) {
@@ -377,6 +375,7 @@ public class GUI {
         p5.textAlign(p5.CORNER);
         p5.text("Notas", p5.width * 0.25f, p5.height * 0.59f);
 
+        p5.textFont(appFonts.getForthFont());
         tANotasUsuario.display(p5);
         p5.pop();
 
@@ -464,13 +463,13 @@ public class GUI {
         bEliminarMultimedia.display(p5);
 
         rBDelete.display(p5);
+        rBHeartAgregar.fillColor = esListaDeseos ? narFuerte : narFlojo;
+        rBHeartAgregar.fillColorOver = esListaDeseos ? narFuerte : narFlojo;
         rBHeartAgregar.display(p5);
 
         cbl.display(p5);
         p5.fill(white);
         p5.text(cbl.getNumSelected() + "/5", p5.width * 0.32f, p5.height * 0.77f);
-
-        p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.3f, p5.width * 0.3f);
 
         // Dibuixa la imatge
         if (imgElegida != null) {
@@ -505,6 +504,13 @@ public class GUI {
         p5.text(txtTitulo, p5.width * 0.25f, p5.height * 0.10f);
 
         // Género
+        float xCB = p5.width * 0.38f;
+        float yCB = p5.height * 0.75f;
+        for (int i = 0; i < cbGenero.length; i++) {
+            cbGenero[i].x = (int)(xCB + i * p5.width * 0.10f);
+            cbGenero[i].y = (int)yCB;
+        }
+
         p5.textFont(appFonts.getFontAt(3));
         p5.fill(white);
         p5.textSize(medidaIntermedia);
@@ -516,6 +522,7 @@ public class GUI {
             p5.textSize(24);
             p5.text(nombresGenero[i], p5.width * 0.38f + i * p5.width * 0.10f + 25, p5.height * 0.77f);
         }
+
         // Ubicación
         p5.textSize(medidaIntermedia);
         p5.text("Ubicación *", p5.width * 0.38f, p5.height * 0.82f);
@@ -538,7 +545,21 @@ public class GUI {
         p5.text("Edición", tFMusica[3].x, tFMusica[3].y - 10);
         tFMusica[3].display(p5);
 
+        tANotasAgregar.x = p5.width * 0.05f;
+        tANotasAgregar.y = p5.height * 0.82f;
+        tANotasAgregar.w = p5.width * 0.30f;
+        tANotasAgregar.h = p5.height * 0.18f;
         tANotasAgregar.display(p5);
+
+        if (tiempoMensajeGuardado > 0) {
+            p5.fill(imagenGuardadaOk ? narFuerte : pink); // naranja si ok, otro color si no imagen
+            p5.textFont(appFonts.getFontAt(3));
+            p5.textSize(medidaParrafo);
+            p5.textAlign(p5.LEFT);
+            p5.text(imagenGuardadaOk ? "Imagen guardada" : "No hay imagen seleccionada", p5.width * 0.38f, p5.height * 0.555f);
+            tiempoMensajeGuardado--;
+        }
+
         p5.pop();
     }
 
@@ -551,17 +572,18 @@ public class GUI {
         bEliminarMultimedia.display(p5);
 
         rBDelete.display(p5);
+        rBHeartAgregar.fillColor = esListaDeseos ? narFuerte : narFlojo;
+        rBHeartAgregar.fillColorOver = esListaDeseos ? narFuerte : narFlojo;
         rBHeartAgregar.display(p5);
 
         // Imagen
         if (imgElegida != null) {
             p5.image(imgElegida, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.62f, p5.width * 0.3f);
-            p5.fill(white); p5.textSize(18); p5.textAlign(p5.LEFT);
+            p5.fill(white); p5.textSize(24); p5.textAlign(p5.LEFT);
             p5.text(titol, p5.width * 0.38f, p5.height * 0.77f);
         } else {
             p5.image(imgDisc2, p5.width * 0.05f, p5.height * 0.24f, p5.width * 0.62f, p5.width * 0.3f);
-            p5.textSize(24);
-            p5.textAlign(p5.LEFT);
+            p5.fill(white); p5.textSize(24); p5.textAlign(p5.LEFT);
             p5.text("Sense imatge", p5.width * 0.38f, p5.height * 0.77f);
         }
 
@@ -599,12 +621,38 @@ public class GUI {
         p5.text("Lugar / Recinto", tFConcierto[3].x, tFConcierto[3].y - 10);
         tFConcierto[3].display(p5);
 
-        tANotasAgregar.display(p5);
-        p5.pop();
-    }
+        // Reposicionar y mostrar checkboxes de género
+        float xCB = p5.width * 0.68f;
+        float yCB = p5.height * 0.83f;
+        for (int i = 0; i < cbGenero.length; i++) {
+            cbGenero[i].x = (int)(xCB + i * p5.width * 0.06f);
+            cbGenero[i].y = (int)yCB;
+        }
 
-    public void displayPantallaAgregarFoto(PApplet p5) {
-        p5.push();
+        p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
+        p5.text("Género *", xCB, yCB - 10);
+        for (int i = 0; i < cbGenero.length; i++) {
+            cbGenero[i].display(p5);
+            p5.fill(white); p5.textSize(18);
+            p5.text(nombresGenero[i], xCB + i * p5.width * 0.06f + 25, yCB + 5);
+        }
+
+        tANotasAgregar.x = p5.width * 0.05f;
+        tANotasAgregar.y = yCB;
+        tANotasAgregar.w = p5.width * 0.62f;
+        tANotasAgregar.h = p5.height * 0.12f;
+        p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
+        p5.text("Notas", p5.width*0.05f, yCB - 10);
+        tANotasAgregar.display(p5);
+
+        if (tiempoMensajeGuardado > 0) {
+            p5.fill(imagenGuardadaOk ? narFuerte : pink); // naranja si ok, otro color si no imagen
+            p5.textFont(appFonts.getFontAt(3));
+            p5.textSize(medidaParrafo);
+            p5.textAlign(p5.CENTER);
+            p5.text(imagenGuardadaOk ? "Imagen guardada" : "No hay imagen seleccionada", p5.width * 0.83f, p5.height * 0.655f);
+            tiempoMensajeGuardado--;
+        }
 
         p5.pop();
     }
@@ -653,7 +701,17 @@ public class GUI {
         tFBuscador.display(p5);
         rBFilter.display(p5); //
         rBPlus.display(p5);
+        rBHeart.fillColor     = mostrarListaDeseos ? narFuerte : narFlojo;
+        rBHeart.fillColorOver = mostrarListaDeseos ? narFuerte : narFlojo;
         rBHeart.display(p5);
+
+        if (mostrarListaDeseos) {
+            p5.fill(narFuerte);
+            p5.textFont(appFonts.getFontAt(2));
+            p5.textSize(medidaIntermedia);
+            p5.textAlign(p5.RIGHT);
+            p5.text("Lista de deseos", p5.width * 0.8f, p5.height * 0.09f);
+        }
 
         p5.pop();
     }
@@ -735,5 +793,35 @@ public class GUI {
 
         // Resetear título de imagen
         this.titol = "";
+
+        // Resetear boolean lista deseos
+        esListaDeseos = false;
+    }
+    public void recargarCards(PApplet p5) {
+        String[][] data;
+        if (pantallaActual == PANTALLA.VINILOS) {
+            data = db.getVinilosUsuario(usuarioActual, mostrarListaDeseos);
+        } else if (pantallaActual == PANTALLA.CDS) {
+            data = db.getCDsUsuario(usuarioActual, mostrarListaDeseos);
+        } else {
+            data = db.getConciertosUsuario(usuarioActual, mostrarListaDeseos);
+        }
+
+        PagedCard2D pc = (pantallaActual == PANTALLA.CONCIERTOS) ? pcConcert : pcMusica;
+        pc.setData(data);
+        pc.setCards();
+        if (data.length > 0) {   // solo reconstruir cards si hay datos
+            pc.setCards();
+            // Asignar imagen a cada card: real si tiene nombre, imgDisc2 si no
+            for (int i = 0; i < pc.cards.length; i++) {
+                String nombreImg = data[i][2];
+                if (nombreImg != null && !nombreImg.isEmpty()) {
+                    PImage img = p5.loadImage(rutaCarpeta + nombreImg);
+                    pc.cards[i].setImage(img != null ? img : imgDisc2);
+                } else {
+                    pc.cards[i].setImage(imgDisc2);
+                }
+            }
+        }
     }
 }

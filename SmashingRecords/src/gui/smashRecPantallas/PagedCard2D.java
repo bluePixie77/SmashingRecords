@@ -7,7 +7,7 @@ import processing.core.PImage;
 public class PagedCard2D extends PApplet{
 
     String[][] cardsData;    // Dades de les Cards
-    Card[] cards;            // Cards
+    public Card[] cards;            // Cards
     Card.tipoCard tipo;
     int numCards;            // Número total de Cards
     int numRowsPage;

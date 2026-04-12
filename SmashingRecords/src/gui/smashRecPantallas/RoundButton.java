@@ -8,8 +8,8 @@ public class RoundButton {
     // Propietats d'un botó:
 
     float x, y, r;  // Posició (x, y) i dimensions (radi)
-    int fillColor, strokeColor; // Colors del boto (fill / stroke).
-    int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
+    public int fillColor, strokeColor; // Colors del boto (fill / stroke).
+    public int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
     PImage icona;  // Icona del botó
     public boolean enabled;  // Estat del botó (actiu / inactiu).
 

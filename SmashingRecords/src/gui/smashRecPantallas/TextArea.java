@@ -12,7 +12,7 @@ import static processing.core.PConstants.CODED;
 public class TextArea {
 
     // Propiedades del campo de texto
-    float x, y, h, w;
+    public float x, y, h, w;
     int numCols, numRows;
 
     // Colores
@@ -62,6 +62,7 @@ public class TextArea {
 
     public void setText(String text){
         this.text = text;
+        updateLines();
     }
 
     // Getters

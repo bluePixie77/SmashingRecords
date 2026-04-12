@@ -168,4 +168,9 @@ public class TextArea {
             selected = false;
         }
     }
+
+    public void setNumCols(int nc) {
+        this.numCols = nc;
+        updateLines();
+    }
 }

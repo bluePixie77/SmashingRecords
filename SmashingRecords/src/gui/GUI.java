@@ -148,7 +148,7 @@ public class GUI {
 
         this.db = db;
 
-        pantallaActual = PANTALLA.INICIO;
+        pantallaActual = PANTALLA.PLOGO;
 
         appColors = new Colors(p5);
         appFonts = new Fonts(p5);
@@ -404,7 +404,7 @@ public class GUI {
         p5.textFont(appFonts.getThirdFont());
         p5.fill(narFuerte);
         p5.textSize(medidaIntermedia);
-        p5.text("Correo electrónico", p5.width * 0.36f, p5.height * 0.49f);
+        p5.text("Nombre usuario", p5.width * 0.36f, p5.height * 0.49f);
         p5.text("Contraseña", p5.width * 0.36f, p5.height * 0.59f);
         b6.display(p5); // Iniciar sesión
         p5.textFont(appFonts.getForthFont()); p5.textSize(medidaParrafo);
@@ -700,6 +700,7 @@ public class GUI {
         p5.text("Edición", tFMusica[3].x, tFMusica[3].y - 10);
         tFMusica[3].display(p5);
 
+        tANotasAgregar.setNumCols(34);
         tANotasAgregar.x = p5.width * 0.05f;
         tANotasAgregar.y = p5.height * 0.82f;
         tANotasAgregar.w = p5.width * 0.30f;
@@ -805,6 +806,7 @@ public class GUI {
             p5.text(nombresGenero[i], xActual + 25, yActual + 15);
         }
 
+        tANotasAgregar.setNumCols(71);
         tANotasAgregar.x = p5.width * 0.05f;
         tANotasAgregar.y = p5.height * 0.83f;
         tANotasAgregar.w = p5.width * 0.62f;
@@ -866,6 +868,7 @@ public class GUI {
 
     public void displayBuscadorYFiltros(PApplet p5) {
         p5.push();
+        p5.textFont(appFonts.getForthFont());
         tFBuscador.display(p5);
         rBFilter.display(p5); //
         rBPlus.display(p5);

@@ -19,9 +19,9 @@ public class RadioButton {
             this.y = y;
             this.r = r;
             this.checked = false;
-            this.bgColor = p5.color(255);
-            this.borderColor = p5.color(0);
-            this.checkedColor = p5.color(180);
+            this.bgColor = p5.color(255); // blanco
+            this.borderColor = p5.color(0); // negro
+            this.checkedColor = p5.color(0xFF646464); // gris
         }
 
         // Getter

@@ -49,7 +49,7 @@ public class GUI {
      *   <li>{@code AGREGAR_CONCERT}– Formulario para añadir un concierto.</li>
      * </ul>
      */
-    public enum PANTALLA {INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR, AGREGAR_CONCERT}
+    public enum PANTALLA {INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR, AGREGAR_CONCERT, DETALLE, DETALLE_CONCIERTO}
 
     public enum CatEstadistica {VINILOS, CDS, CONCIERTOS}
 
@@ -64,8 +64,10 @@ public class GUI {
     public String usuarioActual = "";
 
     // Botones
-    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk, bEliminarMultimedia,
-            bCatVinilos, bCatCDs, bCatConciertos, bLoadImage, bSaveImageToDB;
+    public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk,
+            bCatVinilos, bCatCDs, bCatConciertos, bLoadImage, bSaveImageToDB, bDetalle;
+
+    public PopUp popUpConfirmacionEliminar;
 
     // Colores
     public Colors appColors;
@@ -111,6 +113,11 @@ public class GUI {
     public int ultimoIdInsertado = -1;
     public int tiempoMensajeGuardado = 0; // frames restantes para mostrar el mensaje
     public boolean imagenGuardadaOk = false; // true = éxito, false = sin imagen
+
+    public int idSeleccionado = -1; // para saber qué elemento se quiere eliminar
+    public boolean modoDetalle = false; // false = agregar, true = ver/editar detalle
+
+    public int totalActual = 0; // Estadística
 
     // Dades de les cards
     String[][] infoAlbum = {
@@ -165,7 +172,12 @@ public class GUI {
         bPrev = new Button(p5, appColors, "<", p5.width * 0.24f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
         bCancelar = new Button(p5, appColors, "CANCELAR", p5.width * 0.75f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
         bOk = new Button(p5, appColors, "OK", p5.width * 0.85f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
-        bEliminarMultimedia = new Button(p5, appColors, "ELIMINAR", p5.width * 0.60f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
+
+        popUpConfirmacionEliminar = new PopUp(p5, appColors,
+                "¿Eliminar?",
+                "Esta acción eliminará el elemento de la base de datos.",
+                p5.width * 0.30f, p5.height * 0.30f,
+                p5.width * 0.40f, p5.height * 0.35f);
 
         // Creació del Botó
         bLoadImage = new Button(p5, appColors, "LOAD", p5.width * 0.38f, p5.height * 0.57f, p5.width * 0.2f, p5.height * 0.05f);
@@ -186,6 +198,9 @@ public class GUI {
         bCatCDs = new Button(p5, appColors, "CDs", xB + wB + 10, yB, wB, hB);
         bCatConciertos = new Button(p5, appColors, "Conciertos", xB + (wB + 10) * 2, yB, wB, hB);
         // Al empezar, Vinilos está seleccionado, así que lo "desactivamos" visualmente
+
+        bDetalle = new Button(p5, appColors, "Ver detalle", p5.width * 0.47f, p5.height * 0.92f, p5.width * 0.10f, p5.width * 0.04f);
+
         actualizarEstadoBotones();
     }
 
@@ -279,8 +294,8 @@ public class GUI {
 
         // 2. Crear los 3 objetos de gráficos
         misGraficos = new StatsCard[3];
-        misGraficos[0] = new SectorDiagram("Ratings", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
-        misGraficos[1] = new LinesDiagram("Evolución", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
+        misGraficos[0] = new SectorDiagram("Calificaciones", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
+        misGraficos[1] = new LinesDiagram("Años", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
         misGraficos[2] = new BarsDiagram("Géneros", pcStats.x, pcStats.y, pcStats.w, pcStats.h);
 
         // 3. Pasar el array de objetos directamente
@@ -388,6 +403,8 @@ public class GUI {
         displayBuscadorYFiltros(p5);
         displayDisposicionMusica(p5);
 
+        if (pcMusica.selectedCard != -1) bDetalle.display(p5); // solo si hay card seleccionada
+
         p5.textFont(appFonts.getFontAt(0));
         p5.fill(narFuerte);
         p5.textSize(medidaTitulo);
@@ -401,6 +418,8 @@ public class GUI {
         displaySidebar(p5);
         displayBuscadorYFiltros(p5);
         displayDisposicionMusica(p5);
+
+        if (pcMusica.selectedCard != -1) bDetalle.display(p5); // solo si hay card seleccionada
 
         p5.textFont(appFonts.getFontAt(0));
         p5.fill(narFuerte);
@@ -423,6 +442,8 @@ public class GUI {
         bPrev.display(p5);
         p5.pop();
 
+        if (pcConcert.selectedCard != -1) bDetalle.display(p5); // solo si hay card seleccionada
+
         p5.textFont(appFonts.getFontAt(0));
         p5.fill(narFuerte);
         p5.textSize(medidaTitulo);
@@ -442,6 +463,16 @@ public class GUI {
         bCatVinilos.display(p5);
         bCatCDs.display(p5);
         bCatConciertos.display(p5);
+
+        p5.textFont(appFonts.getFontAt(3));
+        p5.fill(white);
+        p5.textSize(medidaIntermedia);
+        p5.textAlign(p5.LEFT);
+        String labelTotal = (categoriaActual == CatEstadistica.VINILOS)   ? "Vinilos: "
+                : (categoriaActual == CatEstadistica.CDS)        ? "CDs: "
+                : "Conciertos: ";
+        p5.text("TOTAL " + labelTotal + totalActual, bCatConciertos.x + bCatConciertos.w + 30, bCatVinilos.y + bCatVinilos.h * 0.7f);
+
         bNext.display(p5);
         bPrev.display(p5);
 
@@ -460,7 +491,6 @@ public class GUI {
         displayLogo(p5);
         bCancelar.display(p5);
         bOk.display(p5);
-        bEliminarMultimedia.display(p5);
 
         rBDelete.display(p5);
         rBHeartAgregar.fillColor = esListaDeseos ? narFuerte : narFlojo;
@@ -500,7 +530,9 @@ public class GUI {
         p5.fill(narFuerte);
         p5.textSize(medidaTitulo);
         p5.textAlign(p5.LEFT);
-        String txtTitulo = ((pantallaAnterior == PANTALLA.VINILOS) ? "AGREGAR VINILO" : "AGREGAR CD");
+        String txtTitulo = modoDetalle?
+                  (pantallaAnterior == PANTALLA.VINILOS ? "VINILO" : "CD")
+                : (pantallaAnterior == PANTALLA.VINILOS ? "AGREGAR VINILO" : "AGREGAR CD");
         p5.text(txtTitulo, p5.width * 0.25f, p5.height * 0.10f);
 
         // Género
@@ -548,7 +580,9 @@ public class GUI {
         tANotasAgregar.x = p5.width * 0.05f;
         tANotasAgregar.y = p5.height * 0.82f;
         tANotasAgregar.w = p5.width * 0.30f;
-        tANotasAgregar.h = p5.height * 0.18f;
+        tANotasAgregar.h = p5.height * 0.17f;
+        p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
+        p5.text("Notas", p5.width*0.05f, p5.height * 0.815f);
         tANotasAgregar.display(p5);
 
         if (tiempoMensajeGuardado > 0) {
@@ -560,6 +594,8 @@ public class GUI {
             tiempoMensajeGuardado--;
         }
 
+        popUpConfirmacionEliminar.display(p5);
+
         p5.pop();
     }
 
@@ -569,7 +605,7 @@ public class GUI {
         displayLogo(p5);
         bCancelar.display(p5);
         bOk.display(p5);
-        bEliminarMultimedia.display(p5);
+        // bEliminarMultimedia.display(p5);
 
         rBDelete.display(p5);
         rBHeartAgregar.fillColor = esListaDeseos ? narFuerte : narFlojo;
@@ -605,7 +641,8 @@ public class GUI {
         p5.textFont(appFonts.getFontAt(0));
         p5.fill(narFuerte);
         p5.textSize(medidaTitulo);
-        p5.text("AGREGAR CONCIERTO", p5.width * 0.25f, p5.height * 0.10f);
+        String txtTitulo = modoDetalle ? "CONCIERTO" : "AGREGAR CONCIERTO";
+        p5.text(txtTitulo, p5.width * 0.25f, p5.height * 0.10f);
 
         p5.line(p5.width * 0.23f, p5.height * 0.20f, p5.width * 0.97f, p5.height * 0.20f);
 
@@ -642,7 +679,7 @@ public class GUI {
         tANotasAgregar.w = p5.width * 0.62f;
         tANotasAgregar.h = p5.height * 0.12f;
         p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
-        p5.text("Notas", p5.width*0.05f, yCB - 10);
+        p5.text("Notas", p5.width*0.05f, p5.height * 0.825f);
         tANotasAgregar.display(p5);
 
         if (tiempoMensajeGuardado > 0) {
@@ -653,7 +690,7 @@ public class GUI {
             p5.text(imagenGuardadaOk ? "Imagen guardada" : "No hay imagen seleccionada", p5.width * 0.83f, p5.height * 0.655f);
             tiempoMensajeGuardado--;
         }
-
+        popUpConfirmacionEliminar.display(p5);
         p5.pop();
     }
 
@@ -725,6 +762,51 @@ public class GUI {
     }
 
     public void actualizarDatosGraficos(PApplet p5) {
+        String tipoQuery;
+        if      (categoriaActual == CatEstadistica.VINILOS)   tipoQuery = "V";
+        else if (categoriaActual == CatEstadistica.CDS)        tipoQuery = "C";
+        else                                                   tipoQuery = "CONCIERTO";
+
+        // --- RATINGS ---
+        int[] ratings = db.getRatingStats(usuarioActual, tipoQuery);
+        float[] dataRatings = new float[6];
+        String[] tagsRatings = {"0*","1*","2*","3*","4*","5*"};
+        for (int i = 0; i < 6; i++) dataRatings[i] = ratings[i];
+
+        // --- AÑOS ---
+        String[][] aniosRaw = db.getAniosStats(usuarioActual, tipoQuery);
+        float[] dataAnios = new float[aniosRaw.length];
+        String[] tagsAnios = new String[aniosRaw.length];
+        for (int i = 0; i < aniosRaw.length; i++) {
+            tagsAnios[i]  = aniosRaw[i][0];
+            dataAnios[i]  = Float.parseFloat(aniosRaw[i][1]);
+        }
+
+        // --- GÉNEROS ---
+        int[] generos = db.getGeneroStats(usuarioActual, tipoQuery, nombresGenero);
+        float[] dataGeneros = new float[nombresGenero.length];
+        for (int i = 0; i < nombresGenero.length; i++) dataGeneros[i] = generos[i];
+
+        // Inyectar en gráficos
+        ((SectorDiagram) misGraficos[0]).setValues(dataRatings);
+        ((SectorDiagram) misGraficos[0]).setTexts(tagsRatings);
+        ((SectorDiagram) misGraficos[0]).setColors(this.paletaGraficos);
+
+        ((LinesDiagram) misGraficos[1]).setValues(dataAnios.length > 0 ? dataAnios : new float[]{0});
+        ((LinesDiagram) misGraficos[1]).setTexts(tagsAnios.length  > 0 ? tagsAnios : new String[]{"Sin datos"});
+        ((LinesDiagram) misGraficos[1]).setColors(narFuerte);
+
+        ((BarsDiagram) misGraficos[2]).setValues(dataGeneros);
+        ((BarsDiagram) misGraficos[2]).setTexts(nombresGenero);
+        ((BarsDiagram) misGraficos[2]).setColors(this.paletaGraficos);
+
+        // Actualizar total
+        String tipoTotal = (categoriaActual == CatEstadistica.VINILOS) ? "V"
+                        : (categoriaActual == CatEstadistica.CDS)      ? "C"
+                        : "CONCIERTO";
+        totalActual = db.getTotalUsuario(usuarioActual, tipoTotal);
+    }
+    /*public void actualizarDatosGraficos(PApplet p5) {
         float[] dataSectores, dataLineas, dataBarras;
         String[] tagsSectores, tagsLineas, tagsBarras;
 
@@ -762,7 +844,7 @@ public class GUI {
         ((BarsDiagram) misGraficos[2]).setValues(dataBarras);
         ((BarsDiagram) misGraficos[2]).setTexts(tagsBarras);
         ((BarsDiagram) misGraficos[2]).setColors(this.paletaGraficos);
-    }
+    }*/
 
     public void actualizarEstadoBotones() {
         bCatVinilos.setEnabled(categoriaActual != CatEstadistica.VINILOS);
@@ -796,6 +878,10 @@ public class GUI {
 
         // Resetear boolean lista deseos
         esListaDeseos = false;
+
+        // Pantallas detalle
+        modoDetalle = false;
+        idSeleccionado = -1;
     }
     public void recargarCards(PApplet p5) {
         String[][] data;
@@ -814,13 +900,64 @@ public class GUI {
             pc.setCards();
             // Asignar imagen a cada card: real si tiene nombre, imgDisc2 si no
             for (int i = 0; i < pc.cards.length; i++) {
-                String nombreImg = data[i][2];
+                String nombreImg = data[i][3];
                 if (nombreImg != null && !nombreImg.isEmpty()) {
                     PImage img = p5.loadImage(rutaCarpeta + nombreImg);
                     pc.cards[i].setImage(img != null ? img : imgDisc2);
                 } else {
                     pc.cards[i].setImage(imgDisc2);
                 }
+            }
+        }
+    }
+
+    public void cargarDatosDetalle(PApplet p5, String[] datos, boolean esConcierto) {
+        if (datos == null) return;
+        if (!esConcierto) {
+            tFMusica[0].setText(datos[0]); // Título
+            tFMusica[1].setText(datos[1]); // Artista
+            tFMusica[2].setText(datos[2]); // Fecha
+            tFMusica[3].setText(datos[3]); // Edición
+
+            // Género — marcar checkboxes
+            for (int i = 0; i < nombresGenero.length; i++) {
+                cbGenero[i].setChecked(datos[5].contains(nombresGenero[i]));
+            }
+
+            // Ubicación — seleccionar el radiobutton correspondiente
+            for (int i = 0; i < nombresUbicacion.length; i++) {
+                if (nombresUbicacion[i].equals(datos[4])){ rbgUbicacion.setSelected(i); }
+            }
+
+            // Origen
+            for (int i = 0; i < nombresOrigen.length; i++) {
+                if (nombresOrigen[i].equals(datos[6])){ rbgOrigen.setSelected(i); }
+            }
+           // System.out.println("Ubicación BD: '" + datos[4] + "' | Origen BD: '" + datos[6] + "'");
+            tANotasAgregar.setText(datos[7]);
+            cbl.setCheckBoxStars(datos[8].equals("") ? 0 : Integer.parseInt(datos[8]));
+            esListaDeseos = datos[9].equals("S");
+            // Imagen
+            String nombreImg = datos[10];
+            if (!nombreImg.isEmpty()) {
+                imgElegida = p5.loadImage(rutaCarpeta + nombreImg);
+                titol = nombreImg;
+            }
+        } else {
+            tFConcierto[0].setText(datos[0]); // Título
+            tFConcierto[1].setText(datos[1]); // Artista
+            tFConcierto[2].setText(datos[2]); // Fecha
+            tFConcierto[3].setText(datos[3]); // Lugar
+            for (int i = 0; i < nombresGenero.length; i++) {
+                cbGenero[i].setChecked(datos[4].contains(nombresGenero[i]));
+            }
+            tANotasAgregar.setText(datos[5]);
+            cbl.setCheckBoxStars(datos[6].equals("") ? 0 : Integer.parseInt(datos[6]));
+            esListaDeseos = datos[7].equals("S");
+            String nombreImg = datos[8];
+            if (!nombreImg.isEmpty()) {
+                imgElegida = p5.loadImage(rutaCarpeta + nombreImg);
+                titol = nombreImg;
             }
         }
     }

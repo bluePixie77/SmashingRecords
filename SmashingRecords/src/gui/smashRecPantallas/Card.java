@@ -15,6 +15,8 @@ public class Card {
     // Colors
     int naraFuerte, naraFlojo, blanco, negro;
 
+    String[] rawData; // Información base de datos
+
     // Constructors
     public Card(String title, String subTitle, float x, float y, float w, float h){
         this.title = title;
@@ -26,13 +28,13 @@ public class Card {
     }
 
     public Card(String[] info){
-        this.title = info[0];
-        this.subtitle = info[1];
-        this.section = info.length>2 ? info[2] : "";
+        this.rawData = info;
+        this.title = info[1];
+        this.subtitle = info[2];
+        this.section = info.length>3 ? info[3] : "";
     }
 
     //Setters
-
     public void setDimensions(float x, float y, float w, float h, float b){
         this.x = x; this.y = y;
         this.w = w; this.h = h;
@@ -50,8 +52,14 @@ public class Card {
         this.negro = negro;
     }
 
-    // Dibuixa la Card
+    // Getters
+    public String[] getData() {
+        return new String[]{title, subtitle, section};
+    }
 
+    public String[] getRawData() { return rawData; }
+
+    // Dibuixa la Card
     public void display(PApplet p5, boolean selectedCard){
         p5.pushStyle();
 

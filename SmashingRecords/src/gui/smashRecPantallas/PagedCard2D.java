@@ -23,7 +23,7 @@ public class PagedCard2D extends PApplet{
 
     public float x, y, w, h;
     float wc, hc;
-    int selectedCard = -1;
+    public int selectedCard = -1;
 
     // Constructor
     public PagedCard2D(PApplet p5, Colors appColors, int numRows, int numCols, Card.tipoCard tipo) {

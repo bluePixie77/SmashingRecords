@@ -421,21 +421,72 @@ public class DataBase {
         return false;
     }
 
+    public void actualizarViniloCD(int id, String titulo, String artista, String fecha,
+                                   String edicion, String ubicacion, String genero,
+                                   String origen, String notas, int rating, char lDeseos) {
+        String valorFecha   = (fecha == null   || fecha.isEmpty())   ? "NULL" : "'" + fecha + "'";
+        String valorNotas   = (notas == null   || notas.isEmpty())   ? "NULL" : "'" + notas + "'";
+        String valorEdicion = (edicion == null || edicion.isEmpty()) ? "NULL" : "'" + edicion + "'";
+        String q = "UPDATE Vinilo_CD SET Título='" + titulo + "', Artista='" + artista +
+                "', Fecha=" + valorFecha + ", Edición=" + valorEdicion +
+                ", Ubicación='" + ubicacion + "', Género='" + genero +
+                "', Origen='" + origen + "', Notas=" + valorNotas +
+                ", Rating=" + rating + ", ListaDeseos='" + lDeseos +
+                "' WHERE id=" + id;
+        try { query.execute(q); } catch (Exception e) { System.out.println(e); }
+    }
+
+    public void actualizarConcierto(int id, String titulo, String artista, String fecha,
+                                    String lugar, String genero, String notas,
+                                    int rating, char lDeseos) {
+        String valorFecha = (fecha == null || fecha.isEmpty()) ? "NULL" : "'" + fecha + "'";
+        String valorNotas = (notas == null || notas.isEmpty()) ? "NULL" : "'" + notas + "'";
+        String valorLugar = (lugar == null || lugar.isEmpty()) ? "NULL" : "'" + lugar + "'";
+        String q = "UPDATE Concierto SET Título='" + titulo + "', Artista='" + artista +
+                "', Fecha=" + valorFecha + ", Lugar=" + valorLugar +
+                ", Género='" + genero + "', Notas=" + valorNotas +
+                ", Rating=" + rating + ", ListaDeseos='" + lDeseos +
+                "' WHERE id=" + id;
+        try { query.execute(q); } catch (Exception e) { System.out.println(e); }
+    }
+    public void actualizarImagenVinilo(String nombreArchivo, int idVinilo) {
+        try {
+            query.execute("DELETE FROM Imagen WHERE `id_Vinilo/CD` = " + idVinilo);
+            if (nombreArchivo != null && !nombreArchivo.isEmpty()) {
+                query.execute("INSERT INTO Imagen (id, `id_Vinilo/CD`, id_Concierto) VALUES ('"
+                        + nombreArchivo + "', " + idVinilo + ", NULL)");
+            }
+        } catch (Exception e) { System.out.println(e); }
+    }
+
+    public void actualizarImagenConcierto(String nombreArchivo, int idConcierto) {
+        try {
+            query.execute("DELETE FROM Imagen WHERE id_Concierto = " + idConcierto);
+            if (nombreArchivo != null && !nombreArchivo.isEmpty()) {
+                query.execute("INSERT INTO Imagen (id, `id_Vinilo/CD`, id_Concierto) VALUES ('"
+                        + nombreArchivo + "', NULL, " + idConcierto + ")");
+            }
+        } catch (Exception e) { System.out.println(e); }
+    }
+
+
+    // SELECTS
     public String[][] getVinilosUsuario(String usuario, boolean soloListaDeseos) {
         String filtroListaDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
-        String q = "SELECT v.Título, v.Artista, COALESCE(i.id, '') AS imagen " +
+        String q = "SELECT v.id, v.Título, v.Artista, COALESCE(i.id, '') AS imagen " +
                 "FROM Vinilo_CD v LEFT JOIN Imagen i ON i.`id_Vinilo/CD` = v.id " +
                 "WHERE v.tipo='V' AND v.NombreUsuario='" + usuario + "'" + filtroListaDeseos +
                 " ORDER BY v.Artista ASC";
         int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='V' AND NombreUsuario='" + usuario + "'" + filtroListaDeseos);
-        String[][] info = new String[n][3];
+        String[][] info = new String[n][4];
         try {
             ResultSet rs = query.executeQuery(q);
             int f = 0;
             while (rs.next()) {
-                info[f][0] = rs.getString("Título");
-                info[f][1] = rs.getString("Artista");
-                info[f][2] = rs.getString("imagen"); // "" si no tiene imagen
+                info[f][0] = String.valueOf(rs.getInt("id"));
+                info[f][1] = rs.getString("Título");
+                info[f][2] = rs.getString("Artista");
+                info[f][3] = rs.getString("imagen"); // "" si no tiene imagen
                 f++;
             }
         } catch (Exception e) { System.out.println(e); }
@@ -444,19 +495,20 @@ public class DataBase {
 
     public String[][] getCDsUsuario(String usuario, boolean soloListaDeseos) {
         String filtroLDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
-        String q = "SELECT v.Título, v.Artista, COALESCE(i.id, '') AS imagen " +
+        String q = "SELECT v.id, v.Título, v.Artista, COALESCE(i.id, '') AS imagen " +
                 "FROM Vinilo_CD v LEFT JOIN Imagen i ON i.`id_Vinilo/CD` = v.id " +
                 "WHERE v.tipo='C' AND v.NombreUsuario='" + usuario + "'" + filtroLDeseos +
                 " ORDER BY v.Artista ASC";
         int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='C' AND NombreUsuario='" + usuario + "'" + filtroLDeseos);
-        String[][] info = new String[n][3];
+        String[][] info = new String[n][4];
         try {
             ResultSet rs = query.executeQuery(q);
             int f = 0;
             while (rs.next()) {
-                info[f][0] = rs.getString("Título");
-                info[f][1] = rs.getString("Artista");
-                info[f][2] = rs.getString("imagen");
+                info[f][0] = String.valueOf(rs.getInt("id"));
+                info[f][1] = rs.getString("Título");
+                info[f][2] = rs.getString("Artista");
+                info[f][3] = rs.getString("imagen");
                 f++;
             }
         } catch (Exception e) { System.out.println(e); }
@@ -465,22 +517,159 @@ public class DataBase {
 
     public String[][] getConciertosUsuario(String usuario, boolean soloListaDeseos) {
         String filtroListaDeseos = soloListaDeseos ? " AND ListaDeseos='S'" : " AND ListaDeseos='N'";
-        String q = "SELECT c.Título, c.Artista, COALESCE(i.id, '') AS imagen " +
+        String q = "SELECT c.id, c.Título, c.Artista, COALESCE(i.id, '') AS imagen " +
                 "FROM Concierto c LEFT JOIN Imagen i ON i.id_Concierto = c.id " +
                 "WHERE c.NombreUsuario='" + usuario + "'" + filtroListaDeseos +
                 " ORDER BY c.Artista ASC";
         int n = getNumFilesQuery("SELECT COUNT(*) AS n FROM Concierto WHERE NombreUsuario='" + usuario + "'" + filtroListaDeseos);
-        String[][] info = new String[n][3];
+        String[][] info = new String[n][4];
         try {
             ResultSet rs = query.executeQuery(q);
             int f = 0;
             while (rs.next()) {
-                info[f][0] = rs.getString("Título");
-                info[f][1] = rs.getString("Artista");
-                info[f][2] = rs.getString("imagen");
+                info[f][0] = String.valueOf(rs.getInt("id"));
+                info[f][1] = rs.getString("Título");
+                info[f][2] = rs.getString("Artista");
+                info[f][3] = rs.getString("imagen");
                 f++;
             }
         } catch (Exception e) { System.out.println(e); }
         return info;
+    }
+
+    public String[] getDetalleViniloCD(int id) {
+        String q = "SELECT v.Título, v.Artista, v.Fecha, v.Edición, v.Ubicación, v.Género, " +
+                "v.Origen, v.Notas, v.Rating, v.ListaDeseos, COALESCE(i.id,'') AS imagen " +
+                "FROM Vinilo_CD v LEFT JOIN Imagen i ON i.`id_Vinilo/CD` = v.id " +
+                "WHERE v.id = " + id;
+        try {
+            ResultSet rs = query.executeQuery(q);
+            if (rs.next()) {
+                return new String[]{
+                        rs.getString("Título"),       // [0]
+                        rs.getString("Artista"),      // [1]
+                        rs.getString("Fecha") != null ? rs.getString("Fecha") : "",   // [2]
+                        rs.getString("Edición") != null ? rs.getString("Edición") : "", // [3]
+                        rs.getString("Ubicación"),    // [4]
+                        rs.getString("Género"),       // [5]
+                        rs.getString("Origen"),       // [6]
+                        rs.getString("Notas") != null ? rs.getString("Notas") : "",   // [7]
+                        rs.getString("Rating") != null ? rs.getString("Rating") : "0", // [8]
+                        rs.getString("ListaDeseos"),  // [9]
+                        rs.getString("imagen")        // [10]
+                };
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return null;
+    }
+
+    public String[] getDetalleConcierto(int id) {
+        String q = "SELECT c.Título, c.Artista, c.Fecha, c.Lugar, c.Género, " +
+                "c.Notas, c.Rating, c.ListaDeseos, COALESCE(i.id,'') AS imagen " +
+                "FROM Concierto c LEFT JOIN Imagen i ON i.id_Concierto = c.id " +
+                "WHERE c.id = " + id;
+        try {
+            ResultSet rs = query.executeQuery(q);
+            if (rs.next()) {
+                return new String[]{
+                        rs.getString("Título"),       // [0]
+                        rs.getString("Artista"),      // [1]
+                        rs.getString("Fecha") != null ? rs.getString("Fecha") : "",  // [2]
+                        rs.getString("Lugar") != null ? rs.getString("Lugar") : "",  // [3]
+                        rs.getString("Género"),       // [4]
+                        rs.getString("Notas") != null ? rs.getString("Notas") : "",  // [5]
+                        rs.getString("Rating") != null ? rs.getString("Rating") : "0", // [6]
+                        rs.getString("ListaDeseos"),  // [7]
+                        rs.getString("imagen")        // [8]
+                };
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return null;
+    }
+
+    // Total de items del usuario (sin filtro lista deseos)
+    public int getTotalUsuario(String usuario, String tipo) {
+        String q;
+        if (tipo.equals("CONCIERTO")) {
+            q = "SELECT COUNT(*) AS n FROM Concierto WHERE NombreUsuario='" + usuario + "'";
+        } else {
+            q = "SELECT COUNT(*) AS n FROM Vinilo_CD WHERE NombreUsuario='" + usuario + "' AND tipo='" + tipo + "'";
+        }
+        return getNumFilesQuery(q);
+    }
+
+    // Ratings: devuelve cuántos items tienen rating 0,1,2,3,4,5
+    public int[] getRatingStats(String usuario, String tipo) {
+        int[] counts = new int[6]; // índice = rating (0 a 5)
+        String tabla = tipo.equals("CONCIERTO") ? "Concierto" : "Vinilo_CD";
+        String filtroTipo = tipo.equals("CONCIERTO") ? "" : " AND tipo='" + tipo + "'";
+        for (int r = 0; r <= 5; r++) {
+            String q = "SELECT COUNT(*) AS n FROM " + tabla +
+                    " WHERE NombreUsuario='" + usuario + "'" + filtroTipo +
+                    " AND Rating=" + r;
+            counts[r] = getNumFilesQuery(q);
+        }
+        return counts;
+    }
+
+    // Años: devuelve un mapa año→cantidad, ordenado por año
+    public String[][] getAniosStats(String usuario, String tipo) {
+        String q;
+        if (tipo.equals("CONCIERTO")) {
+            q = "SELECT SUBSTRING(Fecha,7,4) AS anio, COUNT(*) AS n " +
+                    "FROM Concierto " +
+                    "WHERE NombreUsuario='" + usuario + "' AND Fecha IS NOT NULL AND Fecha != '' AND LENGTH(Fecha)=10 " +
+                    "GROUP BY anio ORDER BY anio ASC";
+        } else {
+            q = "SELECT Fecha AS anio, COUNT(*) AS n " +
+                    "FROM Vinilo_CD " +
+                    "WHERE NombreUsuario='" + usuario + "' AND tipo='" + tipo + "' AND Fecha IS NOT NULL AND Fecha != '' " +
+                    "GROUP BY Fecha ORDER BY Fecha ASC";
+        }
+        try {
+            // Primero contamos filas
+            java.util.List<String[]> lista = new java.util.ArrayList<>();
+            ResultSet rs = query.executeQuery(q);
+            while (rs.next()) {
+                String anio = rs.getString("anio");
+                String n    = rs.getString("n");
+                if (anio != null && !anio.isEmpty()) lista.add(new String[]{anio, n});
+            }
+            String[][] result = new String[lista.size()][2];
+            for (int i = 0; i < lista.size(); i++) result[i] = lista.get(i);
+            return result;
+        } catch (Exception e) { System.out.println(e); }
+        return new String[0][2];
+    }
+
+    // Géneros: devuelve cuántos items contienen cada género
+    public int[] getGeneroStats(String usuario, String tipo, String[] nombresGenero) {
+        int[] counts = new int[nombresGenero.length];
+        String tabla = tipo.equals("CONCIERTO") ? "Concierto" : "Vinilo_CD";
+        String filtroTipo = tipo.equals("CONCIERTO") ? "" : " AND tipo='" + tipo + "'";
+        for (int i = 0; i < nombresGenero.length; i++) {
+            String q = "SELECT COUNT(*) AS n FROM " + tabla +
+                    " WHERE NombreUsuario='" + usuario + "'" + filtroTipo +
+                    " AND Género LIKE '%" + nombresGenero[i] + "%'";
+            counts[i] = getNumFilesQuery(q);
+        }
+        return counts;
+    }
+
+    // DELETES
+    public void eliminarViniloCD(int id) {
+        try {
+            query.execute("DELETE FROM Imagen WHERE `id_Vinilo/CD` = " + id);
+            query.execute("DELETE FROM Vinilo_CD WHERE id = " + id);
+            System.out.println("Vinilo/CD eliminado: " + id);
+        } catch (Exception e) { System.out.println(e); }
+    }
+
+    public void eliminarConcierto(int id) {
+        try {
+            query.execute("DELETE FROM Imagen WHERE id_Concierto = " + id);
+            query.execute("DELETE FROM Concierto WHERE id = " + id);
+            System.out.println("Concierto eliminado: " + id);
+        } catch (Exception e) { System.out.println(e); }
     }
 }

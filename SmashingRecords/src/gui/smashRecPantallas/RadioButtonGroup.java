@@ -19,8 +19,13 @@ public class RadioButtonGroup {
         }
     }
 
-    public void setSelected(int n){
+    public void setSelected(int n) {
         selectedOption = n;
+        for (int i = 0; i < rbuttons.length; i++) {
+            if (rbuttons[i] != null) {
+                rbuttons[i].setChecked(i == n);
+            }
+        }
     }
 
     public void display(PApplet p5){

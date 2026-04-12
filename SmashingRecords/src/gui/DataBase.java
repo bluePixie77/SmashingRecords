@@ -347,16 +347,60 @@ public class DataBase {
         return 0;
     }
 
-    // INSERTS
-    public void insertaUsuario(String n, String p) {
-        String q = "INSERT INTO Usuario (nombre, contraseña)" +
-                "VALUES ('" + n + "', '" + p + "')";
-        System.out.println(q);
+    public String getDescripcionUsuario(String nombreUsuario) {
+        String q = "SELECT Descripción FROM Usuario WHERE NombreUsuario='" + nombreUsuario + "'";
+        try {
+            ResultSet rs = query.executeQuery(q);
+            if (rs.next()) {
+                String desc = rs.getString("Descripción");
+                return desc != null ? desc : "";
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return "";
+    }
 
+    public void actualizarDescripcionUsuario(String nombreUsuario, String descripcion) {
+        String valorDesc = (descripcion == null || descripcion.isEmpty()) ? "NULL" : "'" + descripcion + "'";
+        String q = "UPDATE Usuario SET Descripción=" + valorDesc + " WHERE NombreUsuario='" + nombreUsuario + "'";
+        try { query.execute(q); } catch (Exception e) { System.out.println(e); }
+    }
+
+    public String getFotoPerfilUsuario(String nombreUsuario) {
+        String q = "SELECT id FROM Imagen WHERE NombreUsuario='" + nombreUsuario + "'";
+        try {
+            ResultSet rs = query.executeQuery(q);
+            if (rs.next()) return rs.getString("id");
+        } catch (Exception e) { System.out.println(e); }
+        return "";
+    }
+
+    public void actualizarFotoPerfilUsuario(String nombreUsuario, String nombreArchivo) {
+        try {
+            // Borrar foto anterior si existe
+            query.execute("DELETE FROM Imagen WHERE NombreUsuario='" + nombreUsuario + "'");
+            // Insertar nueva
+            query.execute("INSERT INTO Imagen (id, `id_Vinilo/CD`, id_Concierto, NombreUsuario) " +
+                    "VALUES ('" + nombreArchivo + "', NULL, NULL, '" + nombreUsuario + "')");
+        } catch (Exception e) { System.out.println(e); }
+    }
+
+    // INSERTS
+    public String registrarUsuario(String nombreUsuario, String correo, String contrasena) {
+        // Verificar que el nombre de usuario no exista ya
+        int nNombre = getNumFilesQuery("SELECT COUNT(*) AS n FROM Usuario WHERE NombreUsuario='" + nombreUsuario + "'");
+        if (nNombre > 0) return "El nombre de usuario ya existe.";
+        // Verificar que el correo no exista ya
+        int nCorreo = getNumFilesQuery("SELECT COUNT(*) AS n FROM Usuario WHERE CorreoElectrónico='" + correo + "'");
+        if (nCorreo > 0) return "El correo ya está registrado.";
+
+        String q = "INSERT INTO Usuario (NombreUsuario, CorreoElectrónico, Contraseña) " +
+                "VALUES ('" + nombreUsuario + "', '" + correo + "', '" + contrasena + "')";
         try {
             query.execute(q);
+            return "ok";
         } catch (Exception e) {
             System.out.println(e);
+            return "Error al crear la cuenta.";
         }
     }
 

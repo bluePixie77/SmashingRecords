@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static gui.smashRecFonts.Sizes.medidaParrafo;
+
 public class Main extends PApplet {
 
     // Atributs
@@ -68,7 +70,11 @@ public class Main extends PApplet {
     public void draw(){
         // Dibuixa la pantalla corresponent
         switch(gui.pantallaActual){
+            case PLOGO:      gui.displayPantallaPLogo(this);
+                             break;
             case INICIO:     gui.displayPantallaInicioSesion(this);
+                             break;
+            case REGISTRO:   gui.displayPantallaRegistro(this);
                              break;
             case USUARIO:    gui.displayPantallaUsuario(this);
                              break;
@@ -99,8 +105,8 @@ public class Main extends PApplet {
         updateCursor(this);
         pushStyle();
         if(loginWrong && gui.pantallaActual== GUI.PANTALLA.INICIO){
-            fill(255, 0, 0); textAlign(CENTER, CENTER); textSize(8); textFont(gui.appFonts.getThirdFont());
-            text("Nom y/o contraseña incorrecto", width*0.5f, height*0.68f);
+            fill(gui.pink); textAlign(CENTER, CENTER); textFont(gui.appFonts.getThirdFont()); textSize(medidaParrafo+4);
+            text("Nombre y/o contraseña incorrectos", width*0.5f, height*0.68f);
         }
         popStyle();
     }
@@ -115,6 +121,11 @@ public class Main extends PApplet {
             for (gui.smashRecPantallas.TextField tf : gui.tFMusica) tf.keyTyped(key);
         } else if (gui.pantallaActual == GUI.PANTALLA.AGREGAR_CONCERT || gui.pantallaActual == GUI.PANTALLA.DETALLE_CONCIERTO) {
             for (gui.smashRecPantallas.TextField tf : gui.tFConcierto) tf.keyTyped(key);
+        }
+        if (gui.pantallaActual == GUI.PANTALLA.REGISTRO) {
+            gui.tFRegistroNombre.keyTyped(key);
+            gui.tFRegistroCorreo.keyTyped(key);
+            gui.tFRegistroPass.keyTyped(key);
         }
     }
     public void keyPressed(){
@@ -137,6 +148,11 @@ public class Main extends PApplet {
                 gui.recargarCards(this);
             }
         }
+        if (gui.pantallaActual == GUI.PANTALLA.REGISTRO) {
+            gui.tFRegistroNombre.keyPressed(keyCode);
+            gui.tFRegistroCorreo.keyPressed(keyCode);
+            gui.tFRegistroPass.keyPressed(keyCode);
+        }
         /* if(key=='0'){
             gui.pantallaActual = GUI.PANTALLA.INICIO;
         } else if(key=='1'){
@@ -155,15 +171,58 @@ public class Main extends PApplet {
                 String pass = gui.tFInicioSesion2.getText();
                 if (db.loginCorrecto(nom, pass)) {
                     gui.usuarioActual = nom;
+                    gui.datosUsuarioActual = db.getDatosUsuario(nom);
+                    String fotoDB = db.getFotoPerfilUsuario(nom);
+                    if (!fotoDB.isEmpty()) {
+                        gui.imgPerfil = loadImage(gui.rutaCarpeta + fotoDB);
+                        gui.titolPerfil = fotoDB;
+                    }
+                    gui.tANotasUsuario.setText(db.getDescripcionUsuario(nom));
                     gui.pantallaActual = GUI.PANTALLA.USUARIO;
                 } else {
                     loginWrong = true;
                 }
+            } else if(gui.bIrRegistro.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.REGISTRO;
             }
             gui.tFInicioSesion1.isPressed(this);
             gui.tFInicioSesion2.isPressed(this);
         }
+        else if(gui.pantallaActual == GUI.PANTALLA.REGISTRO) {
+            if (gui.bCrearCuenta.mouseOverButton(this)) {
+                String nombre = gui.tFRegistroNombre.getText().trim();
+                String correo = gui.tFRegistroCorreo.getText().trim();
+                String pass   = gui.tFRegistroPass.getText().trim();
 
+                if (nombre.isEmpty() || correo.isEmpty() || pass.isEmpty()) {
+                    gui.mensajeRegistro = "Rellena todos los campos.";
+                    gui.registroOk = false;
+                } else {
+                    String resultado = db.registrarUsuario(nombre, correo, pass);
+                    if (resultado.equals("ok")) {
+                        gui.mensajeRegistro = "¡Cuenta creada! Ya puedes iniciar sesión.";
+                        gui.registroOk = true;
+                        // Limpiar campos
+                        gui.tFRegistroNombre.setText("");
+                        gui.tFRegistroCorreo.setText("");
+                        gui.tFRegistroPass.setText("");
+                    } else {
+                        gui.mensajeRegistro = resultado;
+                        gui.registroOk = false;
+                    }
+                }
+                gui.tiempoMensajeRegistro = 240;
+            }
+            if (gui.bVolverInicio.mouseOverButton(this)) {
+                gui.tFRegistroNombre.setText("");
+                gui.tFRegistroCorreo.setText("");
+                gui.tFRegistroPass.setText("");
+                gui.pantallaActual = GUI.PANTALLA.INICIO;
+            }
+            gui.tFRegistroNombre.isPressed(this);
+            gui.tFRegistroCorreo.isPressed(this);
+            gui.tFRegistroPass.isPressed(this);
+        }
         else if(gui.pantallaActual== GUI.PANTALLA.USUARIO){
             if(gui.b1.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false; // reset al entrar
@@ -198,7 +257,15 @@ public class Main extends PApplet {
                 gui.tFInicioSesion1.setText("");
                 gui.tFInicioSesion2.setText("");
                 gui.usuarioActual = "";
+                gui.imgPerfil = null;
+                gui.titolPerfil = "";
+                gui.filePerfil = null;
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
+            } else if(gui.bGuardarNotasUsuario.mouseOverButton(this)) {
+                db.actualizarDescripcionUsuario(gui.usuarioActual, gui.tANotasUsuario.getText());
+                gui.tiempoNotasGuardadas = 180; // 3 segundos a 60fps
+            } else if(gui.bCambiarFotoPerfil.mouseOverButton(this)) {
+                selectInput("Selecciona una imagen de perfil...", "fileSelectedPerfil");
             }
             gui.tANotasUsuario.isPressed(this);
         }
@@ -513,10 +580,10 @@ public class Main extends PApplet {
                 gui.pantallaActual = gui.pantallaAnterior;
             } else if (gui.rBDelete.mouseOverButton(this)) {
                     gui.popUpConfirmacionEliminar.setVisible(true);
-            }else if(gui.bLoadImage.mouseOverButton(this)){
+            }else if(gui.bLoadImage.mouseOverButton(this) && !gui.popUpConfirmacionEliminar.visible){
                 // Obrim el dialeg
                 selectInput("Selecciona una imatge ...", "fileSelected");
-            } else if(gui.bSaveImageToDB.mouseOverButton(this)){
+            } else if(gui.bSaveImageToDB.mouseOverButton(this) && !gui.popUpConfirmacionEliminar.visible){
                 if(gui.file != null && !gui.titol.isEmpty()){
                     copiar(gui.file, gui.rutaCarpeta, gui.titol);
                     gui.imagenGuardadaOk = true;
@@ -567,39 +634,96 @@ public class Main extends PApplet {
     }
 
     public void updateCursor(PApplet p5){
-        if(gui.b1.updateHandCursor(p5) && gui.b1.isEnabled() ||
-           gui.b2.updateHandCursor(p5) && gui.b2.isEnabled() ||
-           gui.b3.updateHandCursor(p5) && gui.b3.isEnabled() ||
-           gui.b4.updateHandCursor(p5) && gui.b4.isEnabled() ||
-           gui.b5.updateHandCursor(p5) && gui.b5.isEnabled() ||
-           gui.b6.updateHandCursor(p5) && gui.b6.isEnabled() ||
-           gui.b7.updateHandCursor(p5) && gui.b7.isEnabled() ||
-           gui.rBPlus.updateHandCursor(p5) && gui.rBPlus.enabled ||
-           gui.rBFilter.updateHandCursor(p5) && gui.rBFilter.enabled ||
-           gui.rBHeart.mouseOverButton(p5) && gui.rBHeart.enabled ||
-           gui.rBHeartAgregar.mouseOverButton(p5) && gui.rBHeartAgregar.enabled ||
-           gui.rBDelete.mouseOverButton(p5) && gui.rBDelete.enabled ||
-           gui.bNext.mouseOverButton(p5) && gui.bNext.isEnabled() ||
-           gui.bPrev.mouseOverButton(p5) && gui.bPrev.isEnabled() ||
-           gui.bCancelar.mouseOverButton(p5) && gui.bCancelar.isEnabled() ||
-           gui.bOk.mouseOverButton(p5) && gui.bOk.isEnabled() ||
-           gui.popUpConfirmacionEliminar.visible && gui.popUpConfirmacionEliminar.bAceptar.mouseOverButton(p5) ||
-           gui.popUpConfirmacionEliminar.visible && gui.popUpConfirmacionEliminar.bCancelar.mouseOverButton(p5) ||
-           gui.cbl.checkCursor(this) ||
-           gui.bCatVinilos.updateHandCursor(p5) ||
-           gui.bCatCDs.updateHandCursor(p5) ||
-           gui.bCatConciertos.updateHandCursor(p5) ||
-           gui.bLoadImage.mouseOverButton(p5) || gui.bSaveImageToDB.mouseOverButton(p5)){
-                cursor(HAND);
-           }else{
-            cursor(ARROW);
+        boolean hand = false;
+
+        // Botones siempre activos (sidebar)
+        if (gui.pantallaActual != GUI.PANTALLA.INICIO &&
+                gui.pantallaActual != GUI.PANTALLA.REGISTRO &&
+                gui.pantallaActual != GUI.PANTALLA.PLOGO &&
+                gui.pantallaActual != GUI.PANTALLA.AGREGAR &&
+                gui.pantallaActual != GUI.PANTALLA.AGREGAR_CONCERT &&
+                gui.pantallaActual != GUI.PANTALLA.DETALLE &&
+                gui.pantallaActual != GUI.PANTALLA.DETALLE_CONCIERTO) {
+            hand = hand ||
+                    gui.b1.updateHandCursor(p5) && gui.b1.isEnabled() ||
+                    gui.b2.updateHandCursor(p5) && gui.b2.isEnabled() ||
+                    gui.b3.updateHandCursor(p5) && gui.b3.isEnabled() ||
+                    gui.b4.updateHandCursor(p5) && gui.b4.isEnabled() ||
+                    gui.b5.updateHandCursor(p5) && gui.b5.isEnabled();
         }
+
+        // Por pantalla
+        switch (gui.pantallaActual) {
+            case INICIO:
+                hand = hand ||
+                        gui.b6.updateHandCursor(p5) && gui.b6.isEnabled() ||
+                        gui.bIrRegistro.updateHandCursor(p5) && gui.bIrRegistro.isEnabled();
+                break;
+            case REGISTRO:
+                hand = hand ||
+                        gui.bCrearCuenta.updateHandCursor(p5) && gui.bCrearCuenta.isEnabled() ||
+                        gui.bVolverInicio.updateHandCursor(p5) && gui.bVolverInicio.isEnabled();
+                break;
+            case USUARIO:
+                hand = hand ||
+                        gui.b7.updateHandCursor(p5) && gui.b7.isEnabled() ||
+                        gui.bGuardarNotasUsuario.updateHandCursor(p5) && gui.bGuardarNotasUsuario.isEnabled() ||
+                        gui.bCambiarFotoPerfil.updateHandCursor(p5) && gui.bCambiarFotoPerfil.isEnabled();
+                break;
+            case VINILOS:
+            case CDS:
+                hand = hand ||
+                        gui.rBPlus.updateHandCursor(p5) && gui.rBPlus.enabled ||
+                        gui.rBFilter.updateHandCursor(p5) && gui.rBFilter.enabled ||
+                        gui.rBHeart.mouseOverButton(p5) && gui.rBHeart.enabled ||
+                        gui.bNext.mouseOverButton(p5) && gui.bNext.isEnabled() ||
+                        gui.bPrev.mouseOverButton(p5) && gui.bPrev.isEnabled() ||
+                        gui.bDetalle.updateHandCursor(p5) && gui.pcMusica.selectedCard != -1;
+                break;
+            case CONCIERTOS:
+                hand = hand ||
+                        gui.rBPlus.updateHandCursor(p5) && gui.rBPlus.enabled ||
+                        gui.rBFilter.updateHandCursor(p5) && gui.rBFilter.enabled ||
+                        gui.rBHeart.mouseOverButton(p5) && gui.rBHeart.enabled ||
+                        gui.bNext.mouseOverButton(p5) && gui.bNext.isEnabled() ||
+                        gui.bPrev.mouseOverButton(p5) && gui.bPrev.isEnabled() ||
+                        gui.bDetalle.updateHandCursor(p5) && gui.pcConcert.selectedCard != -1;
+                break;
+            case ESTADISTICAS:
+                hand = hand ||
+                        gui.bNext.mouseOverButton(p5) && gui.bNext.isEnabled() ||
+                        gui.bPrev.mouseOverButton(p5) && gui.bPrev.isEnabled() ||
+                        gui.bCatVinilos.updateHandCursor(p5) ||
+                        gui.bCatCDs.updateHandCursor(p5) ||
+                        gui.bCatConciertos.updateHandCursor(p5);
+                break;
+            case AGREGAR:
+            case AGREGAR_CONCERT:
+            case DETALLE:
+            case DETALLE_CONCIERTO:
+                hand = hand ||
+                        gui.bOk.mouseOverButton(p5) && gui.bOk.isEnabled() ||
+                        gui.bCancelar.mouseOverButton(p5) && gui.bCancelar.isEnabled() ||
+                        gui.rBHeartAgregar.mouseOverButton(p5) && gui.rBHeartAgregar.enabled ||
+                        gui.rBDelete.mouseOverButton(p5) && gui.rBDelete.enabled ||
+                        gui.bLoadImage.mouseOverButton(p5) && !gui.popUpConfirmacionEliminar.visible ||
+                        gui.bSaveImageToDB.mouseOverButton(p5) && !gui.popUpConfirmacionEliminar.visible ||
+                        gui.cbl.checkCursor(p5) ||
+                        gui.popUpConfirmacionEliminar.visible && gui.popUpConfirmacionEliminar.bAceptar.mouseOverButton(p5) ||
+                        gui.popUpConfirmacionEliminar.visible && gui.popUpConfirmacionEliminar.bCancelar.mouseOverButton(p5);
+                break;
+            default:
+                break;
+        }
+
+        if (hand) cursor(HAND);
+        else cursor(ARROW);
     }
 
     // Carrega Imatge
     public void fileSelected(File selection) {
         if (selection == null) {
-            println("No s'ha seleccionat cap fitxer.");
+            println("Ninguna selección.");
         } else {
             // Referència al fitxer imatge
             gui.file = selection;
@@ -609,6 +733,17 @@ public class Main extends PApplet {
 
             gui.imgElegida = loadImage(rutaImatge);  // Actualitzam imatge
             gui.titol = selection.getName();  // Actualitzam títol (igual)
+        }
+    }
+    public void fileSelectedPerfil(File selection) {
+        if (selection == null) {
+            println("Ninguna selección.");
+        } else {
+            gui.filePerfil = selection;
+            gui.imgPerfil = loadImage(selection.getAbsolutePath());
+            gui.titolPerfil = selection.getName();
+            copiar(selection, gui.rutaCarpeta, gui.titolPerfil);
+            db.actualizarFotoPerfilUsuario(gui.usuarioActual, gui.titolPerfil);
         }
     }
 

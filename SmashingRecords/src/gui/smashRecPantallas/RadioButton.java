@@ -2,6 +2,8 @@ package gui.smashRecPantallas;
 
 import processing.core.PApplet;
 
+import static gui.smashRecFonts.Sizes.medidaParrafo;
+
 public class RadioButton {
 
         // Propietats
@@ -46,7 +48,7 @@ public class RadioButton {
             }
 
             if(this.text!=null) {
-                p5.fill(bgColor); p5.textAlign(p5.LEFT, p5.CENTER); p5.textSize(24);
+                p5.fill(bgColor); p5.textAlign(p5.LEFT, p5.CENTER); p5.textSize(medidaParrafo);
                 p5.text(this.text, this.x + 1.5f * (2*r), this.y - 2);
             }
 

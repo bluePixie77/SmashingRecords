@@ -3,7 +3,7 @@ package gui.smashRecPantallas;
 import gui.smashRecColors.Colors;
 import processing.core.PApplet;
 
-import static gui.smashRecFonts.Sizes.medidaIntermedia;
+import static gui.smashRecFonts.Sizes.medidaParrafo;
 import static java.lang.Math.min;
 import static processing.core.PApplet.constrain;
 import static processing.core.PConstants.BACKSPACE;
@@ -22,7 +22,7 @@ public class TextArea {
     // Texto del campo
     String[] lines;
     public String text = "";
-    int textSize = (int) medidaIntermedia-1;
+    int textSize = (int) medidaParrafo;
 
     boolean selected = false;
 

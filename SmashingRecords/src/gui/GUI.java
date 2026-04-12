@@ -49,7 +49,8 @@ public class GUI {
      *   <li>{@code AGREGAR_CONCERT}– Formulario para añadir un concierto.</li>
      * </ul>
      */
-    public enum PANTALLA {INICIO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR, AGREGAR_CONCERT, DETALLE, DETALLE_CONCIERTO}
+    public enum PANTALLA {PLOGO, INICIO, REGISTRO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR, AGREGAR_CONCERT,
+        DETALLE, DETALLE_CONCIERTO}
 
     public enum CatEstadistica {VINILOS, CDS, CONCIERTOS}
 
@@ -65,19 +66,20 @@ public class GUI {
 
     // Botones
     public Button b1, b2, b3, b4, b5, b6, b7, bNext, bPrev, bCancelar, bOk,
-            bCatVinilos, bCatCDs, bCatConciertos, bLoadImage, bSaveImageToDB, bDetalle;
+           bCatVinilos, bCatCDs, bCatConciertos, bLoadImage, bSaveImageToDB, bDetalle, bGuardarNotasUsuario,
+           bCambiarFotoPerfil, bCrearCuenta, bIrRegistro, bVolverInicio;
 
     public PopUp popUpConfirmacionEliminar;
 
     // Colores
     public Colors appColors;
-    int black, gris, white, narFuerte, narFlojo, yellow, pink;
+    public int black, gris, white, narFuerte, narFlojo, yellow, pink;
 
     DataBase db;
 
     // Texto
     public Fonts appFonts;
-    public TextField tFInicioSesion1, tFInicioSesion2, tFBuscador;
+    public TextField tFInicioSesion1, tFInicioSesion2, tFRegistroNombre, tFRegistroCorreo, tFRegistroPass, tFBuscador;
     public TextField[] tFMusica;   // Para Vinilo/CD (Título, Artista, Año, Edición)
     public TextField[] tFConcierto; // Para Conciertos (Título, Artista, Fecha, Lugar)
     public TextArea tANotasUsuario, tANotasAgregar;
@@ -85,7 +87,7 @@ public class GUI {
     // Imatges de la GUI
     public RoundButton rBFilter, rBHeart, rBPlus, rBDelete, rBHeartAgregar;
     RadioButton radioB1, radioB2, radioB3;
-    PImage icona1, icona2, logo, imgFilter, imgHeart, imgPlus, imgDelete, imgDisc1, imgDefaultViniloCD, imgDefaultConcierto;
+    PImage iconaDefaultUser, icona2, logo, imgFilter, imgHeart, imgPlus, imgDelete, imgDisc1, imgDefaultViniloCD, imgDefaultConcierto;
     public PImage imgElegida;
     String[] imgs = {"starON.png", "starOFF.png"};
 
@@ -113,17 +115,28 @@ public class GUI {
     public int ultimoIdInsertado = -1;
     public int tiempoMensajeGuardado = 0; // frames restantes para mostrar el mensaje
     public boolean imagenGuardadaOk = false; // true = éxito, false = sin imagen
+    public int tiempoNotasGuardadas = 0; // frames restantes para mostrar el mensaje
 
     public int idSeleccionado = -1; // para saber qué elemento se quiere eliminar
     public boolean modoDetalle = false; // false = agregar, true = ver/editar detalle
 
     public int totalActual = 0; // Estadística
 
-    // Filtro y buscador
+    // Filtro, buscador sesión
     public int ordenActual = 0; // 0=TítA-Z, 1=TítZ-A, 2=ArtA-Z, 3=ArtZ-A
     public int tiempoMensajeOrden = 0;
     public String textoBusqueda = "";
+
+    // Usuario y sesión
     public String[] datosUsuarioActual = {"", "", ""};
+    public PImage imgPerfil = null;
+    public String titolPerfil = "";
+    public File filePerfil = null;
+    public String mensajeRegistro = "";
+    public int tiempoMensajeRegistro = 0;
+    public boolean registroOk = false;
+    public int tiempoPLogo = 240; // 4 segundos a 60fps
+
 
     String[][] infoConcert;
 
@@ -148,7 +161,7 @@ public class GUI {
         setBotones(p5);
         setPagedCards(p5);
         setEstadisticas(p5);
-        setRadioButtonsYCheckboxes(p5);
+        setRadioButtonsYCheckboxesMusica(p5);
     }
 
     // Setter botones
@@ -158,8 +171,8 @@ public class GUI {
         b3 = new Button(p5, appColors, "Conciertos", 0, p5.height * 0.45f, p5.width * 0.20f, p5.height * 0.05f);
         b4 = new Button(p5, appColors, "Estadísticas", 0, p5.height * 0.65f, p5.width * 0.20f, p5.height * 0.05f);
         b5 = new Button(p5, appColors, "Sesión", 0, p5.height * 0.95f, p5.width * 0.20f, p5.height * 0.05f);
-        b6 = new Button(p5, appColors, "Iniciar sesión", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
-        b7 = new Button(p5, appColors, "Cerrar sesión", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
+        b6 = new Button(p5, appColors, "INICIAR SESIÓN", p5.width * 0.5f - (p5.width * 0.125f), p5.height * 0.73f, p5.width * 0.25f, p5.height * 0.052f);
+        b7 = new Button(p5, appColors, "CERRAR SESIÓN", p5.width * 0.525f, p5.height * 0.49f, p5.width * 0.15f, p5.height * 0.052f);
         bNext = new Button(p5, appColors, ">", p5.width * 0.93f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
         bPrev = new Button(p5, appColors, "<", p5.width * 0.24f, p5.height * 0.92f, p5.width * 0.04f, p5.width * 0.04f);
         bCancelar = new Button(p5, appColors, "CANCELAR", p5.width * 0.75f, p5.height * 0.1f, p5.width * 0.1f, p5.height * 0.052f);
@@ -178,8 +191,8 @@ public class GUI {
         rBFilter = new RoundButton(p5, appColors, imgFilter, p5.width * 0.85f, p5.height * 0.15f, p5.width * 0.020f);
         rBHeart = new RoundButton(p5, appColors, imgHeart, p5.width * 0.90f, p5.height * 0.15f, p5.width * 0.020f);
         rBPlus = new RoundButton(p5, appColors, imgPlus, p5.width * 0.95f, p5.height * 0.15f, p5.width * 0.020f);
-        rBDelete = new RoundButton(p5, appColors, imgDelete, p5.width * 0.60f, p5.height * 0.13f, p5.width * 0.020f);
-        rBHeartAgregar = new RoundButton(p5, appColors, imgHeart, p5.width * 0.55f, p5.height * 0.13f, p5.width * 0.020f);
+        rBDelete = new RoundButton(p5, appColors, imgDelete, p5.width * 0.7f, p5.height * 0.13f, p5.width * 0.020f);
+        rBHeartAgregar = new RoundButton(p5, appColors, imgHeart, p5.width * 0.65f, p5.height * 0.13f, p5.width * 0.020f);
 
         float xB = p5.width * 0.25f;
         float yB = p5.height * 0.15f;
@@ -191,7 +204,16 @@ public class GUI {
         bCatConciertos = new Button(p5, appColors, "Conciertos", xB + (wB + 10) * 2, yB, wB, hB);
         // Al empezar, Vinilos está seleccionado, así que lo "desactivamos" visualmente
 
-        bDetalle = new Button(p5, appColors, "Ver detalle", p5.width * 0.47f, p5.height * 0.92f, p5.width * 0.10f, p5.width * 0.04f);
+        bDetalle = new Button(p5, appColors, "Ver detalle", p5.width * 0.55f, p5.height * 0.92f,
+                p5.width * 0.10f, p5.width * 0.04f);
+        bGuardarNotasUsuario = new Button(p5, appColors, "Guardar notas", p5.width * 0.83f, p5.height*0.55f,
+                p5.width * 0.12f, p5.height * 0.052f);
+        bCambiarFotoPerfil = new Button(p5, appColors, "Cambiar foto",
+                p5.width * 0.27f, p5.height * 0.42f, p5.width * 0.16f, p5.height * 0.04f);
+
+        bCrearCuenta  = new Button(p5, appColors, "Crear cuenta",  p5.width*0.54f, p5.height*0.73f, p5.width*0.1f, p5.height*0.052f);
+        bIrRegistro   = new Button(p5, appColors, "Crear cuenta",  p5.width*0.525f, p5.height*0.80f, p5.width*0.1f, p5.height*0.052f);
+        bVolverInicio = new Button(p5, appColors, "Volver",        p5.width*0.36f, p5.height*0.80f, p5.width*0.12f, p5.height*0.052f);
 
         actualizarEstadoBotones();
     }
@@ -199,7 +221,9 @@ public class GUI {
     public void setTextFields(PApplet p5) {
         tFInicioSesion1 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
         tFInicioSesion2 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
-        // tFNotasUsuario = new TextField(p5, appColors, 40, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f);
+        tFRegistroNombre = new TextField(p5, appColors, 40, p5.width*0.36f, p5.height*0.42f, p5.width*0.28f, p5.height*0.05f);
+        tFRegistroCorreo = new TextField(p5, appColors, 40, p5.width*0.36f, p5.height*0.52f, p5.width*0.28f, p5.height*0.05f);
+        tFRegistroPass   = new TextField(p5, appColors, 40, p5.width*0.36f, p5.height*0.62f, p5.width*0.28f, p5.height*0.05f);
         tFBuscador = new TextField(p5, appColors, 60, p5.width * 0.24f, p5.height * 0.1f, p5.width * 0.56f, p5.height * 0.10f);
 
         float startX = p5.width * 0.38f;
@@ -226,12 +250,13 @@ public class GUI {
         tFConcierto[2] = new TextField(p5, appColors, 40, sX, startY + (spacing * 2), fW, fieldH); // Fecha
         tFConcierto[3] = new TextField(p5, appColors, 40, sX, startY + (spacing * 3), fW, fieldH); // Lugar
 
-        tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 40, 10);
-        tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.82f, p5.width * 0.62f, p5.height * 0.18f, 65, 4);
+        tANotasUsuario = new TextArea(p5, appColors, p5.width * 0.25f, p5.height * 0.60f, p5.width * 0.70f, p5.height * 0.35f, 79, 10);
+        int nc = (pantallaActual == gui.GUI.PANTALLA.CONCIERTOS)? 75 : 32;
+        tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.82f, p5.width * 0.62f, p5.height * 0.18f, nc, 4);
     }
 
     public void setMedia(PApplet p5) {
-        icona1 = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
+        iconaDefaultUser = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
         icona2 = p5.loadImage("data/iconFullUser.png");
         logo = p5.loadImage("data/logo.png");
         imgFilter = p5.loadImage("data/imgFilter.png");
@@ -295,14 +320,14 @@ public class GUI {
         pcStats.setCards(misGraficos);
     }
 
-    public void setRadioButtonsYCheckboxes(PApplet p5) {
+    public void setRadioButtonsYCheckboxesMusica(PApplet p5) {
         // Construcción checkboxstarlist
         cbl = new CheckBoxStarList(p5, 5, imgs, p5.width * 0.05f, p5.height * 0.72f, p5.width * 0.05f, p5.height * 0.065f);
         cbl.setCheckBoxStars(0);
         // --- GÉNERO (CheckBoxes, selección múltiple) ---
         cbGenero = new CheckBox[nombresGenero.length];
         float xCB = p5.width * 0.38f;
-        float yCB = p5.height * 0.75f;
+        float yCB = p5.height * 0.74f;
         for (int i = 0; i < nombresGenero.length; i++) {
             cbGenero[i] = new CheckBox(p5, (int) (xCB + i * p5.width * 0.10f), (int) yCB, 20);
             // el texto lo dibujamos en display manualmente
@@ -311,7 +336,7 @@ public class GUI {
         // --- UBICACIÓN (RadioButtons, selección única) ---
         rbgUbicacion = new RadioButtonGroup(nombresUbicacion.length);
         RadioButton[] rbsUbic = new RadioButton[nombresUbicacion.length];
-        float xRBU = p5.width * 0.38f;
+        float xRBU = p5.width * 0.385f;
         float yRBU = p5.height * 0.85f;
         for (int i = 0; i < nombresUbicacion.length; i++) {
             rbsUbic[i] = new RadioButton(p5, (int) (xRBU + i * p5.width * 0.12f), (int) yRBU, 10);
@@ -322,8 +347,8 @@ public class GUI {
         // --- ORIGEN (RadioButtons, selección única) ---
         rbgOrigen = new RadioButtonGroup(nombresOrigen.length);
         RadioButton[] rbsOrig = new RadioButton[nombresOrigen.length];
-        float xRBO = p5.width * 0.38f;
-        float yRBO = p5.height * 0.92f;
+        float xRBO = p5.width * 0.385f;
+        float yRBO = p5.height * 0.945f;
         for (int i = 0; i < nombresOrigen.length; i++) {
             rbsOrig[i] = new RadioButton(p5, (int) (xRBO + i * p5.width * 0.12f), (int) yRBO, 10);
             rbsOrig[i].setText(nombresOrigen[i]);
@@ -332,6 +357,32 @@ public class GUI {
     }
 
     // PANTALLAS DE LA GUI
+    public void displayPantallaPLogo(PApplet p5) {
+        p5.push();
+        p5.background(black);
+        p5.imageMode(p5.CENTER);
+        p5.image(logo, p5.width * 0.5f, p5.height * 0.4f, p5.width * 0.28f, p5.height * 0.43f);
+
+        p5.textFont(appFonts.getSecondFont());
+        p5.fill(narFuerte);
+        p5.textSize(medidaTitulo);
+        p5.textAlign(p5.CENTER);
+        p5.text("THE SMASHING RECORDS", p5.width*0.5f, p5.height*0.70f);
+
+        p5.fill(narFlojo);
+        p5.textFont(appFonts.getThirdFont());
+        p5.textSize(medidaIntermedia);
+        p5.text("Tu colección de música y eventos", p5.width*0.5f, p5.height*0.78f);
+
+        // Transición automática
+        if (tiempoPLogo > 0) {
+            tiempoPLogo--;
+        } else {
+            pantallaActual = PANTALLA.INICIO;
+        }
+        p5.pop();
+    }
+
     public void displayPantallaInicioSesion(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -354,11 +405,65 @@ public class GUI {
         p5.fill(narFuerte);
         p5.textSize(medidaIntermedia);
         p5.text("Correo electrónico", p5.width * 0.36f, p5.height * 0.49f);
-        tFInicioSesion1.display(p5);
         p5.text("Contraseña", p5.width * 0.36f, p5.height * 0.59f);
+        b6.display(p5); // Iniciar sesión
+        p5.textFont(appFonts.getForthFont()); p5.textSize(medidaParrafo);
+        tFInicioSesion1.display(p5);
         tFInicioSesion2.display(p5);
 
-        b6.display(p5); // Iniciar sesión
+        p5.textFont(appFonts.getThirdFont());
+        p5.fill(white);
+        p5.textSize(medidaIntermedia);
+        p5.textAlign(p5.RIGHT);
+        p5.text("¿No tienes cuenta?", p5.width*0.515f, p5.height*0.835f);
+        bIrRegistro.display(p5);
+
+        p5.pop();
+    }
+
+    public void displayPantallaRegistro(PApplet p5) {
+        p5.push();
+        p5.background(black);
+        p5.rectMode(p5.CENTER);
+        p5.fill(black);
+        p5.strokeWeight(2);
+        p5.stroke(white);
+        p5.rect(p5.width*0.5f, p5.height*0.5f, p5.width*0.33f, p5.height*0.80f);
+
+        displayLogoMayor(p5);
+
+        p5.textFont(appFonts.getSecondFont());
+        p5.fill(narFuerte);
+        p5.textSize(medidaTitulo - 14);
+        p5.textAlign(p5.CENTER);
+        p5.text("CREAR CUENTA", p5.width*0.5f, p5.height*0.16f);
+
+        p5.pop();
+        p5.push();
+        p5.textFont(appFonts.getThirdFont());
+        p5.fill(narFuerte);
+        p5.textSize(medidaIntermedia);
+        p5.text("Nombre de usuario", p5.width*0.36f, p5.height*0.41f);
+        p5.text("Correo electrónico", p5.width*0.36f, p5.height*0.51f);
+        p5.text("Contraseña", p5.width*0.36f, p5.height*0.61f);
+
+        bCrearCuenta.display(p5);
+        bVolverInicio.display(p5);
+
+        p5.textFont(appFonts.getForthFont());
+        tFRegistroNombre.display(p5);
+        tFRegistroCorreo.display(p5);
+        tFRegistroPass.display(p5);
+
+        // Mensaje de error o éxito
+        if (tiempoMensajeRegistro > 0) {
+            p5.fill(narFuerte);
+            p5.textSize(18);
+            p5.textAlign(p5.CENTER);
+            p5.fill(pink); p5.textAlign(p5.CENTER, p5.CENTER); p5.textFont(appFonts.getThirdFont()); p5.textSize(medidaParrafo+4);
+            p5.text(mensajeRegistro, p5.width*0.5f, p5.height*0.70f);
+            tiempoMensajeRegistro--;
+        }
         p5.pop();
     }
 
@@ -367,20 +472,48 @@ public class GUI {
         p5.background(black);
         displaySidebar(p5);
 
+        // Círculo de fondo / borde
+        p5.noFill();
+        p5.stroke(narFuerte);
+        p5.strokeWeight(3);
         p5.circle(p5.width * 0.35f, p5.height * 0.25f, p5.width * 0.20f);
+
+        // Imagen de perfil o icono por defecto
+        if (imgPerfil != null) {
+            displayImagenCircular(p5, imgPerfil, p5.width * 0.35f, p5.height * 0.25f, p5.width * 0.20f);
+        }
+
+        // Botón para cargar imagen de perfil
+        bCambiarFotoPerfil.display(p5);
+
         p5.textAlign(p5.CENTER);
         p5.textSize(medidaSubtitulo);
         p5.textFont(appFonts.getThirdFont());
         p5.fill(white);
 
         //db.getNomUsuario
-        p5.text("Nombre: Jane Doe", p5.width * 0.60f, p5.height * 0.38f);
-        p5.text("Correo: janeDoe@gmail.com", p5.width * 0.60f, p5.height * 0.45f);
+        p5.textAlign(p5.LEFT); p5.textFont(appFonts.getForthFont()); p5.textSize(medidaSubtitulo);
+        p5.text("Nombre usuario: " + datosUsuarioActual[0], p5.width * 0.5f, p5.height * 0.25f);
+        p5.text("Correo: " + datosUsuarioActual[1], p5.width * 0.5f, p5.height * 0.3f);
+        p5.textFont(appFonts.getThirdFont());
         b7.display(p5); // Cerrar sesión
         p5.textAlign(p5.CORNER);
         p5.text("Notas", p5.width * 0.25f, p5.height * 0.59f);
 
-        p5.textFont(appFonts.getForthFont());
+        p5.push();
+        p5.textFont(appFonts.getThirdFont());
+        bGuardarNotasUsuario.display(p5);
+        if (tiempoNotasGuardadas > 0) {
+            p5.fill(narFuerte);
+            p5.textFont(appFonts.getFontAt(2));
+            p5.textSize(medidaIntermedia);
+            p5.textAlign(p5.RIGHT);
+            p5.text("Notas guardadas", p5.width * 0.82f, p5.height * 0.585f);
+            tiempoNotasGuardadas--;
+        }
+        p5.pop();
+
+        p5.textFont(appFonts.getForthFont()); p5.textSize(medidaParrafo);
         tANotasUsuario.display(p5);
         p5.pop();
 
@@ -527,7 +660,7 @@ public class GUI {
 
         // Género
         float xCB = p5.width * 0.38f;
-        float yCB = p5.height * 0.75f;
+        float yCB = p5.height * 0.74f;
         for (int i = 0; i < cbGenero.length; i++) {
             cbGenero[i].x = (int)(xCB + i * p5.width * 0.10f);
             cbGenero[i].y = (int)yCB;
@@ -537,21 +670,21 @@ public class GUI {
         p5.fill(white);
         p5.textSize(medidaIntermedia);
         p5.textAlign(p5.LEFT);
-        p5.text("Género *", p5.width * 0.38f, p5.height * 0.72f);
+        p5.text("Género", p5.width * 0.38f, p5.height * 0.72f);
         for (int i = 0; i < cbGenero.length; i++) {
             cbGenero[i].display(p5);
             p5.fill(white);
-            p5.textSize(24);
-            p5.text(nombresGenero[i], p5.width * 0.38f + i * p5.width * 0.10f + 25, p5.height * 0.77f);
+            p5.textSize(medidaParrafo);
+            p5.text(nombresGenero[i], p5.width * 0.38f + i * p5.width * 0.10f + 25, p5.height * 0.76f);
         }
 
         // Ubicación
         p5.textSize(medidaIntermedia);
-        p5.text("Ubicación *", p5.width * 0.38f, p5.height * 0.82f);
+        p5.text("Ubicación", p5.width * 0.38f, p5.height * 0.82f);
         rbgUbicacion.display(p5);
         // Origen
         p5.textSize(medidaIntermedia);
-        p5.text("Origen *", p5.width * 0.38f, p5.height * 0.89f);
+        p5.text("Origen", p5.width * 0.38f, p5.height * 0.91f);
         rbgOrigen.display(p5);
 
         p5.line(p5.width * 0.23f, p5.height * 0.20f, p5.width * 0.97f, p5.height * 0.20f);
@@ -650,22 +783,30 @@ public class GUI {
 
         // Reposicionar y mostrar checkboxes de género
         float xCB = p5.width * 0.68f;
-        float yCB = p5.height * 0.83f;
-        for (int i = 0; i < cbGenero.length; i++) {
-            cbGenero[i].x = (int)(xCB + i * p5.width * 0.06f);
-            cbGenero[i].y = (int)yCB;
-        }
-
+        float yCB = p5.height * 0.84f;
+        float espaciadoX = p5.width * 0.10f;
+        float espaciadoY = p5.height * 0.06f;
+        int porFila = 3; // 3 en la primera fila, 2 en la segunda
         p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
-        p5.text("Género *", xCB, yCB - 10);
+        p5.text("Género *", xCB, p5.height * 0.825f);
         for (int i = 0; i < cbGenero.length; i++) {
+            int fila = i / porFila;   // 0 para i=0,1,2 — 1 para i=3,4
+            int col  = i % porFila;   // 0,1,2 — 0,1
+
+            float xActual = xCB + col  * espaciadoX;
+            float yActual = yCB + fila * espaciadoY;
+
+            cbGenero[i].x = (int) xActual;
+            cbGenero[i].y = (int) yActual;
+
             cbGenero[i].display(p5);
-            p5.fill(white); p5.textSize(18);
-            p5.text(nombresGenero[i], xCB + i * p5.width * 0.06f + 25, yCB + 5);
+            p5.fill(white);
+            p5.textSize(18);
+            p5.text(nombresGenero[i], xActual + 25, yActual + 15);
         }
 
         tANotasAgregar.x = p5.width * 0.05f;
-        tANotasAgregar.y = yCB;
+        tANotasAgregar.y = p5.height * 0.83f;
         tANotasAgregar.w = p5.width * 0.62f;
         tANotasAgregar.h = p5.height * 0.12f;
         p5.fill(white); p5.textSize(medidaIntermedia); p5.textAlign(p5.LEFT);
@@ -990,7 +1131,7 @@ public class GUI {
     // Filtro
     public void ciclarOrden() {
         ordenActual = (ordenActual + 1) % 4;
-        tiempoMensajeOrden = 120; // 2 segundos a 60fps
+        tiempoMensajeOrden = 180; // 3 segundos a 60fps
     }
     public String getTextoOrden() {
         switch(ordenActual) {
@@ -1000,5 +1141,33 @@ public class GUI {
             case 3: return "Artista Z -> A";
             default: return "";
         }
+    }
+
+    public void displayImagenCircular(PApplet p5, PImage img, float cx, float cy, float diametro) {
+        // Creamos una máscara circular del mismo tamaño que la imagen redimensionada
+        int d = (int) diametro;
+        PImage mascara = p5.createImage(d, d, p5.ARGB);
+        mascara.loadPixels();
+        float cx2 = d / 2f;
+        float cy2 = d / 2f;
+        float r2 = (d / 2f) * (d / 2f);
+        for (int i = 0; i < d; i++) {
+            for (int j = 0; j < d; j++) {
+                float dx = i - cx2;
+                float dy = j - cy2;
+                mascara.pixels[j * d + i] = (dx*dx + dy*dy <= r2)
+                        ? p5.color(255) : p5.color(0);
+            }
+        }
+        mascara.updatePixels();
+
+        // Redimensionar imagen y aplicar máscara
+        PImage copia = img.copy();
+        copia.resize(d, d);
+        copia.mask(mascara);
+
+        p5.imageMode(p5.CENTER);
+        p5.image(copia, cx, cy, d, d);
+        p5.imageMode(p5.CORNER); // restaurar modo por defecto
     }
 }

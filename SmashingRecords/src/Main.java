@@ -134,6 +134,7 @@ public class Main extends PApplet {
                     loginWrong = true;
                 }
             } else if(gui.bIrRegistro.mouseOverButton(this)) {
+                loginWrong = false;
                 gui.pantallaActual = GUI.PANTALLA.REGISTRO;
             }
             gui.tFInicioSesion1.isPressed(this);
@@ -168,6 +169,7 @@ public class Main extends PApplet {
                 gui.tFRegistroNombre.setText("");
                 gui.tFRegistroCorreo.setText("");
                 gui.tFRegistroPass.setText("");
+                loginWrong = false;
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
             }
             gui.tFRegistroNombre.isPressed(this);
@@ -205,6 +207,7 @@ public class Main extends PApplet {
                 gui.imgPerfil = null;
                 gui.titolPerfil = "";
                 gui.filePerfil = null;
+                loginWrong = false;
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
             } else if(gui.bGuardarNotasUsuario.mouseOverButton(this)) {
                 db.actualizarDescripcionUsuario(gui.usuarioActual, gui.tANotasUsuario.getText());

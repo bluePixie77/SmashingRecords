@@ -2,10 +2,35 @@ package gui.smashRecPantallas;
 
 import processing.core.PApplet;
 
+/**
+ * Tarjeta de tipo álbum (vinilo o CD) para su visualización dentro de un {@link PagedCard2D}.
+ * Extiende {@link Card} y redefine el método {@code display} para mostrar
+ * una imagen cuadrada que ocupa casi toda la anchura de la tarjeta, con el
+ * nombre del álbum y el artista en la zona inferior.
+ *
+ * @author Equipo SmashRecords
+ * @version 1.0
+ */
 public class AlbumCard extends Card{
 
+    /**
+     * Crea una nueva {@code AlbumCard} a partir de un array de datos.
+     * El array {@code info} debe seguir el formato: {@code [id, título, artista, imagen]}.
+     *
+     * @param info array de cadenas con los datos del álbum
+     */
     public AlbumCard(String[] info) { super(info); }
 
+    /**
+     * Renderiza la tarjeta de álbum en pantalla.
+     * Dibuja el fondo blanco redondeado, la imagen cuadrada del álbum (o un rectángulo
+     * oscuro si no hay imagen) ajustada a la anchura de la tarjeta, y bajo ella el
+     * título del álbum y el nombre del artista en tamaño de fuente reducido.
+     * El borde se resalta en rojo cuando la tarjeta está seleccionada.
+     *
+     * @param p5       instancia de Processing usada para el dibujado
+     * @param selected {@code true} si la tarjeta está seleccionada; {@code false} en caso contrario
+     */
     public void display(PApplet p5, boolean selected) {
         p5.pushStyle();
         // Fondo de la Card

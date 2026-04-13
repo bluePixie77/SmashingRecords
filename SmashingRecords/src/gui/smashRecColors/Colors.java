@@ -1,14 +1,43 @@
 package gui.smashRecColors;
 
 import processing.core.PApplet;
-
+/**
+ * Gestiona la paleta de colores de la aplicación The Smashing Records.
+ * Almacena los siete colores corporativos y proporciona accesores individuales
+ * y por índice, así como un método de visualización para depuración.
+ *
+ * <p>La correspondencia entre índice y color es:
+ * <ul>
+ *   <li>0 – Naranja fuerte  (#E1480B)</li>
+ *   <li>1 – Naranja suave   (#E47738)</li>
+ *   <li>2 – Blanco          (#FFFFFF)</li>
+ *   <li>3 – Negro           (#020202)</li>
+ *   <li>4 – Gris            (#646464)</li>
+ *   <li>5 – Amarillo        (#FFC832)</li>
+ *   <li>6 – Rosa            (#E56399)</li>
+ * </ul>
+ * </p>
+ *
+ * @author Equipo SmashRecords
+ * @version 1.0
+ */
 public class Colors {
 
+    /** Array interno que almacena los colores de la paleta en formato Processing. */
     int[] colors; // más arrays para más grupos de colores
 
-    // Constructor
+    /**
+     * Crea una nueva instancia de {@code Colors} e inicializa la paleta de colores.
+     *
+     * @param p5 instancia de Processing necesaria para invocar {@code color()}
+     */
     public Colors(PApplet p5){ this.setColors(p5); }
 
+    /**
+     * Inicializa el array de colores con los siete tonos corporativos de la aplicación.
+     *
+     * @param p5 instancia de Processing necesaria para invocar {@code color()}
+     */
     // Setter (colores de la app)
     public void setColors(PApplet p5){
         this.colors = new int[7];
@@ -21,19 +50,53 @@ public class Colors {
         this.colors[6] = p5.color(0xFFE56399); // Rosa
     }
 
+    /**
+     * Devuelve el número total de colores de la paleta.
+     *
+     * @return número de colores disponibles
+     */
     // Getters
     public int getNumColors(){ return this.colors.length; }
+
+    /** @return Naranja fuerte (#E1480B), usado para elementos destacados y seleccionados. */
     public int getFirstColor(){ return this.colors[0]; }
+
+    /** @return Naranja suave (#E47738), usado para estados de hover y secundarios. */
     public int getSecondColor(){ return this.colors[1]; }
+
+    /** @return Blanco (#FFFFFF), usado para fondos claros y textos sobre fondo oscuro. */
     public int getThirdColor(){ return this.colors[2]; }
+
+    /** @return Negro (#020202), usado para fondos principales, bordes y textos. */
     public int getFourthColor(){ return this.colors[3]; }
+
+    /** @return Gris (#646464), usado para elementos deshabilitados y secundarios. */
     public int getFifthColor(){ return this.colors[4]; }
+
+    /** @return Amarillo (#FFC832), usado como color de acento en gráficos. */
     public int getSixthColor(){ return this.colors[5]; }
+
+    /** @return Rosa (#E56399), usado para mensajes de error y acentos especiales. */
     public int getSeventhColor(){ return this.colors[6]; }
 
-
+    /**
+     * Devuelve el color en la posición indicada del array de la paleta.
+     *
+     * @param i índice del color (0–6)
+     * @return color en formato Processing ({@code int} ARGB)
+     */
     public int getColorAt(int i){ return this.colors[i]; }
 
+    /**
+     * Dibuja visualmente la paleta de colores en pantalla con una leyenda,
+     * útil para depuración y previsualización del tema visual de la aplicación.
+     * Los colores se muestran como rectángulos de igual anchura distribuidos horizontalmente.
+     *
+     * @param p5 instancia de Processing usada para el dibujado
+     * @param x  posición horizontal de inicio en píxeles
+     * @param y  posición vertical de inicio en píxeles
+     * @param w  anchura total ocupada por todos los rectángulos de color en píxeles
+     */
     // Dibujar paleta de colores
     public void displayColors(PApplet p5, float x, float y, float w){
         p5.pushStyle();

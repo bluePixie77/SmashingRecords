@@ -13,28 +13,50 @@ import processing.core.PApplet;
  */
 public class BarsDiagram extends StatsCard {
 
-    // Dimensions del diagrama de Barres
-
-    // Informació del diagrama (textos, valors i colors)
+    /** Etiquetas del eje X, una por cada barra (p. ej. nombre del género). */
     String[] texts;
+
+    /** Valores numéricos de cada barra. */
     float[] values;
+
+    /** Porcentajes calculados de cada barra respecto al total (0–100). */
     float[] percentages;
+
+    /** Colores asignados a cada barra del diagrama. */
     int[] colors;
 
-    // Suma total dels valors
+    /** Suma total de todos los valores, usada para calcular proporciones. */
     float total;
 
-    // Constructor
-
+    /**
+     * Crea un nuevo {@code BarsDiagram} con el título y las dimensiones indicadas.
+     *
+     * @param title título del diagrama mostrado en la cabecera de la tarjeta
+     * @param x     posición horizontal en píxeles
+     * @param y     posición vertical en píxeles
+     * @param w     anchura de la tarjeta en píxeles
+     * @param h     altura de la tarjeta en píxeles
+     */
     public BarsDiagram(String title, float x, float y, float w, float h) {
         super(title, "Estadística de Barras", x, y, w, h);
     }
 
+    /**
+     * Establece las etiquetas del eje X del diagrama.
+     *
+     * @param t array de cadenas con las etiquetas de cada barra
+     */
     // Setters
     public void setTexts(String[] t){
         this.texts = t;
     }
 
+    /**
+     * Establece los valores del diagrama y calcula automáticamente el total
+     * y el porcentaje de cada barra respecto a ese total.
+     *
+     * @param v array de valores flotantes, uno por cada barra
+     */
     public void setValues(float[] v){
         this.values = v;
         this.total = 0;
@@ -48,10 +70,39 @@ public class BarsDiagram extends StatsCard {
         }
     }
 
+    /**
+     * Establece los colores de cada barra del diagrama.
+     *
+     * @param c array de enteros con los colores en formato Processing ({@code color()})
+     */
     public void setColors(int[] c){
         this.colors = c;
     }
 
+    /**
+     * Dibuja el diagrama de barras sobre la tarjeta.
+     *
+     * <p>El proceso de dibujado sigue estos pasos:</p>
+     * <ol>
+     *   <li><strong>Márgenes y área útil:</strong> se definen márgenes izquierdo/derecho,
+     *       superior e inferior para delimitar el área de dibujado.</li>
+     *   <li><strong>Valor máximo:</strong> se recorre el array de valores para encontrar
+     *       el máximo, que se usa para escalar proporcionalmente la altura de las barras.</li>
+     *   <li><strong>Bucle de barras:</strong> para cada valor se calcula la altura de la
+     *       barra mapeándola al alto útil con {@code PApplet.map()}, y se dibujan:
+     *       <ul>
+     *         <li>La barra rellena con el color correspondiente (usando módulo para
+     *             evitar desbordamiento del array).</li>
+     *         <li>La etiqueta del eje X centrada bajo la barra.</li>
+     *         <li>El porcentaje formateado y el valor entero sobre la barra.</li>
+     *       </ul>
+     *   </li>
+     *   <li><strong>Total:</strong> se muestra el total acumulado de géneros marcados
+     *       en la esquina superior derecha del área útil.</li>
+     * </ol>
+     *
+     * @param p5 instancia de Processing usada para el dibujado
+     */
     // Dibujo Diagrama de Sectores
     public void displayDiagram(PApplet p5){
         p5.pushStyle();

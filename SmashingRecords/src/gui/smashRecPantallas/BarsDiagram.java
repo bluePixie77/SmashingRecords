@@ -2,6 +2,15 @@ package gui.smashRecPantallas;
 
 import processing.core.PApplet;
 
+/**
+ * Diagrama de barras verticales que extiende {@link StatsCard}.
+ * Muestra la distribución de un conjunto de valores mediante barras proporcionales
+ * a su peso respecto al total, con etiquetas en el eje X, porcentajes y valores
+ * numéricos sobre cada barra.
+ *
+ * @author Equipo SmashRecords
+ * @version 1.0
+ */
 public class BarsDiagram extends StatsCard {
 
     // Dimensions del diagrama de Barres

@@ -1,10 +1,35 @@
 package gui.smashRecPantallas;
 
 import processing.core.PApplet;
-
+/**
+ * Tarjeta de tipo concierto para su visualización dentro de un {@link PagedCard2D}.
+ * Extiende {@link Card} y redefine el método {@code display} para mostrar
+ * una imagen rectangular que ocupa el 65% de la altura, con el nombre del
+ * concierto y el artista en la zona inferior.
+ *
+ * @author Equipo SmashRecords
+ * @version 1.0
+ */
 public class ConcertCard extends Card {
+
+    /**
+     * Crea una nueva {@code ConcertCard} a partir de un array de datos.
+     * El array {@code info} debe seguir el formato: {@code [id, título, artista, imagen]}.
+     *
+     * @param info array de cadenas con los datos del concierto
+     */
     public ConcertCard(String[] info) { super(info); }
 
+    /**
+     * Renderiza la tarjeta de concierto en pantalla.
+     * Dibuja el fondo blanco redondeado, la imagen del concierto (o un rectángulo
+     * oscuro si no hay imagen) ocupando el 65% de la altura de la tarjeta, y
+     * bajo ella el título del concierto y el nombre del artista.
+     * El borde se resalta en rojo cuando la tarjeta está seleccionada.
+     *
+     * @param p5       instancia de Processing usada para el dibujado
+     * @param selected {@code true} si la tarjeta está seleccionada; {@code false} en caso contrario
+     */
     public void display(PApplet p5, boolean selected) {
         p5.pushStyle();
         p5.stroke(selected ? p5.color(255, 0, 0) : 0);

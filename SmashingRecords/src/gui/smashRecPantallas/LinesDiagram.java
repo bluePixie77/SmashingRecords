@@ -1,25 +1,61 @@
 package gui.smashRecPantallas;
 
 import processing.core.PApplet;
-
+/**
+ * Diagrama de líneas que extiende {@link StatsCard}.
+ * Representa la evolución de un conjunto de valores a lo largo de una serie
+ * (p. ej. número de álbumes por año) mediante segmentos que unen puntos de datos.
+ *
+ * <p>Los ejes se dibujan automáticamente con márgenes calculados a partir de las
+ * dimensiones de la tarjeta. Cada punto se acompaña de su etiqueta textual en el
+ * eje X y de su valor numérico sobre el propio punto.</p>
+ *
+ * @author Equipo SmashRecords
+ * @version 1.0
+ */
 public class LinesDiagram extends StatsCard{
-
-    // Información del diagrama
+    /** Etiquetas del eje X (p. ej. años o meses). */
     String[] texts;
+
+    /** Valores numéricos de cada punto de la serie. */
     float[] values;
+
+    /** Color de las líneas y los puntos del diagrama. */
     int colorLines;
+
+    /** Valor máximo de la serie, usado para escalar el eje Y. */
     float maxValue;
 
+    /**
+     * Crea un nuevo {@code LinesDiagram} con el título y las dimensiones indicadas.
+     *
+     * @param title título del diagrama mostrado en la cabecera de la tarjeta
+     * @param x     posición horizontal en píxeles
+     * @param y     posición vertical en píxeles
+     * @param w     anchura de la tarjeta en píxeles
+     * @param h     altura de la tarjeta en píxeles
+     */
     // Constructor
     public LinesDiagram(String title, float x, float y, float w, float h) {
         super(title, "Estadística lineal", x, y, w, h);
     }
 
+    /**
+     * Establece las etiquetas del eje X del diagrama.
+     *
+     * @param t array de cadenas con las etiquetas de cada punto
+     */
     // Setters
     public void setTexts(String[] t){
         this.texts = t;
     }
 
+    /**
+     * Establece los valores de la serie y calcula automáticamente el valor máximo,
+     * que se usará para escalar proporcionalmente la altura de cada punto.
+     *
+     * @param v array de valores flotantes que representan la serie de datos
+     */
     public void setValues(float[] v){
         this.values = v;
         this.maxValue = this.values[0];
@@ -31,10 +67,34 @@ public class LinesDiagram extends StatsCard{
 
     }
 
+    /**
+     * Establece el color de las líneas y los puntos del diagrama.
+     *
+     * @param c color en formato Processing ({@code color()})
+     */
     public void setColors(int c){
         this.colorLines = c;
     }
 
+    /**
+     * Dibuja el diagrama de líneas sobre la tarjeta.
+     *
+     * <p>El proceso de dibujado sigue estos pasos:</p>
+     * <ol>
+     *   <li><strong>Márgenes y área útil:</strong> se definen márgenes izquierdo/derecho,
+     *       superior e inferior para calcular el origen de los ejes y las dimensiones
+     *       del área de dibujado.</li>
+     *   <li><strong>Ejes:</strong> se dibujan el eje Y (vertical) y el eje X (horizontal)
+     *       como líneas negras desde el origen calculado.</li>
+     *   <li><strong>Bucle de puntos y segmentos:</strong> para cada par de puntos consecutivos
+     *       se calcula su posición mapeando el valor al alto útil con {@code PApplet.map()},
+     *       se dibuja la línea de conexión, el cuadrado indicador del punto {@code i},
+     *       la etiqueta del eje X y el valor numérico sobre el punto. Al llegar al último
+     *       par, se dibuja también el punto y la etiqueta del último elemento.</li>
+     * </ol>
+     *
+     * @param p5 instancia de Processing usada para el dibujado
+     */
     // Dibujar el Diagrama de Sectors
     public void displayDiagram(PApplet p5){
         p5.pushStyle();

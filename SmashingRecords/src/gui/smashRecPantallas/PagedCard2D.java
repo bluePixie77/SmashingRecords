@@ -4,28 +4,115 @@ import gui.smashRecColors.Colors;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * Panel de varias páginas de tarjetas (cards) en 2D.
+ * Cada página muestra un conjunto de tarjetas organizadas en filas y columnas.
+ * Permite avanzar/despáginar, seleccionar carta y visualización de tarjetas
+ * basadas en {@link Card} y sus subtipos ({@code ALBUM}, {@code CONCERT}).
+ *
+ * @author SmashRecords
+ */
 public class PagedCard2D extends PApplet{
 
-    String[][] cardsData;    // Datos de las Cards
-    public Card[] cards;     // Cards
+    /**
+     * Datos de cada tarjeta organizados como filas de atributos.
+     */
+    String[][] cardsData;
+    /**
+     * Array de tarjetas gráficas que se van a mostrar.
+     */
+    public Card[] cards;
+    /**
+     * Tipo de tarjeta que maneja este panel (ALBUM, CONCERT, etc.).
+     */
     Card.tipoCard tipo;
-    int numCards;            // Número total de Cards
+    /**
+     * Número total de tarjetas disponibles.
+     */
+    int numCards;
+    /**
+     * Número de filas de tarjetas por página.
+     */
     int numRowsPage;
+    /**
+     * Número de columnas de tarjetas por página.
+     */
     int numCardsRow;
-    int numCardsPage;        // Número de Cards en 1 página
+    /**
+     * Número de tarjetas por página (filas × columnas).
+     */
+    int numCardsPage;
 
+    /**
+     * Página actual (índice empezando en 0).
+     */
     int numPage;
+    /**
+     * Número total de páginas calculadas a partir de {@link #numCards} y {@link #numCardsPage}.
+     */
     int numTotalPages;
 
     // Colores
+    /**
+     * Esquema de colores de la aplicación.
+     */
     public Colors appColors;
-    int bg, titles, text, white;
+    /**
+     * Color de fondo del panel de tarjetas.
+     */
+    int bg;
+    /**
+     * Color para títulos de tarjetas.
+     */
+    int titles;
+    /**
+     * Color para texto normal.
+     */
+    int text;
+    /**
+     * Color claro (blanco/claro) para elementos de resalte.
+     */
+    int white;
 
-    public float x, y, w, h;
-    float wc, hc;
+    /**
+     * Coordenada X superior‑izquierda del área de tarjetas.
+     */
+    public float x;
+    /**
+     * Coordinada Y superior‑izquierda del área de tarjetas.
+     */
+    public float y;
+    /**
+     * Anchura total del área de tarjetas.
+     */
+    public float w;
+    /**
+     * Altura total del área de tarjetas.
+     */
+    public float h;
+    /**
+     * Anchura de cada tarjeta individual.
+     */
+    float wc;
+    /**
+     * Altura de cada tarjeta individual.
+     */
+    float hc;
+    /**
+     * Índice de la tarjeta seleccionada (-1 si ninguna).
+     */
     public int selectedCard = -1;
 
-    // Constructor
+
+    /**
+     * Constructor de un panel paginado de tarjetas.
+     *
+     * @param p5 referencia a la instancia de Processing (PApplet) asociada.
+     * @param appColors conjunto de colores de la aplicación.
+     * @param numRows número de filas por página.
+     * @param numCols número de columnas por página.
+     * @param tipo tipo de tarjeta que se mostrará (ALBUM, CONCERT, etc.).
+     */
     public PagedCard2D(PApplet p5, Colors appColors, int numRows, int numCols, Card.tipoCard tipo) {
         this.appColors = appColors;
         this.tipo = tipo;
@@ -35,7 +122,15 @@ public class PagedCard2D extends PApplet{
         this.numPage = 0;
     }
 
-    // Setters
+    /**
+     * Establece las dimensiones del panel de tarjetas y calcula automáticamente
+     * el tamaño de cada tarjeta teniendo en cuenta los márgenes horizontales y verticales.
+     *
+     * @param x coordenada X superior‑izquierda.
+     * @param y coordenada Y superior‑izquierda.
+     * @param w anchura total del panel.
+     * @param h altura total del panel.
+     */
     public void setDimensions(float x, float y, float w, float h) {
         this.x = x;
         this.y = y;
@@ -45,12 +140,23 @@ public class PagedCard2D extends PApplet{
         this.hc = (h - 5*(numRowsPage -1)) / numRowsPage;
     }
 
+    /**
+     * Asigna los datos de las tarjetas (matriz de atributos) y calcula el número total
+     * de tarjetas y el número total de páginas.
+     *
+     * @param d matriz de datos donde cada fila corresponde a una tarjeta.
+     */
     public void setData(String[][] d) {
         this.cardsData = d;
         this.numCards = d.length;
         this.numTotalPages = d.length / this.numCardsPage;
     }
 
+    /**
+     * Actualiza los colores del panel usando el esquema de la aplicación.
+     *
+     * @param appColors conjunto de colores de la aplicación.
+     */
     public void setColors(Colors appColors){
         bg = appColors.getFourthColor();
         titles = appColors.getFirstColor();
@@ -58,6 +164,11 @@ public class PagedCard2D extends PApplet{
         white = appColors.getThirdColor();
     }
 
+    /**
+     * Crea y posiciona las tarjetas gráficas según {@link #tipo}.
+     * Se instancian {@link AlbumCard} o {@link ConcertCard} según el tipo,
+     * y se asignan dimensiones y colores.
+     */
     public void setCards() {
 
         cards = new Card[numCards];
@@ -80,7 +191,13 @@ public class PagedCard2D extends PApplet{
             cards[numCard].setCardColors(appColors.getFirstColor(), appColors.getSecondColor(), appColors.getThirdColor(), appColors.getFourthColor());
         }
     }
-    // Estadísticas
+
+    /**
+     * Asigna un array de tarjetas ya creadas (por ejemplo para estadísticas).
+     * Recalcula el número total de páginas basado en {@link #numCardsPage}.
+     *
+     * @param objetosGraficos array de tarjetas gráficas.
+     */
     public void setCards(Card[] objetosGraficos) {
         this.cards = objetosGraficos;
         this.numCards = objetosGraficos.length;
@@ -90,6 +207,13 @@ public class PagedCard2D extends PApplet{
         this.numTotalPages = (this.numCards - 1) / this.numCardsPage;
     }
 
+    /**
+     * Establece imágenes fijas para tarjetas alternando entre dos imágenes.
+     * Las tarjetas en posiciones pares usan {@code img1} y las impares {@code img2}.
+     *
+     * @param img1 primera imagen a alternar.
+     * @param img2 segunda imagen a alternar.
+     */
     public void setImages(PImage img1, PImage img2) {
         PImage img;
         for(int numCard=0; numCard<numCards; numCard++){
@@ -104,20 +228,30 @@ public class PagedCard2D extends PApplet{
         }
     }
 
-
+    /** Incrementa el índice de página actual si existe una página siguiente disponible. */
     public void nextPage() {
         if (this.numPage<this.numTotalPages) {
             this.numPage++;
         }
     }
 
+    /** Decrementa el índice de página actual si no se está ya en la primera página. */
     public void prevPage() {
         if (this.numPage>0) {
             this.numPage--;
         }
     }
 
-    // Dibuja taula
+    /**
+     * Renderiza en pantalla las tarjetas correspondientes a la página activa.
+     * <p>
+     * El funcionamiento consiste en calcular el rango de índices (desde {@code firstCardPage}
+     * hasta {@code lastCardPage}) que pertenecen a la página actual. Solo los objetos dentro
+     * de ese rango invocan su propio método {@code display}. Adicionalmente, dibuja un texto
+     * informativo indicando el número de página actual sobre el total.
+     * </p>
+     * * @param p5 El contexto de Processing donde se realiza el dibujo.
+     */
     public void display(PApplet p5) {
 
         p5.pushStyle();
@@ -141,8 +275,17 @@ public class PagedCard2D extends PApplet{
         p5.popStyle();
     }
 
+    /**
+     * Verifica si el usuario ha hecho clic sobre alguna de las tarjetas visibles.
+     * <p>
+     * Itera exclusivamente sobre las tarjetas de la página actual. Si detecta que las coordenadas
+     * del ratón están sobre una tarjeta (mediante {@code mouseOver}), actualiza {@code selectedCard}
+     * con el índice correspondiente. Si el clic ocurre fuera de cualquier tarjeta, se resetea
+     * la selección a -1.
+     * </p>
+     * * @param p5 El contexto de Processing para obtener las coordenadas del ratón.
+     */
     public void checkCardSelection(PApplet p5){
-
         boolean selected = false;
         int firstCardPage = numCardsPage*numPage;
         int lastCardPage  = numCardsPage*(numPage+1) - 1;
@@ -160,8 +303,12 @@ public class PagedCard2D extends PApplet{
         }
     }
 
+    /**
+     * Indica si el cursor del ratón se encuentra actualmente sobre alguna tarjeta de la página activa.
+     * * @param p5 El contexto de Processing.
+     * @return {@code true} si el ratón colisiona con una tarjeta visible; {@code false} en caso contrario.
+     */
     public boolean checkMouseOver(PApplet p5){
-
         int firstCardPage = numCardsPage*numPage;
         int lastCardPage  = numCardsPage*(numPage+1) - 1;
 
@@ -175,6 +322,10 @@ public class PagedCard2D extends PApplet{
         return false;
     }
 
+    /**
+     * Muestra en una zona específica de la pantalla la información detallada de la tarjeta seleccionada.
+     * * @param p5 El contexto de Processing.
+     */
     public void printSelectedCard(PApplet p5){
         if(selectedCard !=-1){
             Card cSelected = cards[selectedCard];

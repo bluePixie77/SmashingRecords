@@ -32,23 +32,6 @@ public class TextArea {
         this.numCols = nc; this.numRows = nr;
         this.lines = new String[nr];
         setColors(appColors);
-
-       /* p5.pushStyle();
-        if (selected) {
-            p5.fill(selectedColor);
-        } else {
-            p5.fill(fillColor);
-        }
-
-        p5.strokeWeight(borderWeight);
-        p5.stroke(borderColor);
-        p5.rectMode(p5.CORNER);
-        p5.rect(x, y, w, h, 5);
-
-        p5.fill(borderColor);
-        p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);
-        p5.text(text, x + 10, y + h - textSize);
-        p5.popStyle();*/
     }
 
     // Setters
@@ -109,7 +92,7 @@ public class TextArea {
         }
     }
 
-    // Afegeix, lleva el text que es tecleja
+    // Añade, quita el texto que se teclea
     public void keyPressed(char key, int keyCode) {
         if (selected) {
             if (keyCode == (int)BACKSPACE) {
@@ -128,7 +111,7 @@ public class TextArea {
             removeText();
         }
     }
-    // Gestiona entrada de text real (inclou accents)
+    // Gestiona entrada de texto real (incluye acentos)
     public void keyTyped(char key) {
         if (!selected) return;
 
@@ -138,7 +121,7 @@ public class TextArea {
         addText(key);
     }
 
-    // Afegeix la lletra c al final del text
+    // Añade la letra c al final del texto
     public void addText(char c) {
         if (this.text.length() < this.numCols*this.numRows) {
             this.text += c;
@@ -146,7 +129,7 @@ public class TextArea {
         updateLines();
     }
 
-    // Lleva la darrera lletra del text
+    // Quita la última letra del texto
     public void removeText() {
         if (text.length()> 0) {
             text = text.substring(0, text.length()-1);
@@ -154,13 +137,13 @@ public class TextArea {
         updateLines();
     }
 
-    // Indica si el ratolí està sobre el camp de text
+    // Ratón sobre el campo de texto
     public boolean mouseOverTextField(PApplet p5) {
         return (p5.mouseX >= this.x && p5.mouseX <= this.x + this.w && p5.mouseY >= this.y && p5.mouseY <= this.y + this.h);
     }
 
-    // Selecciona el camp de text si pitjam a sobre
-    // Deselecciona el camp de text si pitjam a fora
+    // Selecciona el campo de texto si pulsamos encima
+    // Deselecciona el campo de texto si pulsamos fuera
     public void isPressed(PApplet p5) {
         if (mouseOverTextField(p5)) {
             selected = true;

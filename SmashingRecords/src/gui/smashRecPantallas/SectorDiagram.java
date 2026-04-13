@@ -9,16 +9,16 @@ import static processing.core.PConstants.TWO_PI;
 public
 class SectorDiagram extends StatsCard{
 
-    // Dimensions del Diagrama de Sectors
+    // Dimensiones del Diagrama
     float r;
 
-    // Informació del diagrama (textos, valors i colors)
+    // Información del diagrama
     String[] texts;
     float[] values;
     float[] percentages;
     int[] colors;
 
-    // Suma total dels valors
+    // Suma total de los valores
     float total;
 
     // Constructor
@@ -49,7 +49,7 @@ class SectorDiagram extends StatsCard{
         this.colors = c;
     }
 
-    // Dibuixa el Diagrama de Sectors
+    // Dibuja el Diagrama de Sectores
 
     public void displayDiagram(PApplet p5){
         p5.pushStyle();

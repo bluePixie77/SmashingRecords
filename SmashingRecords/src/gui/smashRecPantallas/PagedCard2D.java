@@ -6,18 +6,18 @@ import processing.core.PImage;
 
 public class PagedCard2D extends PApplet{
 
-    String[][] cardsData;    // Dades de les Cards
-    public Card[] cards;            // Cards
+    String[][] cardsData;    // Datos de las Cards
+    public Card[] cards;     // Cards
     Card.tipoCard tipo;
     int numCards;            // Número total de Cards
     int numRowsPage;
     int numCardsRow;
-    int numCardsPage;        // Número de Cards en 1 Pàgina
+    int numCardsPage;        // Número de Cards en 1 página
 
     int numPage;
     int numTotalPages;
 
-    // Colors
+    // Colores
     public Colors appColors;
     int bg, titles, text, white;
 
@@ -27,11 +27,8 @@ public class PagedCard2D extends PApplet{
 
     // Constructor
     public PagedCard2D(PApplet p5, Colors appColors, int numRows, int numCols, Card.tipoCard tipo) {
-       // appColors = new Colors(p5);
         this.appColors = appColors;
-        //setColors(appColors);
         this.tipo = tipo;
-
         this.numRowsPage = numRows;
         this.numCardsRow = numCols;
         this.numCardsPage = numRows * numCols;
@@ -39,7 +36,6 @@ public class PagedCard2D extends PApplet{
     }
 
     // Setters
-
     public void setDimensions(float x, float y, float w, float h) {
         this.x = x;
         this.y = y;
@@ -80,12 +76,11 @@ public class PagedCard2D extends PApplet{
                 case CONCERT:
                     cards[numCard] = new ConcertCard(cardsData[numCard]);
             }
-          //  cards[numCard] = new Card(cardsData[numCard]);
             cards[numCard].setDimensions(xCard, yCard, wc, hc, 10);
             cards[numCard].setCardColors(appColors.getFirstColor(), appColors.getSecondColor(), appColors.getThirdColor(), appColors.getFourthColor());
         }
     }
-    // para estadísticas
+    // Estadísticas
     public void setCards(Card[] objetosGraficos) {
         this.cards = objetosGraficos;
         this.numCards = objetosGraficos.length;
@@ -106,12 +101,6 @@ public class PagedCard2D extends PApplet{
             if (cards[numCard] != null) {
                 cards[numCard].setImage(img);
             }
-           /* if (cards[numCard].section == "Secció 1") {
-                img = img1;
-            } else {
-                img = img2;
-            }
-            cards[numCard].setImage(img);*/
         }
     }
 
@@ -128,12 +117,12 @@ public class PagedCard2D extends PApplet{
         }
     }
 
-    // Dibuixa taula
+    // Dibuja taula
     public void display(PApplet p5) {
 
         p5.pushStyle();
 
-        // Dibuixa Cards corresponent a la Pàgina
+        // Dibuja Cards correspondiente a la página
         int firstCardPage = numCardsPage*numPage;
         int lastCardPage  = numCardsPage*(numPage+1) - 1;
 
@@ -145,7 +134,7 @@ public class PagedCard2D extends PApplet{
             }
         }
 
-        // Informació de la Pàgina
+        // Información de la página
         p5.fill(0);
         p5.text("Pag: "+(this.numPage+1)+" / "+(this.numTotalPages+1), x + w + 50, y+10);
 

@@ -35,24 +35,6 @@ public class DataBase {
         }
     }
 
-    // Retorno de la información de una casilla en base a un filtro
-    public String getInfo(String nomTaula, String nomColumna, String nomClau, String identificador){
-        try{ // query
-            String q =  " SELECT " + nomColumna +   // SELECT nomColumna AS N (canviar/possar nom N)
-                    " FROM " + nomTaula +       // fins aquí, retornaria tota la columna
-                    " WHERE "+ nomClau  + " = '" + identificador + "' "; // id entre comilles simples
-            // ORDER BY nomColumna ASC, dni ASC
-            System.out.println(q);
-            ResultSet rs= query.executeQuery(q); // Conjunt de resultats (com una col·lecció)
-            rs.next();
-            return rs.getString(nomColumna);
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return "";
-    }
-
     // Retorno del número total de filas de una tabla
     public int getNumFilesTaula(String nomTaula){
         String q = "SELECT COUNT(*) AS num FROM "+ nomTaula; // * vol dir tot
@@ -65,28 +47,6 @@ public class DataBase {
             System.out.println(e);
         }
         return 0;
-    }
-
-    // Retorno de todas las casillas de una columna
-    public String[] getInfoArray(String nomTaula, String nomColumna){
-        int n = getNumFilesTaula(nomTaula);
-        String[] info = new String[n];
-        String q = " SELECT " + nomColumna +
-                " FROM " + nomTaula +
-                " ORDER BY " + nomColumna + " ASC"; // ASC: ascendentment, DES: descendentment
-        System.out.println(q);
-        try{
-            ResultSet rs = query.executeQuery(q);
-            int f=0;    // Recorregut col·lecció ResultSet (múltiples dades)
-            while(rs.next()){
-                info[f] = rs.getString(nomColumna);
-                f++;
-            }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return info;
     }
 
     public String[][] getInfoArrayPetit2DConcert(){
@@ -111,214 +71,6 @@ public class DataBase {
         return info;
     }
 
-    public String[][] getInfoArray2DVinilos(String nombreUsuario){
-        String q = "SELECT Título, Artista, Fecha, Género, Edición " +
-                "FROM Vinilo_CD " +
-                "WHERE tipo = 'V' AND NombreUsuario = '" + nombreUsuario + "' " +
-                "ORDER BY Artista ASC";
-        System.out.println(q);
-        int nf = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='V' AND NombreUsuario='" + nombreUsuario + "'");
-        String[][] info = new String[nf][5];
-        try {
-            ResultSet rs = query.executeQuery(q);
-            int f = 0;
-            while(rs.next()){
-                info[f][0] = rs.getString("Título");
-                info[f][1] = rs.getString("Artista");
-                info[f][2] = rs.getString("Fecha") != null ? rs.getString("Fecha") : "";
-                info[f][3] = rs.getString("Género");
-                info[f][4] = rs.getString("Edición") != null ? rs.getString("Edición") : "";
-                f++;
-            }
-            return info;
-        } catch(Exception e){
-            System.out.println(e);
-        }
-        return info;
-    }
-
-    public String[][] getInfoArray2DCDs(String nombreUsuario){
-        String q = "SELECT Título, Artista, Fecha, Género, Edición " +
-                "FROM Vinilo_CD " +
-                "WHERE tipo = 'C' AND NombreUsuario = '" + nombreUsuario + "' " +
-                "ORDER BY Artista ASC";
-        System.out.println(q);
-        int nf = getNumFilesQuery("SELECT COUNT(*) AS n FROM Vinilo_CD WHERE tipo='C' AND NombreUsuario='" + nombreUsuario + "'");
-        String[][] info = new String[nf][5];
-        try {
-            ResultSet rs = query.executeQuery(q);
-            int f = 0;
-            while(rs.next()){
-                info[f][0] = rs.getString("Título");
-                info[f][1] = rs.getString("Artista");
-                info[f][2] = rs.getString("Fecha") != null ? rs.getString("Fecha") : "";
-                info[f][3] = rs.getString("Género");
-                info[f][4] = rs.getString("Edición") != null ? rs.getString("Edición") : "";
-                f++;
-            }
-            return info;
-        } catch(Exception e){
-            System.out.println(e);
-        }
-        return info;
-    }
-
-
-
-    /*
-    public String[][] getInfoArray2D(){
-        int nf = getNumFilesTaula("unitat");
-        String[][] info = new String[nf][3];
-        String q = "SELECT numero, nom, curs FROM unitat ORDER BY numero ASC";
-        System.out.println(q);
-        try{
-            ResultSet rs = query.executeQuery(q);
-            int f=0;
-            while(rs.next()){
-                info[f][0] = rs.getString("correu"); // String.valueOf( rs.getInt("numero"));
-                info[f][1] = rs.getString("contraseña");
-                info[f][2] = rs.getString("descripción"); // String.valueOf( rs.getInt("curs"));
-                f++;
-            }
-            return info;
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-
-        return info;
-    }
-     */
-    /*
-    public String[][] getInfoTaulaUnitatCurs(int curs){
-        int numFiles = getNumRowsQuery("SELECT COUNT(*) AS n FROM unitat WHERE curs = '"+curs+"'");
-        int numCols  = 3;
-        String[][] info = new String[numFiles][numCols];
-        try {
-            ResultSet rs = query.executeQuery( "SELECT numero, nom, curs FROM unitat WHERE curs= '"+curs+"'");
-            int nr = 0;
-            while (rs.next()) {
-                info[nr][0] = String.valueOf(rs.getInt("numero"));
-                info[nr][1] = rs.getString("nom");
-                info[nr][2] = String.valueOf(rs.getInt("curs"));
-                nr++;
-            }
-            return info;
-        }
-        catch(Exception e) {
-            System.out.println(e);
-            return null;
-        }
-    }
-     */
-
-    public void printArray1D(String[] info){
-        System.out.println();
-        for(int i=0;i<info.length;i++){
-            System.out.printf("%d: %s.\n", i, info[i]);
-        }
-    }
-    public void printArray2D(String[][] info){
-        System.out.println();
-        for(int i=0;i<info.length;i++){
-            System.out.printf("%d: ", i);
-            for(int j=0;j<info[i].length;j++){
-                System.out.printf("%s \t", info[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
-    // Retorno contraseña cliente con un cierto correo
-    public String getPasswordAmbCorreu(String correu){
-        String q = "SELECT Contraseña FROM Usuario WHERE CorreoElectrónico = '" + correu + "'";
-        System.out.println(q);
-        try{
-            ResultSet rs = query.executeQuery(q);
-            rs.next();
-            String contraseña = rs.getString("Contraseña");
-            return contraseña;
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    public String[] getCorreosTodosUsuarios(){
-        String q = "SELECT CorreoElectrónico FROM Usuario ORDER BY CorreoElectrónico ASC";
-        System.out.println(q);
-        try{
-            int numFiles = getNumFilesTaula("Usuario");
-            String[] info = new String[numFiles];
-            ResultSet rs = query.executeQuery(q);
-            int f=0;
-            while(rs.next()){
-                info[f] = rs.getString("CorreoElectrónico");
-                f++;
-            }
-            return info;
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    public String[][] getInfoTotsUsuarios(){
-        String q = "SELECT CorreoElectrónico, Contraseña, Descripción FROM Usuario ORDER BY CorreoElectrónico ASC";
-        System.out.println(q);
-        try{
-            int numFiles = getNumFilesTaula("Usuario");
-            String[][] info = new String[numFiles][4];
-            ResultSet rs = query.executeQuery(q);
-            int f=0;
-            while(rs.next()){
-                info[f][0] = rs.getString("CorreoElectrónico");
-                info[f][1] = rs.getString("Contraseña");
-                info[f][2] = rs.getString("Descripción");
-                f++;
-            }
-            return info;
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    public String[][] getInfoConciertoMartas(){
-
-        String qF = "SELECT COUNT(*) AS n " +
-                "FROM Concierto c, Usuario u " +
-                "WHERE c.NombreUsuario=u.NombreUsuario AND u.CorreoElectrónico='xxx@gmail.com' ";
-        System.out.println(qF);
-
-        int numFiles = getNumFilesQuery(qF);
-        String[][] info = new String[numFiles][4];
-
-        String q = "SELECT c.Título, c.Artista AS art, c.Fecha, u.NombreUsuario AS nom " +
-                "FROM Concierto c, Usuario u " +
-                "WHERE c.NombreUsuario=u.NombreUsuario AND u.CorreoElectrónico='xxx@gmail.com' "+
-                "ORDER BY c.Artista ASC";
-        System.out.println(q);
-        try {
-            ResultSet rs = query.executeQuery(q);
-            int f=0;
-            while(rs.next()){
-                info[f][0] = rs.getString("Título");
-                info[f][1] = rs.getString("art"); // alias definido en la query
-                info[f][2] = rs.getString("Fecha"); //String.valueOf( rs.getInt("Fecha"));
-                info[f][3] = rs.getString("nom");
-                f++;
-            }
-
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return info;
-    }
 
     public String[] getDatosUsuario(String nombreUsuario) {
         String q = "SELECT NombreUsuario, CorreoElectrónico, Descripción FROM Usuario WHERE NombreUsuario='" + nombreUsuario + "'";
@@ -359,12 +111,6 @@ public class DataBase {
         return "";
     }
 
-    public void actualizarDescripcionUsuario(String nombreUsuario, String descripcion) {
-        String valorDesc = (descripcion == null || descripcion.isEmpty()) ? "NULL" : "'" + descripcion + "'";
-        String q = "UPDATE Usuario SET Descripción=" + valorDesc + " WHERE NombreUsuario='" + nombreUsuario + "'";
-        try { query.execute(q); } catch (Exception e) { System.out.println(e); }
-    }
-
     public String getFotoPerfilUsuario(String nombreUsuario) {
         String q = "SELECT id FROM Imagen WHERE NombreUsuario='" + nombreUsuario + "'";
         try {
@@ -372,6 +118,12 @@ public class DataBase {
             if (rs.next()) return rs.getString("id");
         } catch (Exception e) { System.out.println(e); }
         return "";
+    }
+
+    public void actualizarDescripcionUsuario(String nombreUsuario, String descripcion) {
+        String valorDesc = (descripcion == null || descripcion.isEmpty()) ? "NULL" : "'" + descripcion + "'";
+        String q = "UPDATE Usuario SET Descripción=" + valorDesc + " WHERE NombreUsuario='" + nombreUsuario + "'";
+        try { query.execute(q); } catch (Exception e) { System.out.println(e); }
     }
 
     public void actualizarFotoPerfilUsuario(String nombreUsuario, String nombreArchivo) {

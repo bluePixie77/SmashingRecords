@@ -68,11 +68,6 @@ public class TextField {
             } else if (keyCode == ENTER){
                 selected = false;
             }else{
-                /*boolean isKeyCapitalLetter = (key >= 'A' && key <= 'Z');
-                boolean isKeySmallLetter = (key >= 'a' && key <= 'z');
-                boolean isKeyNumber = (key >= '0' && key <= '9');
-                if (isKeyCapitalLetter || isKeySmallLetter || isKeyNumber) { }
-                 */
                 addText(key);
             }
         }
@@ -85,7 +80,7 @@ public class TextField {
         }
     }
 
-    // Gestiona entrada de text real (inclou accents)
+    // Gestiona entrada de texto real (incluye acentos)
     public void keyTyped(char key) {
         if (!selected) return;
 
@@ -129,8 +124,8 @@ public class TextField {
         return (p5.mouseX >= this.x && p5.mouseX <= this.x + this.w && p5.mouseY >= this.y && p5.mouseY <= this.y + this.h);
     }
 
-    // Selecciona el camp de text si pitjam a sobre
-    // Deselecciona el camp de text si pitjam a fora
+    // Selecciona el campo de texto si pulsamos encima
+    // Deselecciona el campo de texto si pulsamos fuera
     public void isPressed(PApplet p5) {
         System.out.println("IS PRESSED");
         if(mouseOverTextField(p5)) {

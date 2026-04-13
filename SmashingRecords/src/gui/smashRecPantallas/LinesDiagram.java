@@ -3,22 +3,19 @@ package gui.smashRecPantallas;
 import processing.core.PApplet;
 
 public class LinesDiagram extends StatsCard{
-    // Dimensions del diagrama de Barres
 
-    // Informació del diagrama (textos, valors i colors)
+    // Información del diagrama
     String[] texts;
     float[] values;
     int colorLines;
     float maxValue;
 
     // Constructor
-
     public LinesDiagram(String title, float x, float y, float w, float h) {
         super(title, "Estadística lineal", x, y, w, h);
     }
 
     // Setters
-
     public void setTexts(String[] t){
         this.texts = t;
     }
@@ -38,8 +35,7 @@ public class LinesDiagram extends StatsCard{
         this.colorLines = c;
     }
 
-    // Dibuixa el Diagrama de Sectors
-
+    // Dibujar el Diagrama de Sectors
     public void displayDiagram(PApplet p5){
         p5.pushStyle();
         // 1. DEFINIR MÁRGENES (Ajusta estos valores para cambiar el tamaño)

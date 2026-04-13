@@ -5,13 +5,13 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class RoundButton {
-    // Propietats d'un botó:
 
-    float x, y, r;  // Posició (x, y) i dimensions (radi)
-    public int fillColor, strokeColor; // Colors del boto (fill / stroke).
-    public int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
-    PImage icona;  // Icona del botó
-    public boolean enabled;  // Estat del botó (actiu / inactiu).
+    // Propiedades
+    float x, y, r;
+    public int fillColor, strokeColor; // Colores del botón (fill / stroke).
+    public int fillColorOver, fillColorDisabled;  // Colores del botón (activo / inactivo).
+    PImage icona;  // Icona del botón
+    public boolean enabled;  // Estado del botón (activo / inactivo).
 
     // Constructor
     public RoundButton(PApplet p5, Colors appColors, PImage img, float x, float y, float r){
@@ -26,7 +26,6 @@ public class RoundButton {
     }
 
     // Setters
-
     public void setImage(PImage img){ this.icona = img; }
 
     public void setEnabled(boolean b){
@@ -40,33 +39,33 @@ public class RoundButton {
         this.strokeColor = appColors.getFourthColor();
     }
 
-    // Dibuixa el botó
+    // Dibujar el botón
     public void display(PApplet p5){
         p5.pushStyle();
         if(!enabled){
-            p5.fill(fillColorDisabled);  // Color desabilitat
+            p5.fill(fillColorDisabled);  // Color desabilitado
         }
         else if(mouseOverButton(p5)){
-            p5.fill(fillColorOver);      // Color quan ratolí a sobre
+            p5.fill(fillColorOver);      // Color ratón sobre
         }
         else{
-            p5.fill(fillColor);          // Color actiu però ratolí fora
+            p5.fill(fillColor);          // Color activo pero sin ratón sobre
         }
-        p5.stroke(strokeColor); p5.strokeWeight(2);              //Color i gruixa del contorn
-        p5.ellipse(this.x, this.y, 2*this.r, 2*this.r);    // Cercle del botó
+        p5.stroke(strokeColor); p5.strokeWeight(2);              // Color y grosor del contorno
+        p5.ellipse(this.x, this.y, 2*this.r, 2*this.r);    // Círculo del botón
 
-        // Imatge del boto
+        // Imagen del botón
         p5.imageMode(p5.CENTER);
         p5.image(this.icona, this.x, this.y, 2*this.r, 2*this.r);
         p5.popStyle();
     }
 
-    // Indica si el cursor està sobre el botó
+    // Cursor sobre botón
     public boolean mouseOverButton(PApplet p5){
         return p5.dist(p5.mouseX, p5.mouseY, this.x, this.y)<= this.r;
     }
 
-    // Indica si cal posar el cursor a HAND
+    // Cursor a HAND
     public boolean updateHandCursor(PApplet p5){
         return mouseOverButton(p5) && enabled;
     }

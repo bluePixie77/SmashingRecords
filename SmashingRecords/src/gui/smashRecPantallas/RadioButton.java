@@ -6,10 +6,10 @@ import static gui.smashRecFonts.Sizes.medidaParrafo;
 
 public class RadioButton {
 
-        // Propietats
+        // Propiedades
         int x, y, r;
 
-        // Colors
+        // Colores
         int bgColor, borderColor, checkedColor;
 
         boolean checked;
@@ -26,7 +26,6 @@ public class RadioButton {
             this.checkedColor = p5.color(0xFF646464); // gris
         }
 
-        // Getter
         public  boolean isChecked(){
             return  this.checked;
         }
@@ -34,7 +33,7 @@ public class RadioButton {
         public void setText(String t){ this.text = t; }
 
 
-        // Dibuixa el CheckBox
+        // Dibujar el RadioButton
         public void display(PApplet p5){
             p5.pushStyle();
             p5.stroke(borderColor);
@@ -59,13 +58,13 @@ public class RadioButton {
             this.checked = b;
         }
 
-        // Canvia l'estat de selecció
+        // Cambia el estado de selección
         public void toggle(){
             this.checked = ! this.checked;
         }
 
 
-        // Mira si el ratolí està sobre el checkbox
+        // Ratón sobre radioButton
         public boolean onMouseOver(PApplet p5){
             return  p5.dist(p5.mouseX, p5.mouseY, this.x, this.y) < this.r;
         }

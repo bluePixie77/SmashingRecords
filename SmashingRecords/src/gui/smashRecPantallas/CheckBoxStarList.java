@@ -4,11 +4,11 @@ import processing.core.PApplet;
 
 public class CheckBoxStarList {
 
-    // Propietats (posició i dimensions)
+    // Propiedades (posición y dimensions)
     float x, y, w, h;
     int marge = 15;
 
-    // Propietats(checkboxes)
+    // Propiedad (checkboxes)
     CheckBoxStar[] cbs;
 
     // Constructor
@@ -26,14 +26,14 @@ public class CheckBoxStarList {
     }
 
 
-    // Dibuixam el checkboxlist
+    // Dibujar el checkboxlist
     public void display(PApplet p5) {
         for (CheckBoxStar cb : cbs) {
             cb.display(p5);
         }
     }
 
-    // Comprova si feim click sobre algun checkboxstar
+    // Comprobación click sobre algún checkboxstar
     public void checkMouse(PApplet p5) {
 
         for (int i=0; i<cbs.length; i++) {
@@ -56,7 +56,7 @@ public class CheckBoxStarList {
         }
     }
 
-    // Setter del número de estrelles activades
+    // Setter del número de estrellas activadas
     public void setCheckBoxStars(int n){
         for (int i=0; i<n; i++) {
             cbs[i].checked = true;
@@ -66,13 +66,7 @@ public class CheckBoxStarList {
         }
     }
 
-
-    // Retorna si el checkBox n està seleccionat
-    public boolean isChecked(int n) {
-        return cbs[n].checked;
-    }
-
-    // Retorna true si el mouse està sobre algun checkbox
+    // Devuelve true si el mouse está sobre algún checkbox
     public boolean checkCursor(PApplet p5) {
         for (CheckBoxStar cb : cbs) {
             if (cb.onMouseOver(p5)) {
@@ -82,7 +76,7 @@ public class CheckBoxStarList {
         return false;
     }
 
-    // Retorna el número d'elements seleccionats
+    // Devuelve el número de elementos seleccionados
     public int getNumSelected() {
         int n = 0;
         for (CheckBoxStar cb : cbs) {

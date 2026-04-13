@@ -1,8 +1,6 @@
 import gui.DataBase;
-import gui.smashRecPantallas.Button;
 import processing.core.PApplet;
 import gui.GUI;
-import processing.core.PImage;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,17 +12,11 @@ import static gui.smashRecFonts.Sizes.medidaParrafo;
 
 public class Main extends PApplet {
 
-    // Atributs
+    // Atributos
         // GUI
     GUI gui;
     public static DataBase db;
     boolean loginWrong = false;
-
-    /*Imatges de les cards
-    PImage img1, img2;
-    String titol="";
-    File file;
-    String rutaCarpeta = "C:\\Usuaris\\mariaramis\\Escriptori\\";*/
     
     public static void main(String[] args) {
         PApplet.main("Main");
@@ -38,33 +30,6 @@ public class Main extends PApplet {
         db.connect();
 
         gui = new GUI(this, db);
-
-//          Dimensiones
-//        float buttonW = 60, buttonH = 60;                  // Botones Cards
-//        float cardsW = width*0.75f, cardsH = height*0.75f; // Espacio total para las Cards
-
-        /* Load imgs
-        imgs = new PImage[2];
-        titulo = new String[2];
-        b = new Button(this, gui.appColors, "Vinilos", 0, height * 0.25f, width * 0.20f, height * 0.05f);*/
-
-        // Paged Card
-           /* Imatges de les Categories
-        img1 = loadImage("data/musicPredetBlackBG.png");
-        img2 = loadImage("data/musicPredetWhiteBG.png");*/
-
-           /* // Creació de les PagedTables ?
-        pcMusica = new PagedCard2D(this, gui.appColors,2, 4, Card.tipoCard.ALBUM);
-        pcMusica.setDimensions(50, 50, cardsW, cardsH);
-        pcMusica.setData(infoAlbum);
-        pcMusica.setCards();
-        pcMusica.setImages(img1, img2);
-
-        pcConcert = new PagedCard2D(this, gui.appColors,3, 2, Card.tipoCard.CONCERT);
-        pcConcert.setDimensions(50, 50, 800, 600);
-        pcMusica.setData(infoConcert);
-        pcMusica.setCards();
-        pcMusica.setImages(img1, img2);*/
     }
 
     public void draw(){
@@ -97,12 +62,6 @@ public class Main extends PApplet {
         }
         updateCursor(this);
 
-        // Actualitza el cursor
-        updateCursor(this);
-
-
-        // Actualitza forma del cursor
-        updateCursor(this);
         pushStyle();
         if(loginWrong && gui.pantallaActual== GUI.PANTALLA.INICIO){
             fill(gui.pink); textAlign(CENTER, CENTER); textFont(gui.appFonts.getThirdFont()); textSize(medidaParrafo+4);
@@ -153,14 +112,6 @@ public class Main extends PApplet {
             gui.tFRegistroCorreo.keyPressed(keyCode);
             gui.tFRegistroPass.keyPressed(keyCode);
         }
-        /* if(key=='0'){
-            gui.pantallaActual = GUI.PANTALLA.INICIO;
-        } else if(key=='1'){
-            gui.pantallaActual = GUI.PANTALLA.USUARIO;
-        }else if(key=='2'){
-            gui.pantallaActual = GUI.PANTALLA.VINILOS;
-        }
-        */
     }
 
     public void mousePressed(){
@@ -226,34 +177,28 @@ public class Main extends PApplet {
         else if(gui.pantallaActual== GUI.PANTALLA.USUARIO){
             if(gui.b1.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false; // reset al entrar
-                //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b2.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b3.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b4.mouseOverButton(this)){
-                //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
                 gui.actualizarDatosGraficos(this);
             }else if(gui.b5.mouseOverButton(this)){
-                //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }else if(gui.b7.mouseOverButton(this)){
-                //println("B7 has been pressed.");
                 gui.tFInicioSesion1.setText("");
                 gui.tFInicioSesion2.setText("");
                 gui.usuarioActual = "";
@@ -273,35 +218,29 @@ public class Main extends PApplet {
         else if(gui.pantallaActual== GUI.PANTALLA.VINILOS){
             if(gui.b1.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b2.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b3.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b4.mouseOverButton(this)){
-                //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
                 gui.actualizarDatosGraficos(this);
             }else if(gui.b5.mouseOverButton(this)){
-                //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }else if(gui.rBPlus.mouseOverButton(this)){
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
-                //println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
 
             } else if (gui.rBHeart.mouseOverButton(this)) {
@@ -329,35 +268,29 @@ public class Main extends PApplet {
         }else if(gui.pantallaActual== GUI.PANTALLA.CDS){
             if(gui.b1.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b2.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b3.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b4.mouseOverButton(this)){
-                //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
                 gui.actualizarDatosGraficos(this);
             }else if(gui.b5.mouseOverButton(this)){
-                //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }else if(gui.rBPlus.mouseOverButton(this)){
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
-                //println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR;
 
             } else if(gui.rBHeart.mouseOverButton(this)) {
@@ -385,35 +318,29 @@ public class Main extends PApplet {
         }else if(gui.pantallaActual== GUI.PANTALLA.CONCIERTOS){
             if(gui.b1.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b2.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b3.mouseOverButton(this)){
                 gui.mostrarListaDeseos = false;
-                //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             }else if(gui.b4.mouseOverButton(this)){
-                //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
                 gui.actualizarDatosGraficos(this);
             }else if(gui.b5.mouseOverButton(this)){
-                //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             }else if(gui.rBPlus.mouseOverButton(this)){
                 gui.pantallaAnterior = gui.pantallaActual; // Guardamos si venimos de VINILOS, CDS o CONCIERTOS
-                //println("RBPlus has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.AGREGAR_CONCERT;
             } else if(gui.rBHeart.mouseOverButton(this)) {
                 gui.mostrarListaDeseos = !gui.mostrarListaDeseos;
@@ -440,31 +367,26 @@ public class Main extends PApplet {
         }else if(gui.pantallaActual== GUI.PANTALLA.ESTADISTICAS) {
             if (gui.b1.mouseOverButton(this)) {
                 gui.mostrarListaDeseos = false;
-                //println("B1 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.VINILOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             } else if (gui.b2.mouseOverButton(this)) {
                 gui.mostrarListaDeseos = false;
-                //println("B2 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CDS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             } else if (gui.b3.mouseOverButton(this)) {
                 gui.mostrarListaDeseos = false;
-                //println("B3 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.CONCIERTOS;
                 gui.textoBusqueda = "";
                 gui.tFBuscador.setText("");
                 gui.recargarCards(this);
             } else if (gui.b4.mouseOverButton(this)) {
-                //println("B4 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
                 gui.actualizarDatosGraficos(this);
             } else if (gui.b5.mouseOverButton(this)) {
-                //println("B5 has been pressed.");
                 gui.pantallaActual = GUI.PANTALLA.USUARIO;
             } else if (gui.bCatVinilos.mouseOverButton(this) && gui.bCatVinilos.enabled) {
                 gui.categoriaActual = GUI.CatEstadistica.VINILOS;
@@ -587,10 +509,8 @@ public class Main extends PApplet {
                 if(gui.file != null && !gui.titol.isEmpty()){
                     copiar(gui.file, gui.rutaCarpeta, gui.titol);
                     gui.imagenGuardadaOk = true;
-                    //System.out.println("Imagen copiada. Se guardará en BD al pulsar OK.");
                 } else {
                     gui.imagenGuardadaOk = false;
-                    //System.out.println("No hay imagen seleccionada.");
                 }
                 gui.tiempoMensajeGuardado = 180; // 3 segundos a 60fps
             }
@@ -635,7 +555,6 @@ public class Main extends PApplet {
 
     public void updateCursor(PApplet p5){
         boolean hand = false;
-
         // Botones siempre activos (sidebar)
         if (gui.pantallaActual != GUI.PANTALLA.INICIO &&
                 gui.pantallaActual != GUI.PANTALLA.REGISTRO &&
@@ -720,19 +639,19 @@ public class Main extends PApplet {
         else cursor(ARROW);
     }
 
-    // Carrega Imatge
+    // Cargar Imagen
     public void fileSelected(File selection) {
         if (selection == null) {
             println("Ninguna selección.");
         } else {
-            // Referència al fitxer imatge
+            // Referencia al documento imagen
             gui.file = selection;
 
-            // Obtenim la ruta del fitxer seleccionat
+            // Obtenemos la ruta del documento seleccionado
             String rutaImatge = selection.getAbsolutePath();
 
-            gui.imgElegida = loadImage(rutaImatge);  // Actualitzam imatge
-            gui.titol = selection.getName();  // Actualitzam títol (igual)
+            gui.imgElegida = loadImage(rutaImatge);  // Actualizamos imatge
+            gui.titol = selection.getName();  // Actualizamos título (igual)
         }
     }
     public void fileSelectedPerfil(File selection) {
@@ -747,15 +666,15 @@ public class Main extends PApplet {
         }
     }
 
-    // Copia un fitxer a una altra ubicació
+    // Copia un documento en otra ubicación
     public void copiar(File file, String rutaCopia, String titol){
         Path original = Paths.get(file.getAbsolutePath());
         Path copia    = Paths.get(rutaCopia+"/"+titol);
         try{
             Files.copy(original, copia);
-            println("OK: fitxer copiat a la carpeta.");
+            println("OK: documento copiado en la carpeta.");
         } catch (IOException e) {
-            println("ERROR: No s'ha pogut copiar el fitxer.");
+            println("ERROR: No se ha podido copiar el documento.");
         }
     }
 }

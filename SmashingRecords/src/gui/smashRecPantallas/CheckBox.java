@@ -22,12 +22,9 @@ public class CheckBox {
         this.checkedColor = p5.color(180);
     }
 
-    // Getters
-
     public boolean isChecked(){
         return  this.checked;
     }
-
 
     // Dibuixa el CheckBox
     public void display(PApplet p5){

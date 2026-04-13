@@ -6,7 +6,7 @@ import processing.core.PImage;
 
 public class CheckBoxStar {
 
-    // Propietats
+    // Propiedades
     float x, y, w, h;
     PImage imgChecked, imgNotChecked;
 
@@ -24,7 +24,7 @@ public class CheckBoxStar {
         this.imgNotChecked = p5.loadImage(imgName2);
     }
 
-    // Dibuixa el CheckBox
+    // Dibuja el CheckBox
     public void display(PApplet p5){
 
         p5.pushStyle();
@@ -45,13 +45,13 @@ public class CheckBoxStar {
         this.checked = b;
     }
 
-    // Canvia l'estat de selecció
+    // Cambia el estado
     public void toggle(){
         this.checked = ! this.checked;
     }
 
 
-    // Mira si el ratolí està sobre el checkbox
+    // Ratón sobre checkBox
     public boolean onMouseOver(PApplet p5){
         return  p5.mouseX>= this.x &&
                 p5.mouseX<= this.x + this.w &&

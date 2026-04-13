@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 public class RadioButtonGroup {
 
-    // Propietats
+    // Propiedades
     RadioButton[] rbuttons;
     public int selectedOption;
 

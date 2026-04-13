@@ -22,7 +22,7 @@ public class Fonts {
         this.fonts[3] = p5.createFont("data/hack_regular.ttf", medidaParrafo);
     }
 
-    // Getter num fuentes
+    // Getters
     public int getNumFonts(){ return this.fonts.length; }
     public PFont getFirstFont(){ return this.fonts[0]; }
     public PFont getSecondFont(){ return this.fonts[1]; }

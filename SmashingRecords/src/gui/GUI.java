@@ -52,6 +52,9 @@ public class GUI {
     public enum PANTALLA {PLOGO, INICIO, REGISTRO, USUARIO, VINILOS, CDS, CONCIERTOS, ESTADISTICAS, AGREGAR, AGREGAR_CONCERT,
         DETALLE, DETALLE_CONCIERTO}
 
+    /**
+     * Categorías disponibles para filtrar las estadísticas.
+     */
     public enum CatEstadistica {VINILOS, CDS, CONCIERTOS}
 
     public CatEstadistica categoriaActual = CatEstadistica.VINILOS;
@@ -143,6 +146,16 @@ public class GUI {
     // Otros
     public CheckBoxStarList cbl;
 
+    /**
+     * Constructor de la interfaz gráfica.
+     * <p>
+     * Inicializa los sistemas de color, fuentes, componentes multimedia y
+     * construye todos los elementos de la interfaz (botones, campos de texto y tablas)
+     * vinculándolos a la instancia de la base de datos.
+     * </p>
+     * @param p5 Instancia de PApplet para el renderizado.
+     * @param db Instancia de la base de datos para la persistencia.
+     */
     // Constructor de GUI
     public GUI(PApplet p5, DataBase db) {
 
@@ -164,6 +177,14 @@ public class GUI {
         setRadioButtonsYCheckboxesMusica(p5);
     }
 
+    /**
+     * Inicializa y posiciona todos los botones de la aplicación.
+     * <p>
+     * Configura tanto los botones de navegación lateral como los botones de
+     * acción rápida (favoritos, eliminar, agregar) y los pop-ups de confirmación.
+     * </p>
+     * @param p5 Instancia de PApplet.
+     */
     // Setter botones
     public void setBotones(PApplet p5) {
         b1 = new Button(p5, appColors, "Vinilos", 0, p5.height * 0.25f, p5.width * 0.20f, p5.height * 0.05f);
@@ -218,6 +239,14 @@ public class GUI {
         actualizarEstadoBotones();
     }
 
+    /**
+     * Configura todos los campos de entrada de texto y áreas de notas.
+     * <p>
+     * Define dimensiones y límites de caracteres para los formularios de
+     * login, registro y detalles técnicos de la música.
+     * </p>
+     * @param p5 Instancia de PApplet.
+     */
     public void setTextFields(PApplet p5) {
         tFInicioSesion1 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.50f, p5.width * 0.28f, p5.height * 0.05f);
         tFInicioSesion2 = new TextField(p5, appColors, 40, p5.width * 0.36f, p5.height * 0.60f, p5.width * 0.28f, p5.height * 0.05f);
@@ -255,6 +284,10 @@ public class GUI {
         tANotasAgregar = new TextArea(p5, appColors, p5.width * 0.05f, p5.height * 0.82f, p5.width * 0.62f, p5.height * 0.18f, nc, 4);
     }
 
+    /**
+     * Carga los archivos multimedia necesarios (imágenes, iconos y logos).
+     * @param p5 Instancia de PApplet.
+     */
     public void setMedia(PApplet p5) {
         iconaDefaultUser = p5.loadImage("data/iconEmptyUser.png");   // si fuera imagen transparente svg (loadShape: vectorial)
         icona2 = p5.loadImage("data/iconFullUser.png");
@@ -271,6 +304,10 @@ public class GUI {
         infoConcert = db.getInfoArrayPetit2DConcert();
     }
 
+    /**
+     * Define la paleta de colores global y específica para gráficos.
+     * @param p5 Instancia de PApplet.
+     */
     public void setColors(PApplet p5) {
         black = appColors.getFourthColor();
         gris = appColors.getFifthColor();
@@ -291,6 +328,10 @@ public class GUI {
         };
     }
 
+    /**
+     * Inicializa los contenedores de tarjetas paginadas para las colecciones.
+     * @param p5 Instancia de PApplet.
+     */
     public void setPagedCards(PApplet p5) {
         int files = db.getNumFilesTaula("Concierto");
 
@@ -305,6 +346,14 @@ public class GUI {
 
     }
 
+    /**
+     * Configura el sistema de visualización de datos estadísticos.
+     * <p>
+     * Crea los diagramas de sectores, líneas y barras para representar
+     * calificaciones, cronología y géneros respectivamente.
+     * </p>
+     * @param p5 Instancia de PApplet.
+     */
     public void setEstadisticas(PApplet p5) {
         // 1. Inicializar la tabla (1 fila, 1 columna para que el gráfico sea grande)
         pcStats = new PagedCard2D(p5, appColors, 1, 1, Card.tipoCard.ESTADIST);
@@ -320,6 +369,10 @@ public class GUI {
         pcStats.setCards(misGraficos);
     }
 
+    /**
+     * Configura los selectores de opción única y múltiple de los formularios.
+     * @param p5 Instancia de PApplet.
+     */
     public void setRadioButtonsYCheckboxesMusica(PApplet p5) {
         // Construcción checkboxstarlist
         cbl = new CheckBoxStarList(p5, 5, imgs, p5.width * 0.05f, p5.height * 0.72f, p5.width * 0.05f, p5.height * 0.065f);
@@ -357,6 +410,10 @@ public class GUI {
     }
 
     // PANTALLAS DE LA GUI
+    /**
+     * Dibuja la pantalla de carga (Splash Screen) con el logo y nombre de la app.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayPantallaPLogo(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -383,6 +440,10 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja la interfaz de acceso para usuarios registrados.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayPantallaInicioSesion(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -421,6 +482,10 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja el formulario de creación de cuenta nueva.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayPantallaRegistro(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -467,6 +532,10 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja el panel de control del usuario, su perfil y sus notas personales.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayPantallaUsuario(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -519,6 +588,10 @@ public class GUI {
 
     }
 
+    /**
+     * Dibuja la vista de la colección de Vinilos con buscador y filtros.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayPantallaVinilos(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -535,6 +608,10 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja la vista de la colección de CDs con buscador y filtros.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayPantallaCDs(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -554,6 +631,10 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja la vista de conciertos y eventos asistidos.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayPantallaConciertos(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -577,6 +658,10 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja el panel de análisis estadístico de la colección actual.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayPantallaEstadisticas(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -608,6 +693,14 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja el formulario de inserción o edición de música (Vinilos/CDs).
+     * <p>
+     * Gestiona la visualización de previsualización de imagen, campos de texto
+     * técnicos, selección de género, ubicación física del objeto y origen.
+     * </p>
+     * @param p5 Instancia de PApplet para el dibujo.
+     */
     public void displayPantallaAgregarMusica(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -723,6 +816,14 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja el formulario de inserción o edición para eventos y conciertos.
+     * <p>
+     * A diferencia de la música, adapta el layout para imágenes panorámicas y
+     * campos específicos como lugar/recinto y fecha del evento.
+     * </p>
+     * @param p5 Instancia de PApplet para el dibujo.
+     */
     public void displayPantallaAgregarConcert(PApplet p5) {
         p5.push();
         p5.background(black);
@@ -828,6 +929,11 @@ public class GUI {
     }
 
     // ZONAS DE LA GUI
+    /**
+     * Dibuja el logotipo de la aplicación en la esquina superior izquierda.
+     * Incluye las líneas de división estéticas del marco lateral.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayLogo(PApplet p5) {
         //p5.circle(p5.width * 0.10f, p5.height * 0.125f, p5.width * 0.12f);
         p5.push();
@@ -842,6 +948,10 @@ public class GUI {
         p5.image(icona2, p5.width*0.10f, p5.height*0.1f);*/
     }
 
+    /**
+     * Dibuja el logotipo en formato grande, centrado para las pantallas de login y registro.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayLogoMayor(PApplet p5) {
         p5.push();
         p5.imageMode(p5.CENTER);
@@ -849,6 +959,14 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Renderiza la barra lateral de navegación (Sidebar).
+     * <p>
+     * Contiene los botones de acceso a las categorías principales y mantiene
+     * la coherencia visual mediante un marco persistente.
+     * </p>
+     * @param p5 Instancia de PApplet.
+     */
     public void displaySidebar(PApplet p5) {
         p5.pop();
         p5.fill(black);
@@ -866,6 +984,14 @@ public class GUI {
         p5.push();
     }
 
+    /**
+     * Dibuja la zona superior de búsqueda y herramientas.
+     * <p>
+     * Gestiona el campo de búsqueda global, el botón de filtrado/ordenación,
+     * el acceso a la lista de deseos y el feedback visual del orden actual.
+     * </p>
+     * @param p5 Instancia de PApplet.
+     */
     public void displayBuscadorYFiltros(PApplet p5) {
         p5.push();
         p5.textFont(appFonts.getForthFont());
@@ -895,6 +1021,10 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Dibuja el contenedor principal de cartas y los botones de paginación de música.
+     * @param p5 Instancia de PApplet.
+     */
     public void displayDisposicionMusica(PApplet p5) {
         p5.push();
         pcMusica.display(p5);
@@ -903,6 +1033,14 @@ public class GUI {
         p5.pop();
     }
 
+    /**
+     * Consulta la base de datos y actualiza los valores de los gráficos estadísticos.
+     * <p>
+     * Obtiene datos de calificaciones (Ratings), distribución temporal (Años) y
+     * diversidad de géneros para el usuario actual y la categoría seleccionada.
+     * </p>
+     * @param p5 Instancia de PApplet.
+     */
     public void actualizarDatosGraficos(PApplet p5) {
         String tipoQuery;
         if      (categoriaActual == CatEstadistica.VINILOS)   tipoQuery = "V";
@@ -964,51 +1102,20 @@ public class GUI {
                         : "CONCIERTO";
         totalActual = db.getTotalUsuario(usuarioActual, tipoTotal);
     }
-    /*public void actualizarDatosGraficos(PApplet p5) {
-        float[] dataSectores, dataLineas, dataBarras;
-        String[] tagsSectores, tagsLineas, tagsBarras;
-
-        if (categoriaActual == CatEstadistica.VINILOS) {
-            dataSectores = new float[]{10, 25, 40, 15, 10}; // Ratings 1-5 estrellas
-            tagsSectores = new String[]{"1*", "2*", "3*", "4*", "5*"};
-            dataLineas = new float[]{4, 2, 1, 10}; // Años
-            tagsLineas = new String[]{"2021", "2022", "2023", "2024"};
-            dataBarras = new float[]{42, 24, 20}; // Géneros
-            tagsBarras = new String[]{"Punk", "Pop", "Indie"};
-        } else if (categoriaActual == CatEstadistica.CDS) {
-            dataSectores = new float[]{3, 2, 1, 10, 40}; // Ratings 1-5 estrellas
-            tagsSectores = new String[]{"1*", "2*", "3*", "4*", "5*"};
-            dataLineas = new float[]{2, 5, 8, 12}; // Años
-            tagsLineas = new String[]{"2021", "2022", "2023", "2024"};
-            dataBarras = new float[]{70, 33, 32}; // Géneros
-            tagsBarras = new String[]{"Punk", "Pop", "Indie"};
-        } else {// categoriaActual == CatEstadistica.CONCIERTOS
-            dataSectores = new float[]{1, 2, 41, 14, 70}; // Ratings 1-5 estrellas
-            tagsSectores = new String[]{"1*", "2*", "3*", "4*", "5*"};
-            dataLineas = new float[]{1, 2, 7, 14}; // Años
-            tagsLineas = new String[]{"2021", "2022", "2023", "2024"};
-            dataBarras = new float[]{20, 56, 21}; // Géneros
-            tagsBarras = new String[]{"Punk", "Pop", "Indie"};
-        }
-        // Inyectamos los datos en los objetos que ya existen en el array
-        ((SectorDiagram) misGraficos[0]).setValues(dataSectores);
-        ((SectorDiagram) misGraficos[0]).setTexts(tagsSectores);
-        ((SectorDiagram) misGraficos[0]).setColors(this.paletaGraficos);
-
-        ((LinesDiagram) misGraficos[1]).setValues(dataLineas);
-        ((LinesDiagram) misGraficos[1]).setTexts(tagsLineas);
-        ((LinesDiagram) misGraficos[1]).setColors(narFuerte);
-
-        ((BarsDiagram) misGraficos[2]).setValues(dataBarras);
-        ((BarsDiagram) misGraficos[2]).setTexts(tagsBarras);
-        ((BarsDiagram) misGraficos[2]).setColors(this.paletaGraficos);
-    }*/
-
+    /**
+     * Actualiza la disponibilidad de los botones de categoría en la pantalla de estadísticas.
+     * Desactiva el botón de la categoría que ya está siendo visualizada.
+     */
     public void actualizarEstadoBotones() {
         bCatVinilos.setEnabled(categoriaActual != CatEstadistica.VINILOS);
         bCatCDs.setEnabled(categoriaActual != CatEstadistica.CDS);
         bCatConciertos.setEnabled(categoriaActual != CatEstadistica.CONCIERTOS);
     }
+
+    /**
+     * Limpia todos los campos de los formularios de inserción.
+     * Restablece textos, checkboxes, radio buttons, valoraciones y archivos de imagen cargados.
+     */
     public void resetPantallaAgregar() {
         // Vaciar textos
         for (TextField tf : tFMusica) { tf.setText(""); }
@@ -1041,6 +1148,15 @@ public class GUI {
         modoDetalle = false;
         idSeleccionado = -1;
     }
+
+    /**
+     * Refresca el contenido de las tarjetas (Cards) según los filtros y búsqueda.
+     * <p>
+     * Realiza una nueva consulta a la base de datos aplicando el criterio de
+     * ordenación y búsqueda seleccionado, recargando las imágenes correspondientes.
+     * </p>
+     * @param p5 Instancia de PApplet.
+     */
     public void recargarCards(PApplet p5) {
         String[] columnas = {"Título", "Título", "Artista", "Artista"};
         String[] direcciones = {"ASC", "DESC", "ASC", "DESC"};
@@ -1080,6 +1196,12 @@ public class GUI {
         }
     }
 
+    /**
+     * Rellena los formularios de edición con la información de un elemento existente.
+     * * @param p5 Instancia de PApplet.
+     * @param datos Array de strings con la información recuperada de la BD.
+     * @param esConcierto Indica si los datos pertenecen a un concierto (true) o música (false).
+     */
     public void cargarDatosDetalle(PApplet p5, String[] datos, boolean esConcierto) {
         if (datos == null) return;
         if (!esConcierto) {
@@ -1132,10 +1254,17 @@ public class GUI {
     }
 
     // Filtro
+    /**
+     * Cambia el criterio de ordenación (Título A-Z, Z-A, Artista A-Z, Z-A) de forma circular.
+     */
     public void ciclarOrden() {
         ordenActual = (ordenActual + 1) % 4;
         tiempoMensajeOrden = 180; // 3 segundos a 60fps
     }
+    /**
+     * Obtiene la representación textual del criterio de ordenación seleccionado.
+     * @return String descriptivo del orden.
+     */
     public String getTextoOrden() {
         switch(ordenActual) {
             case 0: return "Título A -> Z";
@@ -1146,6 +1275,18 @@ public class GUI {
         }
     }
 
+    /**
+     * Renderiza una imagen recortada en forma de círculo.
+     * <p>
+     * Utiliza una máscara {@code PImage} generada dinámicamente para aplicar
+     * transparencia fuera del radio definido. Ideal para fotos de perfil.
+     * </p>
+     * @param p5 Instancia de PApplet.
+     * @param img Imagen original a dibujar.
+     * @param cx Coordenada X del centro del círculo.
+     * @param cy Coordenada Y del centro del círculo.
+     * @param diametro Diámetro final del círculo.
+     */
     public void displayImagenCircular(PApplet p5, PImage img, float cx, float cy, float diametro) {
         // Creamos una máscara circular del mismo tamaño que la imagen redimensionada
         int d = (int) diametro;

@@ -6,20 +6,6 @@ import processing.core.PApplet;
  * Almacena los siete colores corporativos y proporciona accesores individuales
  * y por índice, así como un método de visualización para depuración.
  *
- * <p>La correspondencia entre índice y color es:
- * <ul>
- *   <li>0 – Naranja fuerte  (#E1480B)</li>
- *   <li>1 – Naranja suave   (#E47738)</li>
- *   <li>2 – Blanco          (#FFFFFF)</li>
- *   <li>3 – Negro           (#020202)</li>
- *   <li>4 – Gris            (#646464)</li>
- *   <li>5 – Amarillo        (#FFC832)</li>
- *   <li>6 – Rosa            (#E56399)</li>
- * </ul>
- * </p>
- *
- * @author Equipo SmashRecords
- * @version 1.0
  */
 public class Colors {
 
@@ -52,36 +38,34 @@ public class Colors {
 
     /**
      * Devuelve el número total de colores de la paleta.
-     *
      * @return número de colores disponibles
      */
     // Getters
     public int getNumColors(){ return this.colors.length; }
 
-    /** @return Naranja fuerte (#E1480B), usado para elementos destacados y seleccionados. */
+    /** Devuelve @return Naranja fuerte (#E1480B), usado para elementos destacados y seleccionados. */
     public int getFirstColor(){ return this.colors[0]; }
 
-    /** @return Naranja suave (#E47738), usado para estados de hover y secundarios. */
+    /** Devuelve @return Naranja suave (#E47738), usado para estados de hover y secundarios. */
     public int getSecondColor(){ return this.colors[1]; }
 
-    /** @return Blanco (#FFFFFF), usado para fondos claros y textos sobre fondo oscuro. */
+    /** Devuelve @return Blanco (#FFFFFF), usado para fondos claros y textos sobre fondo oscuro. */
     public int getThirdColor(){ return this.colors[2]; }
 
-    /** @return Negro (#020202), usado para fondos principales, bordes y textos. */
+    /** Devuelve @return Negro (#020202), usado para fondos principales, bordes y textos. */
     public int getFourthColor(){ return this.colors[3]; }
 
-    /** @return Gris (#646464), usado para elementos deshabilitados y secundarios. */
+    /** Devuelve @return Gris (#646464), usado para elementos deshabilitados y secundarios. */
     public int getFifthColor(){ return this.colors[4]; }
 
-    /** @return Amarillo (#FFC832), usado como color de acento en gráficos. */
+    /** Devuelve @return Amarillo (#FFC832), usado como color de acento en gráficos. */
     public int getSixthColor(){ return this.colors[5]; }
 
-    /** @return Rosa (#E56399), usado para mensajes de error y acentos especiales. */
+    /** Devuelve @return Rosa (#E56399), usado para mensajes de error y acentos especiales. */
     public int getSeventhColor(){ return this.colors[6]; }
 
     /**
      * Devuelve el color en la posición indicada del array de la paleta.
-     *
      * @param i índice del color (0–6)
      * @return color en formato Processing ({@code int} ARGB)
      */
@@ -91,7 +75,6 @@ public class Colors {
      * Dibuja visualmente la paleta de colores en pantalla con una leyenda,
      * útil para depuración y previsualización del tema visual de la aplicación.
      * Los colores se muestran como rectángulos de igual anchura distribuidos horizontalmente.
-     *
      * @param p5 instancia de Processing usada para el dibujado
      * @param x  posición horizontal de inicio en píxeles
      * @param y  posición vertical de inicio en píxeles

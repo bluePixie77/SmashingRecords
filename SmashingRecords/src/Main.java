@@ -10,21 +10,47 @@ import java.nio.file.Paths;
 
 import static gui.smashRecFonts.Sizes.medidaParrafo;
 
+/**
+ * Clase principal de la aplicación SmashingRecords.
+ * <p>
+ * Esta clase extiende de {@code PApplet} (Processing) y actúa como el motor central
+ * de la aplicación, gestionando la conexión a la base de datos, el ciclo de vida
+ * del dibujo (renderizado) y la captura de eventos de teclado y ratón.
+ * </p>
+ * * @author Tu Nombre o Equipo
+ * @version 1.0
+ */
 public class Main extends PApplet {
 
-    // Atributos
-        // GUI
+    /** Objeto que gestiona toda la interfaz gráfica de usuario. */
     GUI gui;
+
+    /** Conexión estática a la base de datos MySQL. */
     public static DataBase db;
+
+    /** Flag que indica si ha habido un error en el último intento de inicio de sesión. */
     boolean loginWrong = false;
-    
+
+    /**
+     * Punto de entrada principal de la aplicación Java.
+     * @param args Argumentos de línea de comandos.
+     */
     public static void main(String[] args) {
         PApplet.main("Main");
     }
 
+    /**
+     * Configuración inicial de la ventana de Processing antes de crear el contexto.
+     */
     public void settings(){
         fullScreen();
     }
+    /**
+     * Inicialización de los componentes de la aplicación.
+     * <p>
+     * Se establece la conexión con la base de datos local y se instancia la clase GUI.
+     * </p>
+     */
     public void setup(){
         db = new DataBase("admin", "l0n3lyr04d", "SmashingRecords");
         db.connect();
@@ -32,6 +58,13 @@ public class Main extends PApplet {
         gui = new GUI(this, db);
     }
 
+    /**
+     * Bucle principal de dibujo.
+     * <p>
+     * Renderiza la pantalla activa según el estado de {@code gui.pantallaActual}
+     * y gestiona el feedback visual de errores de login.
+     * </p>
+     */
     public void draw(){
         // Dibuixa la pantalla corresponent
         switch(gui.pantallaActual){
@@ -70,6 +103,12 @@ public class Main extends PApplet {
         popStyle();
     }
 
+    /**
+     * Gestiona la entrada de caracteres alfanuméricos.
+     * <p>
+     * Redirige el carácter pulsado a los campos de texto activos en la interfaz actual.
+     * </p>
+     */
     public void keyTyped(){
         gui.tFInicioSesion1.keyTyped(key);
         gui.tFInicioSesion2.keyTyped(key);
@@ -87,6 +126,12 @@ public class Main extends PApplet {
             gui.tFRegistroPass.keyTyped(key);
         }
     }
+    /**
+     * Gestiona la pulsación de teclas especiales (ENTER, BACKSPACE, etc.).
+     * <p>
+     * Controla la ejecución de búsquedas al pulsar ENTER en las pantallas de música.
+     * </p>
+     */
     public void keyPressed(){
         gui.tFInicioSesion1.keyPressed(keyCode);
         gui.tFInicioSesion2.keyPressed(keyCode);
@@ -114,6 +159,13 @@ public class Main extends PApplet {
         }
     }
 
+    /**
+     * Gestiona los clics de ratón en toda la aplicación.
+     * <p>
+     * Este método contiene la lógica de navegación entre pantallas y la ejecución
+     * de acciones al pulsar botones (Login, Registro, CRUD de vinilos/CDs, etc.).
+     * </p>
+     */
     public void mousePressed(){
         if(gui.pantallaActual== GUI.PANTALLA.INICIO) {
             if (gui.b6.mouseOverButton(this)) {
@@ -556,6 +608,15 @@ public class Main extends PApplet {
             b7 // Cerrar sesión */
     }
 
+    /**
+     * Gestiona dinámicamente el estado del cursor del ratón (flecha o mano).
+     * <p>
+     * Evalúa si el ratón se encuentra sobre algún componente interactivo (botones,
+     * checkboxes, áreas de tarjetas) dependiendo de la pantalla actual,
+     * aplicando el estilo {@code HAND} si hay interacción disponible.
+     * </p>
+     * @param p5 Instancia de PApplet para acceder a las funciones de cursor.
+     */
     public void updateCursor(PApplet p5){
         boolean hand = false;
         // Botones siempre activos (sidebar)
@@ -643,6 +704,14 @@ public class Main extends PApplet {
     }
 
     // Cargar Imagen
+    /**
+     * Callback invocado tras la selección de una imagen para un elemento (Vinilo/CD/Concierto).
+     * <p>
+     * Si la selección es válida, carga la imagen en memoria para la previsualización
+     * y almacena la referencia del archivo y su nombre.
+     * </p>
+     * @param selection El archivo seleccionado a través del diálogo nativo del SO.
+     */
     public void fileSelected(File selection) {
         if (selection == null) {
             println("Ninguna selección.");
@@ -657,6 +726,16 @@ public class Main extends PApplet {
             gui.titol = selection.getName();  // Actualizamos título (igual)
         }
     }
+
+    /**
+     * Callback invocado tras la selección de una nueva foto de perfil de usuario.
+     * <p>
+     * A diferencia de la carga estándar, este método realiza la copia inmediata
+     * del archivo al directorio de la aplicación y actualiza el registro
+     * correspondiente en la base de datos.
+     * </p>
+     * @param selection El archivo de imagen seleccionado para el perfil.
+     */
     public void fileSelectedPerfil(File selection) {
         if (selection == null) {
             println("Ninguna selección.");
@@ -670,6 +749,17 @@ public class Main extends PApplet {
     }
 
     // Copia un documento en otra ubicación
+    /**
+     * Realiza una copia física de un archivo desde una ubicación externa al
+     * directorio local de recursos de la aplicación.
+     * <p>
+     * Utiliza la API {@code java.nio.file} para garantizar la integridad de la
+     * copia y gestiona posibles excepciones de Entrada/Salida (IOException).
+     * </p>
+     * @param file Archivo original de origen.
+     * @param rutaCopia Directorio de destino donde se almacenará la copia.
+     * @param titol Nombre final que tendrá el archivo en el destino.
+     */
     public void copiar(File file, String rutaCopia, String titol){
         Path original = Paths.get(file.getAbsolutePath());
         Path copia    = Paths.get(rutaCopia+"/"+titol);
